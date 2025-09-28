@@ -574,6 +574,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   rb: {fileID: 0}
   animator: {fileID: 0}
+  moveSpeed: 5
+  rollAnimation: {fileID: 7400000, guid: 27cd0e1588f455547bac819e5b69d828, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

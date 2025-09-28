@@ -14,6 +14,11 @@ public class IdleState : PlayerState
     {
         base.FrameUpdate();
 
+        if (inputSystem.RollInput)
+        {
+            stateMachine.ChangeState(player.rollState);
+            return;
+        }
         if (inputSystem.MoveInput.magnitude > 0.1f)
         {
             stateMachine.ChangeState(player.walkState);

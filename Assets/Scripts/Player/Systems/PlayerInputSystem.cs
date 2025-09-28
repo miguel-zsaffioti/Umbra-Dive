@@ -6,6 +6,7 @@ public class PlayerInputSystem
     private InputActions playerControls;
 
     public Vector2 MoveInput { get; private set; }
+    public bool RollInput { get; private set; }
 
     public PlayerInputSystem()
     {
@@ -25,5 +26,6 @@ public class PlayerInputSystem
     public void Tick()
     {
         MoveInput = playerControls.Player.Move.ReadValue<Vector2>();
+        RollInput = playerControls.Player.Roll.WasPerformedThisFrame();
     }
 }

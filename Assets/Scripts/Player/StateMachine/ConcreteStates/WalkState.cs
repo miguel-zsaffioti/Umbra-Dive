@@ -14,10 +14,17 @@ public class WalkState : PlayerState
     public override void FrameUpdate()
     {
         base.FrameUpdate();
+        if (inputSystem.RollInput)
+        {
+            stateMachine.ChangeState(player.rollState);
+            return;
+        }
         if (inputSystem.MoveInput == Vector2.zero)
         {
             stateMachine.ChangeState(player.idleState);
+            return;
         }
+        
     }
 
     public override void HandleAnimation()
