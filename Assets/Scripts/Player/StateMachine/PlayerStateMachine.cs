@@ -1,12 +1,7 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerStateMachine : MonoBehaviour
 {
-    #region Components
-    private Rigidbody2D rb;
-    private Animator animator;
-    #endregion
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
