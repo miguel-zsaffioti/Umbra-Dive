@@ -8,6 +8,8 @@ public class PlayerInputSystem
     public Vector2 MoveInput { get; private set; }
     public bool RollInput { get; private set; }
 
+    public bool AttackInput { get; private set; }
+
     public PlayerInputSystem()
     {
         playerControls = new InputActions();
@@ -27,5 +29,6 @@ public class PlayerInputSystem
     {
         MoveInput = playerControls.Player.Move.ReadValue<Vector2>();
         RollInput = playerControls.Player.Roll.WasPerformedThisFrame();
+        AttackInput = playerControls.Player.Attack.WasPerformedThisFrame();
     }
 }

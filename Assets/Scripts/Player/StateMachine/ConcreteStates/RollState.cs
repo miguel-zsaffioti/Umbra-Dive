@@ -24,7 +24,7 @@ public class RollState : PlayerState
 
         rollTimer = player.rollAnimation.length;
 
-        rb.AddForce(rollDirection * 5, ForceMode2D.Impulse);
+        rb.AddForce(rollDirection * player.rollForce, ForceMode2D.Impulse);
     }
 
     public override void Exit()

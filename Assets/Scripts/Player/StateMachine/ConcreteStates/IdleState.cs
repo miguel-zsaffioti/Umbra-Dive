@@ -13,7 +13,11 @@ public class IdleState : PlayerState
     public override void FrameUpdate()
     {
         base.FrameUpdate();
-
+        if (inputSystem.AttackInput)
+        {
+            stateMachine.ChangeState(player.attackState);
+            return;
+        }
         if (inputSystem.RollInput)
         {
             stateMachine.ChangeState(player.rollState);

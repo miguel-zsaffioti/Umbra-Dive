@@ -15,12 +15,15 @@ public class Player : MonoBehaviour
     [HideInInspector] public IdleState idleState;
     [HideInInspector] public WalkState walkState;
     [HideInInspector] public RollState rollState;
+    [HideInInspector] public AttackState attackState;
 
 
     public float moveSpeed = 5f;
 
-    //public float rollDuration = 0.2f;
     public AnimationClip rollAnimation;
+    public float rollForce = 5f;
+
+    public AnimationClip attackAnimation;
 
     private void Awake()
     {
@@ -33,7 +36,7 @@ public class Player : MonoBehaviour
         idleState = new IdleState(this, stateMachine);
         walkState = new WalkState(this, stateMachine);
         rollState = new RollState(this, stateMachine);
-        
+        attackState = new AttackState(this, stateMachine);
     }
 
     #region Enable/Disable
