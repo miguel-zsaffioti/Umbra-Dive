@@ -3,6 +3,7 @@ using UnityEngine;
 public class AttackState : PlayerState
 {
     private float attackTimer;
+    private Vector2 attackDirection;
 
     public AttackState(Player player, PlayerStateMachine stateMachine) : base(player, stateMachine)
     {
@@ -11,6 +12,15 @@ public class AttackState : PlayerState
     public override void Enter()
     {
         animator.SetBool("isAttacking", true);
+        if (inputSystem.MoveInput.magnitude > 0.1f)
+        {
+            attackDirection = inputSystem.MoveInput.normalized;
+        }
+        else
+        {
+            attackDirection = new Vector2(animator.GetFloat("LastX"), animator.GetFloat("LastY"));
+        }
+
         attackTimer = player.attackAnimation.length;
     }
 
@@ -42,6 +52,6 @@ public class AttackState : PlayerState
 
     public override void PhysicsUpdate()
     {
-        rb.linearVelocity = inputSystem.MoveInput.normalized * player.moveSpeed;
+        rb.linearVelocity = attackDirection * player.attackMoveSpeed;
     }
 }

@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public WalkState walkState;
     [HideInInspector] public RollState rollState;
     [HideInInspector] public AttackState attackState;
+    [HideInInspector] public BlockState blockState;
 
 
     public float moveSpeed = 5f;
@@ -24,6 +25,9 @@ public class Player : MonoBehaviour
     public float rollForce = 5f;
 
     public AnimationClip attackAnimation;
+    public float attackMoveSpeed = 2f;
+
+    public float blockMoveSpeed = 3f;
 
     private void Awake()
     {
@@ -37,6 +41,7 @@ public class Player : MonoBehaviour
         walkState = new WalkState(this, stateMachine);
         rollState = new RollState(this, stateMachine);
         attackState = new AttackState(this, stateMachine);
+        blockState = new BlockState(this, stateMachine);
     }
 
     #region Enable/Disable

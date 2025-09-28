@@ -18,6 +18,10 @@ public class IdleState : PlayerState
             stateMachine.ChangeState(player.attackState);
             return;
         }
+        if (inputSystem.BlockInput) {
+            stateMachine.ChangeState(player.blockState);
+            return;
+        }
         if (inputSystem.RollInput)
         {
             stateMachine.ChangeState(player.rollState);

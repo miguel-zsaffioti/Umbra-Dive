@@ -10,6 +10,8 @@ public class PlayerInputSystem
 
     public bool AttackInput { get; private set; }
 
+    public bool BlockInput { get; private set; }
+
     public PlayerInputSystem()
     {
         playerControls = new InputActions();
@@ -30,5 +32,6 @@ public class PlayerInputSystem
         MoveInput = playerControls.Player.Move.ReadValue<Vector2>();
         RollInput = playerControls.Player.Roll.WasPerformedThisFrame();
         AttackInput = playerControls.Player.Attack.WasPerformedThisFrame();
+        BlockInput = playerControls.Player.Block.IsPressed();
     }
 }
