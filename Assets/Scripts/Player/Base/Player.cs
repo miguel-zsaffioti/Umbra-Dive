@@ -3,13 +3,20 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     #region Components
-    private Rigidbody2D rb;
-    private Animator animator;
+    [HideInInspector] public Rigidbody2D rb;
+    [HideInInspector] public Animator animator;
     #endregion
 
     #region Systems
-    private PlayerInputSystem inputSystem;
+    [HideInInspector] public PlayerInputSystem inputSystem;
+    private PlayerStateMachine stateMachine;
     #endregion
+
+    [HideInInspector] public IdleState idleState;
+    [HideInInspector] public WalkState walkState;
+
+
+    public float moveSpeed = 5f;
 
     private void Awake()
     {
@@ -17,20 +24,13 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
 
         inputSystem = new PlayerInputSystem();
+        stateMachine = new PlayerStateMachine();
+
+        idleState = new IdleState(this, stateMachine);
+        walkState = new WalkState(this, stateMachine);
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        inputSystem.Tick();
-    }
-
+    #region Enable/Disable
     private void OnEnable()
     {
         inputSystem.Enable();
@@ -40,4 +40,23 @@ public class Player : MonoBehaviour
     {
         inputSystem.Disable();
     }
+    #endregion
+
+    void Start()
+    {
+        stateMachine.Start(idleState);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        inputSystem.Tick();
+        stateMachine.FrameUpdate();
+    }
+
+    private void FixedUpdate()
+    {
+        stateMachine.PhysicsUpdate();
+    }
+
 }
