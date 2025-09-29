@@ -1,0 +1,59 @@
+using UnityEngine;
+
+public class Enemy : MonoBehaviour
+{
+    [Header("Data")]
+    public EnemyData data;
+
+    [Header("Components")]
+    [HideInInspector] public Rigidbody2D rb;
+    [HideInInspector] public Animator animator;
+    [HideInInspector] public Transform playerTransform;
+
+    [Header("Detection")]
+    [HideInInspector] public DetectionSystem detectionSystem;
+    public LayerMask playerLayer;
+    public LayerMask obstacleLayer;
+
+    [HideInInspector] public EnemyStateMachine stateMachine;
+    [HideInInspector] public WaitState waitState;
+    [HideInInspector] public ChaseState chaseState;
+
+    public virtual void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        stateMachine = new EnemyStateMachine();
+        detectionSystem = new DetectionSystem(this);
+
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+
+    private void Start()
+    {
+        waitState = new WaitState(this, stateMachine);
+        chaseState = new ChaseState(this, stateMachine);
+
+        stateMachine.Start(waitState);
+    }
+
+    public virtual void Update()
+    {
+        stateMachine.FrameUpdate();
+        detectionSystem.UpdateDetection();
+    }
+
+    public virtual void FixedUpdate()
+    {
+        stateMachine.PhysicsUpdate();
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (data == null) return;
+
+        Gizmos.color = Color.yellow;
+
+        Gizmos.DrawWireSphere(transform.position, data.playerDetectionRadius);
+    }
+}

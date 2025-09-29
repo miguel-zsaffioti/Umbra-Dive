@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - Ground
+  - Wall
+  - Hole
+  - Slime
   layers:
   - Default
   - TransparentFX
@@ -12,9 +15,9 @@ TagManager:
   - Player
   - Water
   - UI
-  - Level
-  - 
-  - 
+  - Ground
+  - Enemies
+  - Obstacle
   - 
   - 
   - 
