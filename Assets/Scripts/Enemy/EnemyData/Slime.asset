@@ -20,3 +20,5 @@ MonoBehaviour:
   attackRange: 1.5
   attackDamage: 10
   attackCooldown: 2
+  damageAmount: 2
+  knockbackForce: 6

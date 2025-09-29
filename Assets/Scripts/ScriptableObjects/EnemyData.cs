@@ -16,4 +16,9 @@ public class EnemyData : ScriptableObject
     public float attackRange = 1.5f;
     public float attackDamage = 10f;
     public float attackCooldown = 2f;
+
+    [Header("Contact Damage")]
+    public int damageAmount = 2;
+    public float knockbackForce = 20f;
+    
 }
