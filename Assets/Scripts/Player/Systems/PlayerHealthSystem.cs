@@ -1,11 +1,11 @@
 using System.Collections;
 using UnityEngine;
 
-public class HealthSystem
+public class PlayerHealthSystem
 {
     Player player;
 
-    public HealthSystem(Player player)
+    public PlayerHealthSystem(Player player)
     {
         this.player = player;
     }

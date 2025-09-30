@@ -45,5 +45,20 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Ground
+    uniqueID: 403968461
+    locked: 0
+  - name: Holes
+    uniqueID: 462692993
+    locked: 0
+  - name: Obstacles
+    uniqueID: 2809584187
+    locked: 0
+  - name: Entities
+    uniqueID: 2425620729
+    locked: 0
+  - name: Door
+    uniqueID: 3255636017
+    locked: 0
   m_RenderingLayers:
   - Default

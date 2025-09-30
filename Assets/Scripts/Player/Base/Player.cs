@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
 
     #region Systems
     [HideInInspector] public PlayerInputSystem inputSystem;
-    [HideInInspector] public HealthSystem healthSystem;
+    [HideInInspector] public PlayerHealthSystem healthSystem;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     private PlayerStateMachine stateMachine;
     #endregion
@@ -47,6 +47,16 @@ public class Player : MonoBehaviour
     public float knockbackDuration = 0.2f;
     #endregion
 
+
+    [HideInInspector] public Vector2 facingDirection;
+
+    [Header("Configurações de Ataque")]
+    public Transform attackPoint;
+    public float attackPointOffset = 1f;
+    public float attackRange = 0.8f;
+    public int attackDamage = 20;
+    public LayerMask enemyLayers;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -55,7 +65,7 @@ public class Player : MonoBehaviour
 
         inputSystem = new PlayerInputSystem();
         stateMachine = new PlayerStateMachine();
-        healthSystem = new HealthSystem(this);  
+        healthSystem = new PlayerHealthSystem(this);  
     }
 
     #region Enable/Disable
@@ -92,6 +102,25 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         stateMachine.PhysicsUpdate();
+    }
+
+    public void TriggerAttackDamage()
+    {
+        attackPoint.localPosition = this.facingDirection * attackPointOffset;
+
+        Debug.Log("Momento do Ataque! Posição: " + attackPoint.position);
+
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            Debug.Log("Acertamos: " + enemy.name);
+            EnemyHealthSystem enemyHealth = enemy.GetComponent<Enemy>().healthSystem;
+            if (enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(attackDamage);
+            }
+        }
     }
 
     public void ApplyKnockback(Vector2 direction, float force)

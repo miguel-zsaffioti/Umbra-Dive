@@ -53,6 +53,7 @@ public class WalkState : PlayerState
 
     public override void PhysicsUpdate()
     {
+        player.facingDirection = inputSystem.MoveInput.normalized;
         rb.linearVelocity = inputSystem.MoveInput.normalized * player.moveSpeed;
     }
 }

@@ -16,7 +16,7 @@ public class EnemyContactDamage : MonoBehaviour
 
         if (player != null && enemy != null)
         {
-            HealthSystem playerHealth = player.healthSystem;
+            PlayerHealthSystem playerHealth = player.healthSystem;
 
             if (playerHealth != null)
             {

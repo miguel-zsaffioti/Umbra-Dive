@@ -22,6 +22,8 @@ public class AttackState : PlayerState
         }
 
         attackTimer = player.attackAnimation.length;
+
+        player.facingDirection = attackDirection;
     }
 
     public override void Exit()

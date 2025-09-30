@@ -15,6 +15,13 @@ public class Enemy : MonoBehaviour
     public LayerMask playerLayer;
     public LayerMask obstacleLayer;
 
+    [Header("Health")]
+    public int maxHealth = 2;
+    [HideInInspector] public int currentHealth;
+
+
+    [HideInInspector] public EnemyHealthSystem healthSystem;
+
     [HideInInspector] public EnemyStateMachine stateMachine;
     [HideInInspector] public WaitState waitState;
     [HideInInspector] public ChaseState chaseState;
@@ -25,6 +32,7 @@ public class Enemy : MonoBehaviour
         animator = GetComponent<Animator>();
         stateMachine = new EnemyStateMachine();
         detectionSystem = new DetectionSystem(this);
+        healthSystem = new EnemyHealthSystem(this);
 
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
@@ -55,5 +63,10 @@ public class Enemy : MonoBehaviour
         Gizmos.color = Color.yellow;
 
         Gizmos.DrawWireSphere(transform.position, data.playerDetectionRadius);
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
     }
 }
