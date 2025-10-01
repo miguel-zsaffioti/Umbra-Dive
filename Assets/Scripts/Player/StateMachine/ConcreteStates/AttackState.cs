@@ -24,6 +24,7 @@ public class AttackState : PlayerState
         attackTimer = player.attackAnimation.length;
 
         player.facingDirection = attackDirection;
+        player.enemiesAlreadyHit.Clear();
     }
 
     public override void Exit()

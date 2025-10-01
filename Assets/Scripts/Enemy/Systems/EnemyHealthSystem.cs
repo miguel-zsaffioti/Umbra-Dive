@@ -10,17 +10,17 @@ public class EnemyHealthSystem
         this.enemy = enemy;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Vector2 knockbackDirection, float knockbackForce)
     {
         enemy.currentHealth -= damage;
+        enemy.animator.SetTrigger("Hurt");
 
-
+        enemy.ApplyKnockback(knockbackDirection, knockbackForce);
         if (enemy.currentHealth <= 0)
         {
             StartDying();
             return;
         }
-        enemy.animator.SetTrigger("Hurt");
     }
 
     private void StartDying()

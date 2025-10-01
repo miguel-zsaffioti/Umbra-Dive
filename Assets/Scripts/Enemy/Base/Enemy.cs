@@ -43,6 +43,7 @@ public class Enemy : MonoBehaviour
         chaseState = new ChaseState(this, stateMachine);
 
         stateMachine.Start(waitState);
+        currentHealth = maxHealth;
     }
 
     public virtual void Update()
@@ -68,5 +69,12 @@ public class Enemy : MonoBehaviour
     public void Die()
     {
         Destroy(gameObject);
+    }
+
+    public void ApplyKnockback(Vector2 direction, float force)
+    {
+        rb.linearVelocity = Vector2.zero;
+
+        rb.AddForce(direction * force, ForceMode2D.Impulse);
     }
 }

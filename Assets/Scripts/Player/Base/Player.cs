@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -54,14 +56,18 @@ public class Player : MonoBehaviour
     public Transform attackPoint;
     public float attackPointOffset = 1f;
     public float attackRange = 0.8f;
-    public int attackDamage = 20;
+    public int attackDamage = 1;
     public LayerMask enemyLayers;
+
+    [HideInInspector] public List<Enemy> enemiesAlreadyHit;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        enemiesAlreadyHit = new List<Enemy>();
 
         inputSystem = new PlayerInputSystem();
         stateMachine = new PlayerStateMachine();
@@ -108,19 +114,43 @@ public class Player : MonoBehaviour
     {
         attackPoint.localPosition = this.facingDirection * attackPointOffset;
 
-        Debug.Log("Momento do Ataque! Posição: " + attackPoint.position);
+        // 1. Criamos uma flag para controlar o Hit Stop
+        bool hasHitEnemy = false;
 
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
 
-        foreach (Collider2D enemy in hitEnemies)
+        foreach (Collider2D enemyCollider in hitEnemies)
         {
-            Debug.Log("Acertamos: " + enemy.name);
-            EnemyHealthSystem enemyHealth = enemy.GetComponent<Enemy>().healthSystem;
-            if (enemyHealth != null)
+            Enemy enemy = enemyCollider.GetComponent<Enemy>();
+
+            if (enemy != null && !enemiesAlreadyHit.Contains(enemy))
             {
-                enemyHealth.TakeDamage(attackDamage);
+                Debug.Log("Acertamos: " + enemy.name);
+                Vector2 knockbackDirection = (enemy.transform.position - transform.position).normalized;
+                enemy.healthSystem.TakeDamage(attackDamage, knockbackDirection, enemy.data.knockbackForce);
+                enemiesAlreadyHit.Add(enemy);
+
+                // 2. Marcamos que acertamos alguém
+                hasHitEnemy = true;
             }
         }
+
+        if (hasHitEnemy)
+        {
+            StartCoroutine(HitStopEffect(0.08f));
+        }
+    }
+
+    // Usamos IEnumerator para criar uma Coroutine
+    private IEnumerator HitStopEffect(float duration)
+    {
+        Time.timeScale = 0.1f;
+
+  
+        yield return new WaitForSecondsRealtime(duration);
+
+        // Retorna o tempo ao normal
+        Time.timeScale = 1f;
     }
 
     public void ApplyKnockback(Vector2 direction, float force)

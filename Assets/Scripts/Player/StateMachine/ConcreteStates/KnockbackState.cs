@@ -19,6 +19,7 @@ public class KnockbackState : PlayerState
         if (knockbackTimer <= 0)
         {
             stateMachine.ChangeState(player.idleState);
+            return;
         }
     }
 }
