@@ -7,12 +7,14 @@ public class Player : MonoBehaviour
     #region Components
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public Animator animator;
+    [HideInInspector] public AudioSource audioSource;
     #endregion
 
     #region Systems
     [HideInInspector] public PlayerInputSystem inputSystem;
     [HideInInspector] public PlayerHealthSystem healthSystem;
     [HideInInspector] public SpriteRenderer spriteRenderer;
+    [HideInInspector] public PlayerAudioSystem audioSystem;
     private PlayerStateMachine stateMachine;
     #endregion
 
@@ -59,6 +61,9 @@ public class Player : MonoBehaviour
     public int attackDamage = 1;
     public LayerMask enemyLayers;
 
+    [Header("Data")]
+    public PlayerAudioData audioData;
+
     [HideInInspector] public List<Enemy> enemiesAlreadyHit;
 
     private void Awake()
@@ -66,12 +71,14 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
 
         enemiesAlreadyHit = new List<Enemy>();
 
         inputSystem = new PlayerInputSystem();
         stateMachine = new PlayerStateMachine();
-        healthSystem = new PlayerHealthSystem(this);  
+        healthSystem = new PlayerHealthSystem(this);
+        audioSystem = new PlayerAudioSystem(this);
     }
 
     #region Enable/Disable
@@ -125,16 +132,17 @@ public class Player : MonoBehaviour
 
             if (enemy != null && !enemiesAlreadyHit.Contains(enemy))
             {
+                hasHitEnemy = true;
+                
+
                 Debug.Log("Acertamos: " + enemy.name);
                 Vector2 knockbackDirection = (enemy.transform.position - transform.position).normalized;
                 enemy.healthSystem.TakeDamage(attackDamage, knockbackDirection, enemy.data.knockbackForce);
                 enemiesAlreadyHit.Add(enemy);
-
-                // 2. Marcamos que acertamos alguém
-                hasHitEnemy = true;
             }
         }
-
+        audioSystem.PlayAttackSound(hasHitEnemy);
+        Debug.Log("entrando em triugger attack");
         if (hasHitEnemy)
         {
             StartCoroutine(HitStopEffect(0.08f));

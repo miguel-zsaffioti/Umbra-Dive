@@ -11,7 +11,7 @@ public class AttackState : PlayerState
 
     public override void Enter()
     {
-        animator.SetBool("isAttacking", true);
+        animator.SetTrigger("Attack");
         if (inputSystem.MoveInput.magnitude > 0.1f)
         {
             attackDirection = inputSystem.MoveInput.normalized;
@@ -25,11 +25,6 @@ public class AttackState : PlayerState
 
         player.facingDirection = attackDirection;
         player.enemiesAlreadyHit.Clear();
-    }
-
-    public override void Exit()
-    {
-        animator.SetBool("isAttacking", false);
     }
 
     public override void FrameUpdate()

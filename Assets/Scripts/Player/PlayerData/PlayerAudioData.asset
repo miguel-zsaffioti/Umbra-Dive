@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b2465af639ea9744a74d03da9ecfcaa, type: 3}
+  m_Name: PlayerAudioData
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAudioData
+  normalAttacks:
+  - {fileID: 8300000, guid: 937da79e547aa314ba8ceca9d772c301, type: 3}
+  - {fileID: 8300000, guid: d8a766c0cbf7fc14cb97ca8ec80d100c, type: 3}
+  - {fileID: 8300000, guid: b8d26bf5958ff174e83fbfc7a623d8bd, type: 3}
+  hitAttacks:
+  - {fileID: 8300000, guid: 695f32e3715e221448d1dcc9bc7792d4, type: 3}
+  - {fileID: 8300000, guid: c3f0c053949fbd34fa56ab8a25c54034, type: 3}
+  - {fileID: 8300000, guid: 903c7148cd7c69846b520ef6fd208bcb, type: 3}
