@@ -6,4 +6,5 @@ public class PlayerAudioData : ScriptableObject
     [Header("SFX")]
     public AudioClip[] normalAttacks;
     public AudioClip[] hitAttacks;
+    public AudioClip damage;
 }

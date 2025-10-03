@@ -17,6 +17,7 @@ public class PlayerHealthSystem
         player.currentHealth -= damageAmount;
 
         player.ApplyKnockback(knockbackDirection, knockbackForce);
+        player.audioSystem.PlaySound(player.audioData.damage);
 
         player.StartCoroutine(InvincibilityCoroutine());
 

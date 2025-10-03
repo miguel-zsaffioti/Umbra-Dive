@@ -135,14 +135,13 @@ public class Player : MonoBehaviour
                 hasHitEnemy = true;
                 
 
-                Debug.Log("Acertamos: " + enemy.name);
+                //Debug.Log("Acertamos: " + enemy.name);
                 Vector2 knockbackDirection = (enemy.transform.position - transform.position).normalized;
                 enemy.healthSystem.TakeDamage(attackDamage, knockbackDirection, enemy.data.knockbackForce);
                 enemiesAlreadyHit.Add(enemy);
             }
         }
         audioSystem.PlayAttackSound(hasHitEnemy);
-        Debug.Log("entrando em triugger attack");
         if (hasHitEnemy)
         {
             StartCoroutine(HitStopEffect(0.08f));

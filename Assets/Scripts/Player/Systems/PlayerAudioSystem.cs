@@ -22,6 +22,11 @@ public class PlayerAudioSystem
         audioSource.PlayOneShot(clipToPlay);
     }
 
+    public void PlaySound(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
+    }
+
     //public void PlayFootstepSound()
     //{
     //    PlayRandomSound(player.audioData.footstepSounds);
