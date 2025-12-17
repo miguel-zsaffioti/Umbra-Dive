@@ -18,4 +18,8 @@ public class EnemyState
                                        }
     public virtual void PhysicsUpdate() { }
     //public virtual void HandleAnimation() { }
+
+    public virtual void OnAnimationTrigger(string eventName)
+    {
+    }
 }

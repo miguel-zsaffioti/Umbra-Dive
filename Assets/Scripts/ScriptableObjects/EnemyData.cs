@@ -12,13 +12,14 @@ public class EnemyData : ScriptableObject
     public float playerDetectionRadius = 5f;
     public float timeToLose = 2f;
 
-    [Header("Combat")]
-    public float attackRange = 1.5f;
-    public float attackDamage = 10f;
-    public float attackCooldown = 2f;
-
     [Header("Contact Damage")]
     public int damageAmount = 2;
     public float knockbackForce = 20f;
-    
+
+    [Header("Attack Data")]
+    public float attackDistance = 2f;
+    public float attackDashSpeed = 20f;
+    public float damage = 4f;
+    public float attackCooldown = 1f;
+
 }

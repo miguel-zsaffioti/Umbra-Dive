@@ -1,6 +1,9 @@
+using System.Xml;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+// Torna a classe abstrata. Você não poderá adicionar o componente "Enemy" diretamente
+// em um GameObject, apenas classes que herdam dele (como "Slime").
+public abstract class Enemy : MonoBehaviour
 {
     [Header("Data")]
     public EnemyData data;
@@ -18,14 +21,17 @@ public class Enemy : MonoBehaviour
     [Header("Health")]
     public int maxHealth = 2;
     [HideInInspector] public int currentHealth;
-
-
     [HideInInspector] public EnemyHealthSystem healthSystem;
 
-    [HideInInspector] public EnemyStateMachine stateMachine;
-    [HideInInspector] public WaitState waitState;
-    [HideInInspector] public ChaseState chaseState;
+    public WaitState waitState;
+    public ChaseState chaseState;
 
+    [HideInInspector] public bool isFacingRight = true;
+
+    // A máquina de estados continua aqui, mas os estados específicos saem.
+    [HideInInspector] public EnemyStateMachine stateMachine;
+
+    // Awake permanece igual, pois inicializa componentes comuns a todos.
     public virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -39,11 +45,16 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        this.InitializeStates();
+        currentHealth = maxHealth;
+    }
+
+    protected virtual void InitializeStates()
+    {
         waitState = new WaitState(this, stateMachine);
         chaseState = new ChaseState(this, stateMachine);
 
         stateMachine.Start(waitState);
-        currentHealth = maxHealth;
     }
 
     public virtual void Update()
@@ -60,9 +71,7 @@ public class Enemy : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         if (data == null) return;
-
         Gizmos.color = Color.yellow;
-
         Gizmos.DrawWireSphere(transform.position, data.playerDetectionRadius);
     }
 
@@ -74,7 +83,15 @@ public class Enemy : MonoBehaviour
     public void ApplyKnockback(Vector2 direction, float force)
     {
         rb.linearVelocity = Vector2.zero;
-
         rb.AddForce(direction * force, ForceMode2D.Impulse);
     }
+
+    public void Flip()
+    {
+        isFacingRight = !isFacingRight;
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
+    }
+
 }

@@ -29,7 +29,22 @@ public class ChaseState : EnemyState
     {
         Vector2 dir = (enemy.playerTransform.position - enemy.transform.position);
 
-        if (dir.magnitude > enemy.data.stopDistance)
+        if (dir.x > 0 && !enemy.isFacingRight)
+        {
+            enemy.Flip();
+        }
+        else if (dir.x < 0 && enemy.isFacingRight)
+        {
+            enemy.Flip();
+        }
+
+        float distanceToPlayer = dir.magnitude;
+
+        if (distanceToPlayer <= enemy.data.attackDistance && ((Bat) enemy).canAttack)
+        {
+            stateMachine.ChangeState(((Bat)enemy).attackState);
+        }
+        else if (distanceToPlayer > enemy.data.stopDistance)
         {
             enemy.rb.AddForce(dir.normalized * enemy.data.moveSpeed, ForceMode2D.Force);
 

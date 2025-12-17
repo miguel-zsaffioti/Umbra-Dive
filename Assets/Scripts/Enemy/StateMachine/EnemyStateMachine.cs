@@ -26,4 +26,8 @@ public class EnemyStateMachine
     {
         currState.PhysicsUpdate();
     }
+    public void OnAnimationTrigger(string eventName)
+    {
+        currState.OnAnimationTrigger(eventName);
+    }
 }

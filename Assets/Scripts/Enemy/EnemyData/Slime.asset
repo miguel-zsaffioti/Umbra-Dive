@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Slime
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   health: 10
-  moveSpeed: 10
+  moveSpeed: 15
   stopDistance: 0.1
   playerDetectionRadius: 3
   timeToLose: 2
-  attackRange: 1.5
-  attackDamage: 10
-  attackCooldown: 2
   damageAmount: 2
   knockbackForce: 6
+  attackDistance: 0
+  attackDashSpeed: 0
+  damage: 0
