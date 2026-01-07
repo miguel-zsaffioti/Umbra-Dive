@@ -64,6 +64,8 @@ public class Player : MonoBehaviour
     [Header("Data")]
     public PlayerAudioData audioData;
 
+    private Coroutine layerWeightCoroutine;
+
     [HideInInspector] public List<Enemy> enemiesAlreadyHit;
 
     private void Awake()
@@ -168,4 +170,11 @@ public class Player : MonoBehaviour
 
         stateMachine.ChangeState(knockbackState);
     }
+
+    public void EnableCombatLayer()
+    {
+        if (layerWeightCoroutine != null) StopCoroutine(layerWeightCoroutine);
+        animator.SetLayerWeight(1, 1f); // Liga instantaneamente para o ataque sair na hora
+    }
+
 }

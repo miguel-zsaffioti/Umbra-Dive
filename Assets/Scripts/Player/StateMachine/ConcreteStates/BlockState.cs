@@ -8,11 +8,13 @@ public class BlockState : PlayerState
 
     public override void Enter()
     {
+        player.EnableCombatLayer();
         animator.SetBool("isBlocking", true);
     }
 
     public override void Exit()
     {
+        player.animator.SetLayerWeight(1, 0f);
         animator.SetBool("isBlocking", false);
     }
 
