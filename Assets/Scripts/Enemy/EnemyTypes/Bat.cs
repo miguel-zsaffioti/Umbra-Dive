@@ -11,6 +11,7 @@ public class Bat : Enemy
         waitState = new WaitState(this, stateMachine);
         chaseState = new ChaseState(this, stateMachine);
         attackState = new EnemyAttackState(this,stateMachine);
+        knockbackState = new EnemyKnockbackState(this, stateMachine);
 
         stateMachine.Start(waitState);
     }

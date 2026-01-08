@@ -10,7 +10,7 @@ public class AttackState : PlayerState
     private Vector3 targetScale; // Para onde a escala deve ir
 
     // Configurações de "Juiciness"
-    private float squashAmount = 0.8f; // Quanto encolhe na preparação
+    private float squashAmount = 0.9f; // Quanto encolhe na preparação
     private float stretchAmount = 1.1f; // Quanto estica no ataque
     private float scaleSmoothness = 20f; // Velocidade da transição (Lerp)
 

@@ -394,6 +394,7 @@ GameObject:
   - component: {fileID: 158819559}
   - component: {fileID: 158819558}
   - component: {fileID: 158819563}
+  - component: {fileID: 158819564}
   m_Layer: 7
   m_Name: Bat
   m_TagString: Bat
@@ -446,9 +447,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &158819560
 BoxCollider2D:
@@ -596,7 +597,22 @@ MonoBehaviour:
   maxHealth: 2
   currentHealth: 0
   isFacingRight: 1
+  isDead: 0
   canAttack: 1
+--- !u!114 &158819564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 158819556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eef2e7c1e75ce3429f73919bd902761, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlashEffect
+  whiteMaterial: {fileID: 2100000, guid: 4c0f761dfbd1ed64fae0b91bd46e6a4c, type: 2}
+  duration: 0.1
 --- !u!1 &510920495
 GameObject:
   m_ObjectHideFlags: 0
@@ -1923,7 +1939,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.96312, y: 2.17742, z: -10}
+  m_LocalPosition: {x: 17.647121, y: -11.52758, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2072,7 +2088,7 @@ Transform:
   m_GameObject: {fileID: 840936150}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.96312, y: 2.17742, z: -10}
+  m_LocalPosition: {x: 17.647121, y: -11.52758, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2187,6 +2203,7 @@ GameObject:
   - component: {fileID: 1189293121}
   - component: {fileID: 1189293122}
   - component: {fileID: 1189293123}
+  - component: {fileID: 1189293124}
   m_Layer: 7
   m_Name: Slime
   m_TagString: Slime
@@ -2338,9 +2355,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!95 &1189293122
 Animator:
@@ -2389,6 +2406,21 @@ MonoBehaviour:
   maxHealth: 5
   currentHealth: 0
   isFacingRight: 1
+  isDead: 0
+--- !u!114 &1189293124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189293117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eef2e7c1e75ce3429f73919bd902761, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  whiteMaterial: {fileID: 2100000, guid: 4c0f761dfbd1ed64fae0b91bd46e6a4c, type: 2}
+  duration: 0.1
 --- !u!1 &1363395223
 GameObject:
   m_ObjectHideFlags: 0
@@ -2513,7 +2545,7 @@ Transform:
   m_GameObject: {fileID: 1580769508}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.164, y: 2.735, z: 0}
+  m_LocalPosition: {x: 16.52, y: -10.97, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2673,8 +2705,8 @@ MonoBehaviour:
   knockbackDuration: 0.2
   facingDirection: {x: 0, y: 0}
   attackPoint: {fileID: 54129473}
-  attackPointOffset: 1
-  attackRange: 0.8
+  attackPointOffset: 0.5
+  attackRange: 1
   attackDamage: 1
   enemyLayers:
     serializedVersion: 2

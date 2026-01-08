@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Bat
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   health: 10
-  moveSpeed: 15
-  stopDistance: 0.1
+  moveSpeed: 3
+  stopDistance: 0.6
   playerDetectionRadius: 3
   timeToLose: 2
   damageAmount: 2
-  knockbackForce: 6
+  knockbackForce: 1
   attackDistance: 2
   attackDashSpeed: 10
   damage: 2
+  attackCooldown: 1

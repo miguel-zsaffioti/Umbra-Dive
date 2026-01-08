@@ -8,11 +8,10 @@ public class WaitState : EnemyState
 
     public override void FrameUpdate()
     {
-        //if (enemy.detectionSystem.IsPlayerDetected())
-        //{
-        //    stateMachine.ChangeState(enemy.chaseState);
-        //    return;
-        //}
+        if (enemy.detectionSystem.IsPlayerDetected())
+        {
+            stateMachine.ChangeState(enemy.chaseState);
+        }
     }
 
     public override void PhysicsUpdate()

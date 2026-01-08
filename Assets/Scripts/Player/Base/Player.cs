@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public PlayerHealthSystem healthSystem;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [HideInInspector] public PlayerAudioSystem audioSystem;
-    private PlayerStateMachine stateMachine;
+    [HideInInspector] public PlayerStateMachine stateMachine;
     #endregion
 
     #region Concrete States
@@ -68,8 +68,11 @@ public class Player : MonoBehaviour
 
     [HideInInspector] public List<Enemy> enemiesAlreadyHit;
 
+    public static Player Instance;
+
     private void Awake()
     {
+        Instance = this;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -139,7 +142,7 @@ public class Player : MonoBehaviour
 
                 //Debug.Log("Acertamos: " + enemy.name);
                 Vector2 knockbackDirection = (enemy.transform.position - transform.position).normalized;
-                enemy.healthSystem.TakeDamage(attackDamage, knockbackDirection, enemy.data.knockbackForce);
+                enemy.healthSystem.TakeDamage(attackDamage, knockbackDirection, 10f);
                 enemiesAlreadyHit.Add(enemy);
             }
         }

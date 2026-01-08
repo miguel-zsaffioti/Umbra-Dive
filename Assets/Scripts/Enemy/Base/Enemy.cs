@@ -1,8 +1,6 @@
 using System.Xml;
 using UnityEngine;
 
-// Torna a classe abstrata. Você não poderá adicionar o componente "Enemy" diretamente
-// em um GameObject, apenas classes que herdam dele (como "Slime").
 public abstract class Enemy : MonoBehaviour
 {
     [Header("Data")]
@@ -25,8 +23,11 @@ public abstract class Enemy : MonoBehaviour
 
     public WaitState waitState;
     public ChaseState chaseState;
+    public EnemyKnockbackState knockbackState;
 
     [HideInInspector] public bool isFacingRight = true;
+
+    [HideInInspector] public bool isDead = false;
 
     // A máquina de estados continua aqui, mas os estados específicos saem.
     [HideInInspector] public EnemyStateMachine stateMachine;
@@ -39,14 +40,19 @@ public abstract class Enemy : MonoBehaviour
         stateMachine = new EnemyStateMachine();
         detectionSystem = new DetectionSystem(this);
         healthSystem = new EnemyHealthSystem(this);
+        knockbackState = new EnemyKnockbackState(this, stateMachine);
 
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        
     }
 
     private void Start()
     {
         this.InitializeStates();
         currentHealth = maxHealth;
+        if (Player.Instance != null)
+        {
+            playerTransform = Player.Instance.transform;
+        }
     }
 
     protected virtual void InitializeStates()
@@ -84,6 +90,8 @@ public abstract class Enemy : MonoBehaviour
     {
         rb.linearVelocity = Vector2.zero;
         rb.AddForce(direction * force, ForceMode2D.Impulse);
+
+        stateMachine.ChangeState(knockbackState);
     }
 
     public void Flip()

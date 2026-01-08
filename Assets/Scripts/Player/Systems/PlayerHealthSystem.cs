@@ -12,18 +12,34 @@ public class PlayerHealthSystem
 
     public void TakeDamage(int damageAmount, Vector2 knockbackDirection, float knockbackForce)
     {
-        if (player.isInvincible) { return; }
+        if (player.isInvincible) return;
 
+        // Checa se está no estado de ataque para aplicar a lógica de Hyper Armor
+        bool isAttacking = player.stateMachine.currState == player.attackState;
+
+        // Aplica o dano normalmente
         player.currentHealth -= damageAmount;
-
-        player.ApplyKnockback(knockbackDirection, knockbackForce);
         player.audioSystem.PlaySound(player.audioData.damage);
-
-        player.StartCoroutine(InvincibilityCoroutine());
 
         if (player.currentHealth <= 0)
         {
             Die();
+            return;
+        }
+
+        // LÓGICA DE HYPER ARMOR:
+        // Se estiver atacando, NÃO aplica knockback e NÃO interrompe o ataque
+        if (!isAttacking)
+        {
+            player.ApplyKnockback(knockbackDirection, knockbackForce);
+            // A corrotina de invencibilidade visual só deve rodar se não for Hyper Armor
+            // ou você pode deixar rodar, mas sem cancelar o ataque.
+            player.StartCoroutine(InvincibilityCoroutine());
+        }
+        else
+        {
+            // Opcional: Feedback visual que tomou dano mas aguentou (ex: piscar vermelho rápido)
+            Debug.Log("Hyper Armor tankou o hit!");
         }
     }
 

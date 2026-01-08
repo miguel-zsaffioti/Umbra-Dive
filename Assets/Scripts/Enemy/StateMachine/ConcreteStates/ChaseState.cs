@@ -27,34 +27,39 @@ public class ChaseState : EnemyState
 
     public override void PhysicsUpdate()
     {
+        if (enemy.playerTransform == null) return;
+
         Vector2 dir = (enemy.playerTransform.position - enemy.transform.position);
-
-        if (dir.x > 0 && !enemy.isFacingRight)
-        {
-            enemy.Flip();
-        }
-        else if (dir.x < 0 && enemy.isFacingRight)
-        {
-            enemy.Flip();
-        }
-
         float distanceToPlayer = dir.magnitude;
 
-        if (distanceToPlayer <= enemy.data.attackDistance && ((Bat) enemy).canAttack)
+        // --- CORREÇÃO DO SAMBA (Flip) ---
+        if (Mathf.Abs(dir.x) > 0.2f)
         {
-            stateMachine.ChangeState(((Bat)enemy).attackState);
+            if (dir.x > 0 && !enemy.isFacingRight) enemy.Flip();
+            else if (dir.x < 0 && enemy.isFacingRight) enemy.Flip();
         }
+
+        // Lógica de Ataque
+        if (distanceToPlayer <= enemy.data.attackDistance && ((Bat)enemy).canAttack)
+        {
+            // Importante: Zere a velocidade/inércia ao atacar
+            enemy.rb.linearVelocity = Vector2.zero;
+            stateMachine.ChangeState(((Bat)enemy).attackState);
+            return;
+        }
+        // Lógica de Movimento
         else if (distanceToPlayer > enemy.data.stopDistance)
         {
-            enemy.rb.AddForce(dir.normalized * enemy.data.moveSpeed, ForceMode2D.Force);
+            // MovePosition é mais estável que AddForce para RPGs
+            // Calculamos a nova posição baseada na velocidade * tempo fixo
+            Vector2 targetPosition = enemy.rb.position + (dir.normalized * enemy.data.moveSpeed * Time.fixedDeltaTime);
 
-            if (enemy.rb.linearVelocity.magnitude > enemy.data.moveSpeed)
-            {
-                enemy.rb.linearVelocity = enemy.rb.linearVelocity.normalized * enemy.data.moveSpeed;
-            }
+            enemy.rb.MovePosition(targetPosition);
         }
+        // Parado
         else
         {
+            // Se já chegou perto, garanta que ele não deslize
             enemy.rb.linearVelocity = Vector2.zero;
         }
     }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerStateMachine
 {
-    private PlayerState currState { get; set; }
+    public PlayerState currState { get; set; }
 
     public void Start(PlayerState state)
     {
