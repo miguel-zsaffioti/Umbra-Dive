@@ -12,9 +12,27 @@ public class PlayerHealthSystem
 
     public void TakeDamage(int damageAmount, Vector2 knockbackDirection, float knockbackForce)
     {
-        if (player.isInvincible) return;
 
-        // Checa se está no estado de ataque para aplicar a lógica de Hyper Armor
+
+        if (player.isInvincible) return;
+        Debug.Log("Teste");
+
+        if (player.isBlocking)
+        {
+            Vector2 snappedDirection = new Vector2(
+            Mathf.Round(knockbackDirection.x),
+            Mathf.Round(knockbackDirection.y));
+
+            if (-snappedDirection.x == player.animator.GetFloat("LastX") &&
+                -snappedDirection.y == player.animator.GetFloat("LastY"))
+            {
+                Debug.Log("Bloqueou");
+                player.ApplyKnockback(knockbackDirection, knockbackForce *2f);
+                player.StartCoroutine(InvincibilityCoroutine(false));
+                return;
+            }
+        }
+
         bool isAttacking = player.stateMachine.currState == player.attackState;
 
         // Aplica o dano normalmente
@@ -27,39 +45,35 @@ public class PlayerHealthSystem
             return;
         }
 
-        // LÓGICA DE HYPER ARMOR:
-        // Se estiver atacando, NÃO aplica knockback e NÃO interrompe o ataque
         if (!isAttacking)
         {
             player.ApplyKnockback(knockbackDirection, knockbackForce);
-            // A corrotina de invencibilidade visual só deve rodar se não for Hyper Armor
-            // ou você pode deixar rodar, mas sem cancelar o ataque.
-            player.StartCoroutine(InvincibilityCoroutine());
-        }
-        else
-        {
-            // Opcional: Feedback visual que tomou dano mas aguentou (ex: piscar vermelho rápido)
-            Debug.Log("Hyper Armor tankou o hit!");
+            player.StartCoroutine(InvincibilityCoroutine(true));
         }
     }
 
-    private IEnumerator InvincibilityCoroutine()
+    // Adicione o parâmetro 'bool flashSprite'
+    private IEnumerator InvincibilityCoroutine(bool flashSprite)
     {
-        yield return null;
-
         player.isInvincible = true;
 
         float endTime = Time.time + player.invincibilityDuration;
+
         while (Time.time < endTime)
         {
-            player.spriteRenderer.enabled = !player.spriteRenderer.enabled;
+            // Só roda a lógica de piscar se flashSprite for verdadeiro
+            if (flashSprite)
+            {
+                player.spriteRenderer.enabled = !player.spriteRenderer.enabled;
+            }
             yield return new WaitForSeconds(0.1f);
         }
 
         player.spriteRenderer.enabled = true;
-
         player.isInvincible = false;
     }
+
+
 
     private void Die()
     {

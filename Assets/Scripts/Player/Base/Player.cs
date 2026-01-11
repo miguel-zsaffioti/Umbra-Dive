@@ -33,6 +33,8 @@ public class Player : MonoBehaviour
     [HideInInspector] public int currentHealth;
     public float invincibilityDuration = 1.0f;
     [HideInInspector] public bool isInvincible = false;
+    [HideInInspector] public bool isBlocking = false;
+    public float blockBufferDuration = 0.2f;
     #endregion
 
     #region State Variables
@@ -140,7 +142,7 @@ public class Player : MonoBehaviour
                 hasHitEnemy = true;
                 
 
-                //Debug.Log("Acertamos: " + enemy.name);
+                
                 Vector2 knockbackDirection = (enemy.transform.position - transform.position).normalized;
                 enemy.healthSystem.TakeDamage(attackDamage, knockbackDirection, 10f);
                 enemiesAlreadyHit.Add(enemy);
@@ -172,6 +174,12 @@ public class Player : MonoBehaviour
         rb.AddForce(direction * force, ForceMode2D.Impulse);
 
         stateMachine.ChangeState(knockbackState);
+    }
+
+    public IEnumerator StopBlocking()
+    {
+        yield return new WaitForSecondsRealtime(blockBufferDuration);
+        isBlocking = false;
     }
 
     public void EnableCombatLayer()

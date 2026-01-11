@@ -25,12 +25,14 @@ public class RollState : PlayerState
         rollTimer = player.rollAnimation.length;
 
         rb.AddForce(rollDirection * player.rollForce, ForceMode2D.Impulse);
+        player.isInvincible = true;
     }
 
     public override void Exit()
     {
         animator.SetBool("isRolling", false);
         rb.linearVelocity = Vector2.zero;
+        player.isInvincible = false;
     }
 
     public override void FrameUpdate()

@@ -11,12 +11,14 @@ public class BlockState : PlayerState
         player.animator.Play("Empty", 1, 0f);
         player.EnableCombatLayer();
         animator.SetBool("isBlocking", true);
+        player.isBlocking = true;
     }
 
     public override void Exit()
     {
         player.animator.SetLayerWeight(1, 0f);
         animator.SetBool("isBlocking", false);
+        player.StartCoroutine(player.StopBlocking());
     }
 
     public override void FrameUpdate()
