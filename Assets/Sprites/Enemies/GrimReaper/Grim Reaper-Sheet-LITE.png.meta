@@ -813,8 +813,8 @@ TextureImporter:
       name: Grim Reaper-Sheet-LITE_25
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 240
+        y: 48
         width: 48
         height: 48
       alignment: 0
@@ -835,8 +835,8 @@ TextureImporter:
       name: Grim Reaper-Sheet-LITE_26
       rect:
         serializedVersion: 2
-        x: 48
-        y: 0
+        x: 288
+        y: 48
         width: 48
         height: 48
       alignment: 0
@@ -857,8 +857,8 @@ TextureImporter:
       name: Grim Reaper-Sheet-LITE_27
       rect:
         serializedVersion: 2
-        x: 96
-        y: 0
+        x: 336
+        y: 48
         width: 48
         height: 48
       alignment: 0
@@ -879,8 +879,8 @@ TextureImporter:
       name: Grim Reaper-Sheet-LITE_28
       rect:
         serializedVersion: 2
-        x: 144
-        y: 0
+        x: 384
+        y: 48
         width: 48
         height: 48
       alignment: 0
@@ -901,8 +901,8 @@ TextureImporter:
       name: Grim Reaper-Sheet-LITE_29
       rect:
         serializedVersion: 2
-        x: 192
-        y: 0
+        x: 432
+        y: 48
         width: 48
         height: 48
       alignment: 0
@@ -923,7 +923,7 @@ TextureImporter:
       name: Grim Reaper-Sheet-LITE_30
       rect:
         serializedVersion: 2
-        x: 240
+        x: 0
         y: 0
         width: 48
         height: 48
@@ -945,7 +945,7 @@ TextureImporter:
       name: Grim Reaper-Sheet-LITE_31
       rect:
         serializedVersion: 2
-        x: 288
+        x: 48
         y: 0
         width: 48
         height: 48
@@ -967,7 +967,7 @@ TextureImporter:
       name: Grim Reaper-Sheet-LITE_32
       rect:
         serializedVersion: 2
-        x: 336
+        x: 96
         y: 0
         width: 48
         height: 48
@@ -989,7 +989,7 @@ TextureImporter:
       name: Grim Reaper-Sheet-LITE_33
       rect:
         serializedVersion: 2
-        x: 384
+        x: 144
         y: 0
         width: 48
         height: 48
@@ -1003,6 +1003,116 @@ TextureImporter:
       bones: []
       spriteID: bf9a0d45110375760800000000000000
       internalID: 7446473359875942907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grim Reaper-Sheet-LITE_34
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: feb50190e9e1ea6469f990e25cd65ff8
+      internalID: -1393241978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grim Reaper-Sheet-LITE_35
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4de4b7d765c544d40b1aef848ed2efb9
+      internalID: 1719142138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grim Reaper-Sheet-LITE_36
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec2290b9bcfda284696f6e31e5a739ae
+      internalID: -135887715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grim Reaper-Sheet-LITE_37
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7fe494c9cca5f047a5e1a30d88ab735
+      internalID: -1653408903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grim Reaper-Sheet-LITE_38
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38d39917c4aba2a45bf8ab13d3a8aae9
+      internalID: -208333393
       vertices: []
       indices: 
       edges: []
@@ -1022,6 +1132,8 @@ TextureImporter:
       entries:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":10.0,"y":5.0},"gridSpriteSize":{"x":48.0,"y":48.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+      - key: SpriteEditor.SliceOnImport
+        value: False
     nameFileIdTable:
       Grim Reaper-Sheet-LITE_0: -8277645794170980759
       Grim Reaper-Sheet-LITE_1: 7435320373792493141
@@ -1051,6 +1163,11 @@ TextureImporter:
       Grim Reaper-Sheet-LITE_31: -2013084966796554649
       Grim Reaper-Sheet-LITE_32: 3340524628223536651
       Grim Reaper-Sheet-LITE_33: 7446473359875942907
+      Grim Reaper-Sheet-LITE_34: -1393241978
+      Grim Reaper-Sheet-LITE_35: 1719142138
+      Grim Reaper-Sheet-LITE_36: -135887715
+      Grim Reaper-Sheet-LITE_37: -1653408903
+      Grim Reaper-Sheet-LITE_38: -208333393
       Grim Reaper-Sheet-LITE_4: -1252228773506163464
       Grim Reaper-Sheet-LITE_5: -2957765042948277793
       Grim Reaper-Sheet-LITE_6: 5470451562603162411

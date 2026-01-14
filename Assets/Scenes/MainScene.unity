@@ -219,7 +219,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &77768578
 Transform:
   m_ObjectHideFlags: 0
@@ -304,7 +304,7 @@ Animator:
   m_GameObject: {fileID: 77768577}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5cf40abe7c8d894408eba31e1e435204, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -331,7 +331,7 @@ MonoBehaviour:
   m_Graph: {fileID: -3420786273252983457, guid: f2863a4d1067e014b9bf5eeeded007f3, type: 2}
   m_BlackboardVariableOverridesList:
   - rid: 3972595146815177014
-  m_OriginalGraph: {fileID: 0}
+  m_OriginalGraph: {fileID: -3420786273252983457, guid: f2863a4d1067e014b9bf5eeeded007f3, type: 2}
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
@@ -361,7 +361,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -430,6 +430,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f87385086b4464f9bf7f21c9032cc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Boss
+  player: {fileID: 0}
+  isFacingRight: 0
 --- !u!1 &510920495
 GameObject:
   m_ObjectHideFlags: 0
