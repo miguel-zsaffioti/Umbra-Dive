@@ -6,7 +6,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 using Action = Unity.Behavior.Action;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "Chase Player", story: "Chase Player with [Speed] speed", category: "Action", id: "e20f8ef9f1031ff202216d107b4d87b0")]
+[NodeDescription(name: "Chase Player", story: "Chase Player with [Speed]", category: "Action", id: "e20f8ef9f1031ff202216d107b4d87b0")]
 public partial class ChasePlayerAction : Action
 {
     [SerializeReference] public BlackboardVariable<float> Speed;
