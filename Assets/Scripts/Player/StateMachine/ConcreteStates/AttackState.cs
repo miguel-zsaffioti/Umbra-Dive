@@ -47,7 +47,7 @@ public class AttackState : PlayerState
         targetScale = normalScale;
 
         player.facingDirection = attackDirection;
-        player.enemiesAlreadyHit.Clear();
+        player.objectsAlreadyHit.Clear();
     }
 
     public override void FrameUpdate()

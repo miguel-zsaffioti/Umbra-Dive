@@ -34,7 +34,7 @@ public class PlayerAudioSystem
 
     public void PlayAttackSound(bool hit)
     {
-        Debug.Log("Chamou com hit igual a: " + hit);
+        //Debug.Log("Chamou com hit igual a: " + hit);
         if (hit)
         {
             PlayRandomSound(player.audioData.hitAttacks);

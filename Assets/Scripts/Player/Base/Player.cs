@@ -68,7 +68,7 @@ public class Player : MonoBehaviour
 
     private Coroutine layerWeightCoroutine;
 
-    [HideInInspector] public List<Enemy> enemiesAlreadyHit;
+    [HideInInspector] public List<GameObject> objectsAlreadyHit = new List<GameObject>();
 
     public static Player Instance;
 
@@ -79,8 +79,6 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
-
-        enemiesAlreadyHit = new List<Enemy>();
 
         inputSystem = new PlayerInputSystem();
         stateMachine = new PlayerStateMachine();
@@ -128,28 +126,42 @@ public class Player : MonoBehaviour
     {
         attackPoint.localPosition = this.facingDirection * attackPointOffset;
 
-        // 1. Criamos uma flag para controlar o Hit Stop
-        bool hasHitEnemy = false;
+        bool hasHitSomething = false;
 
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
 
-        foreach (Collider2D enemyCollider in hitEnemies)
+        foreach (Collider2D hitCollider in hitColliders)
         {
-            Enemy enemy = enemyCollider.GetComponent<Enemy>();
+            // 1. Tenta pegar o script de Inimigo Comum
+            Enemy enemy = hitCollider.GetComponent<Enemy>();
 
-            if (enemy != null && !enemiesAlreadyHit.Contains(enemy))
+            // 2. Tenta pegar o script de Boss (caso não seja inimigo ou para verificar ambos)
+            Boss boss = hitCollider.GetComponent<Boss>();
+
+            // Lógica para INIMIGO COMUM
+            if (enemy != null && !objectsAlreadyHit.Contains(enemy.gameObject))
             {
-                hasHitEnemy = true;
-                
+                hasHitSomething = true;
 
-                
                 Vector2 knockbackDirection = (enemy.transform.position - transform.position).normalized;
+                // Aplica dano no inimigo
                 enemy.healthSystem.TakeDamage(attackDamage, knockbackDirection, 10f);
-                enemiesAlreadyHit.Add(enemy);
+
+                objectsAlreadyHit.Add(enemy.gameObject);
             }
-        }
-        audioSystem.PlayAttackSound(hasHitEnemy);
-        if (hasHitEnemy)
+            // Lógica para BOSS
+            else if (boss != null && !objectsAlreadyHit.Contains(boss.gameObject))
+            {
+                hasHitSomething = true;
+
+                Vector2 knockbackDirection = (boss.transform.position - transform.position).normalized;
+
+                boss.healthSystem.TakeDamage(attackDamage);
+
+                objectsAlreadyHit.Add(boss.gameObject);
+            }
+          }
+        if (hasHitSomething)
         {
             StartCoroutine(HitStopEffect(0.08f));
         }

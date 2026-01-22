@@ -12,11 +12,7 @@ public class PlayerHealthSystem
 
     public void TakeDamage(int damageAmount, Vector2 knockbackDirection, float knockbackForce)
     {
-
-
         if (player.isInvincible) return;
-        Debug.Log("Teste");
-
         if (player.isBlocking)
         {
             Vector2 snappedDirection = new Vector2(

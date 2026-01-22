@@ -1,27 +1,50 @@
+using System.Collections;
+using Unity.Behavior;
 using UnityEngine;
 
 public class Boss : MonoBehaviour
 {
+    // Singleton Seguro
+    public static Boss Instance { get; private set; }
+
     [HideInInspector] public Player player;
-
-    [HideInInspector] public static Boss Instance;
-    [HideInInspector] public bool isFacingRight;
-
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public Animator animator;
 
+    public float maxHealth;
+    [HideInInspector] public float currentHealth;
+    [HideInInspector] public bool isDead;
 
-    private void Awake()
+    [HideInInspector] public BossHealthSystem healthSystem; 
+
+    public BossTrigger trigger;
+
+    public BehaviorGraphAgent behaviorAgent { get; private set; }
+
+    protected virtual void Awake()
     {
-       player = Player.Instance;
-       isFacingRight = true;
-       rb = GetComponent<Rigidbody2D>();
-       animator = GetComponent<Animator>();
+        // Esta é a linha que estava sendo ignorada:
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        behaviorAgent = GetComponent<BehaviorGraphAgent>();
+        currentHealth = maxHealth;
+        isDead = false;
+        healthSystem = new BossHealthSystem(this);
+
+        // ... resto do seu código de singleton
+        if (Instance == null) Instance = this;
     }
 
-    private void OnEnable()
+    private void Start()
     {
-        Instance = this;
+        if (Player.Instance != null)
+        {
+            player = Player.Instance;
+        }
+        else
+        {
+            player = FindFirstObjectByType<Player>();
+        }
     }
 
     private void OnDisable()
@@ -32,21 +55,17 @@ public class Boss : MonoBehaviour
         }
     }
 
-    public void Flip()
+    public void Die()
     {
-        isFacingRight = !isFacingRight;
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
+        StartCoroutine(WaitToDie());
+        if (trigger == null) return;
+        trigger.Door.SetActive(false);
     }
 
-    public void TriggerNormalAttack() { 
-        
-    }
-
-    public void TriggerSpecialAttack()
+    private IEnumerator WaitToDie()
     {
-
+        yield return new WaitForSeconds(0.5f);
+        Destroy(gameObject);
     }
+
 }
-

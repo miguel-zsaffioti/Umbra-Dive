@@ -10,11 +10,15 @@ using Action = Unity.Behavior.Action;
 public partial class ChasePlayerAction : Action
 {
     [SerializeReference] public BlackboardVariable<float> Speed;
-    private Boss reaper;
+    [SerializeReference] public BlackboardVariable<float> StoppingDistance;
+
+    private GrimReaper reaper;
 
     protected override Status OnStart()
     {
-        reaper = Boss.Instance;
+        reaper = GameObject.GetComponent<GrimReaper>(); ;
+        if (reaper == null) return Status.Failure;
+
         reaper.animator.SetBool("isMoving", true);
         return Status.Running;
     }
@@ -22,21 +26,29 @@ public partial class ChasePlayerAction : Action
     protected override Status OnUpdate()
     {
         if (reaper == null || reaper.player == null) return Status.Failure;
-        Player player = reaper.player;
 
-        Vector2 dir = (player.transform.position - reaper.transform.position);
-        float distanceToPlayer = dir.magnitude;
+        Vector2 currentPos = reaper.transform.position;
+        Vector2 targetPos = reaper.player.transform.position;
+        float distance = Vector2.Distance(currentPos, targetPos);
 
-        if (Mathf.Abs(dir.x) > 0.1f)
+        if (distance <= StoppingDistance.Value)
         {
-            if (dir.x > 0 && !reaper.isFacingRight) reaper.Flip();
-            else if (dir.x < 0 && reaper.isFacingRight) reaper.Flip();
+            reaper.animator.SetBool("isMoving", false);
+            return Status.Success; // Chegou no alvo!
         }
 
-        Vector2 targetPosition = reaper.rb.position + (dir.normalized * Speed * Time.fixedDeltaTime);
-        reaper.rb.MovePosition(targetPosition);
+        // 2. Lógica de Flip
+        float diffX = targetPos.x - currentPos.x;
+        if (Mathf.Abs(diffX) > 0.1f)
+        {
+            if (diffX > 0 && !reaper.isFacingRight) reaper.Flip();
+            else if (diffX < 0 && reaper.isFacingRight) reaper.Flip();
+        }
 
-        return Status.Success;
+        Vector2 newPos = Vector2.MoveTowards(currentPos, targetPos, Speed.Value * Time.deltaTime);
+        reaper.rb.MovePosition(newPos);
+
+        return Status.Running;
     }
 
     protected override void OnEnd()

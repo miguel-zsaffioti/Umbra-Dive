@@ -8,20 +8,45 @@ using Unity.Properties;
 [NodeDescription(name: "Normal Attack", story: "Normal Attack", category: "Action", id: "a22fd73f352bf842ae4bf8de0f2cf1b6")]
 public partial class NormalAttackAction : Action
 {
-    [SerializeReference] public BlackboardVariable<float> Timer;
-    [SerializeReference] public BlackboardVariable<float> Cooldown;
+
+    private GrimReaper reaper;
+    private bool hasStartedAnimation = false;
 
     protected override Status OnStart()
     {
-        Timer.Value = Cooldown.Value;
-        Boss.Instance.animator.SetTrigger("Attack");
-        Debug.Log("Ataque");
+        reaper = GameObject.GetComponent<GrimReaper>();
+
+        if (reaper != null)
+        {
+            reaper.animator.SetTrigger("Attack");
+        }
         return Status.Running;
     }
 
     protected override Status OnUpdate()
     {
-        return Status.Success;
+        if (reaper == null) return Status.Failure;
+
+        var anim = reaper.animator;
+        var stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+
+        bool isCurrentStateAttack = stateInfo.IsName("NormalAttack");
+
+        if (!hasStartedAnimation)
+        {
+            if (isCurrentStateAttack) hasStartedAnimation = true;
+            return Status.Running;
+        }
+
+        // FASE 2: Espera acabar
+        if (stateInfo.normalizedTime >= 0.95f || !isCurrentStateAttack)
+        {
+            reaper.StartCooldown(GrimReaper.AttackTypes.Normal);
+
+            return Status.Success;
+        }
+
+        return Status.Running;
     }
 
     protected override void OnEnd()
