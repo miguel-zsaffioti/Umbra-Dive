@@ -1524,7 +1524,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.36288, y: -40.927578, z: -10}
+  m_LocalPosition: {x: 45.17712, y: -26.857578, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1646,6 +1646,91 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &642997462
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 805260411619635311, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: boss
+      value: 
+      objectReference: {fileID: 8486392946124527458, guid: 43d420a369554a645b42ca833c2e1616, type: 3}
+    - target: {fileID: 4433011964297537525, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4883659986073440389, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 37.38232
+      objectReference: {fileID: 0}
+    - target: {fileID: 4883659986073440389, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -28.62471
+      objectReference: {fileID: 0}
+    - target: {fileID: 4883659986073440389, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4883659986073440389, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4883659986073440389, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4883659986073440389, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4883659986073440389, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4883659986073440389, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4883659986073440389, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4883659986073440389, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634364973404529926, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 13.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 8514298757989113252, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 14.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8514298757989113252, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -8.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 8915932843174035518, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 12.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 8915932843174035518, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -15.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189963504783144774, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: m_Name
+      value: Spectre Boss Room
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
 --- !u!1 &840936150
 GameObject:
   m_ObjectHideFlags: 0
@@ -1673,7 +1758,7 @@ Transform:
   m_GameObject: {fileID: 840936150}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.36288, y: -40.927578, z: -10}
+  m_LocalPosition: {x: 45.17712, y: -26.857578, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1898,7 +1983,7 @@ Transform:
   m_GameObject: {fileID: 1580769508}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.49, y: -40.37, z: 0}
+  m_LocalPosition: {x: 44.05, y: -26.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -121126,7 +121211,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9189963504783144774, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
       propertyPath: m_Name
-      value: BossRoom
+      value: Reaper Boss Room
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -121142,3 +121227,4 @@ SceneRoots:
   - {fileID: 1580769510}
   - {fileID: 1094890302}
   - {fileID: 2842823623415648300}
+  - {fileID: 642997462}

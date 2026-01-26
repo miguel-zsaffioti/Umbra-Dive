@@ -10,6 +10,7 @@ TagManager:
   - Slime
   - Bat
   - GrimReaper
+  - Spectre
   layers:
   - Default
   - TransparentFX

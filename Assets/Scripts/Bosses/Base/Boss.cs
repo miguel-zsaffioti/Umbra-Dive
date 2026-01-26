@@ -17,7 +17,7 @@ public class Boss : MonoBehaviour
 
     [HideInInspector] public BossHealthSystem healthSystem; 
 
-    public BossTrigger trigger;
+    [HideInInspector] public BossTrigger trigger;
 
     public BehaviorGraphAgent behaviorAgent { get; private set; }
 
