@@ -5,11 +5,11 @@ public class GrimReaper : Boss
 {
     [HideInInspector] public bool isFacingRight;
 
-    public float attackCooldown = 5f;
-    public float specialCooldown = 10f;
+    public float attackCooldownDuration = 5f;
+    public float specialCooldownDuration = 10f;
 
-    private float attackTimer = 0f;
-    private float specialTimer = 0f;
+    private Cooldown attackCooldown;
+    private Cooldown specialCooldown;
 
     private BlackboardVariable<float> Range;
 
@@ -22,9 +22,12 @@ public class GrimReaper : Boss
         Special
     }
 
+
     protected override void Awake()
     {
         isFacingRight = true;
+        attackCooldown = new Cooldown(attackCooldownDuration); 
+        specialCooldown = new Cooldown(specialCooldownDuration);
         base.Awake();
     }
 
@@ -38,77 +41,24 @@ public class GrimReaper : Boss
 
     private void Update()
     {
-        if (attackTimer > 0)
-        {
-            attackTimer -= Time.deltaTime;
+        attackCooldown.Tick(Time.deltaTime);
+        specialCooldown.Tick(Time.deltaTime);
 
-            if (attackTimer <= 0)
-            {
-                attackTimer = 0;
-                FinishCooldown(AttackTypes.Normal);
-            }
-        }
-
-        if (specialTimer > 0)
-        {
-            specialTimer -= Time.deltaTime;
-
-            if (specialTimer <= 0)
-            {
-                specialTimer = 0;
-                FinishCooldown(AttackTypes.Special);
-            }
-        }
-    }
-
-    public void StartCooldown(AttackTypes type)
-    {
-        string variableName;
-
-        if (type == AttackTypes.Normal)
-        {
-            attackTimer = attackCooldown;
-            variableName = "AttackReady";
-        }
-        else // Special
-        {
-            specialTimer = specialCooldown;
-            variableName = "SpecialReady";
-        }
-
-        if (behaviorAgent != null)
-            behaviorAgent.SetVariableValue(variableName, false);
-    }
-
-    void FinishCooldown(AttackTypes type)
-    {
-        string variableName = type == AttackTypes.Normal ? "AttackReady" : "SpecialReady";
-
-        if (behaviorAgent != null)
-            behaviorAgent.SetVariableValue(variableName, true);
-        Debug.Log($"Boss recuperou o ataque: {type}");
+        behaviorAgent.SetVariableValue("AttackReady", attackCooldown.IsReady);
+        behaviorAgent.SetVariableValue("SpecialReady", specialCooldown.IsReady);
     }
 
     public void TriggerNormalAttack()
     {
-        int layerMask = LayerMask.GetMask("Player");
-        if (behaviorAgent.GetVariable<float>("AttackRange", out Range))
+        Player player = GetPlayerInRange(Range.Value + 0.5f);
+
+        if (player != null && player.healthSystem != null)
         {
-            Collider2D collision = Physics2D.OverlapCircle(transform.position, Range.Value + 0.5f, layerMask);
-            if (collision != null)
-            {
-                Player player = collision.gameObject.GetComponent<Player>();
-                if (player != null)
-                {
-                    PlayerHealthSystem playerHealth = collision.gameObject.GetComponent<Player>().healthSystem;
-                    if (playerHealth != null)
-                    {
-                        Vector2 knockbackDirection = (player.transform.position - transform.position).normalized;
-                        playerHealth.TakeDamage(2, knockbackDirection, 5f);
-                    }
-                }
-            }
+            Vector2 knockbackDirection = (player.transform.position - transform.position).normalized;
+            player.healthSystem.TakeDamage(2, knockbackDirection, 5f);
         }
+
+        attackCooldown.Reset();
     }
 
     public void TriggerSpecialAttack()
@@ -119,8 +69,9 @@ public class GrimReaper : Boss
         Vector3 newScale = newSlash.transform.localScale;
         newScale.x = transform.localScale.x;
         newSlash.transform.localScale = newScale;
-
+        specialCooldown.Reset();
     }
+
     private void OnDrawGizmosSelected()
     {
 

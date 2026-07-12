@@ -44,6 +44,9 @@ public class Player : MonoBehaviour
     [Header("Roll")]
     public AnimationClip rollAnimation;
     public float rollForce = 5f;
+    public float rollCooldownDuration = 1f;
+
+    [HideInInspector] public Cooldown rollCooldown;
 
     [Header("Attack")]
     public AnimationClip attackAnimation;
@@ -89,6 +92,7 @@ public class Player : MonoBehaviour
         stateMachine = new PlayerStateMachine();
         healthSystem = new PlayerHealthSystem(this);
         audioSystem = new PlayerAudioSystem(this);
+        rollCooldown = new Cooldown(rollCooldownDuration);
     }
 
     #region Enable/Disable
@@ -120,6 +124,7 @@ public class Player : MonoBehaviour
     {
         inputSystem.Tick();
         stateMachine.FrameUpdate();
+        rollCooldown.Tick(Time.deltaTime);
     }
 
     private void FixedUpdate()
@@ -137,24 +142,18 @@ public class Player : MonoBehaviour
 
         foreach (Collider2D hitCollider in hitColliders)
         {
-            // 1. Tenta pegar o script de Inimigo Comum
             Enemy enemy = hitCollider.GetComponent<Enemy>();
-
-            // 2. Tenta pegar o script de Boss (caso não seja inimigo ou para verificar ambos)
             Boss boss = hitCollider.GetComponent<Boss>();
 
-            // Lógica para INIMIGO COMUM
             if (enemy != null && !objectsAlreadyHit.Contains(enemy.gameObject))
             {
                 hasHitSomething = true;
 
                 Vector2 knockbackDirection = (enemy.transform.position - transform.position).normalized;
-                // Aplica dano no inimigo
                 enemy.healthSystem.TakeDamage(attackDamage, knockbackDirection, 10f);
 
                 objectsAlreadyHit.Add(enemy.gameObject);
             }
-            // Lógica para BOSS
             else if (boss != null && !objectsAlreadyHit.Contains(boss.gameObject))
             {
                 hasHitSomething = true;

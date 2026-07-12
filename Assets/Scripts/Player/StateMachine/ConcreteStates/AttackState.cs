@@ -6,7 +6,9 @@ public class AttackState : PlayerState
     private bool animationPlayed;
     private Vector2 attackDirection;
     private Vector3 normalScale;
-    private Vector3 targetScale; 
+    private Vector3 targetScale;
+
+    private bool bufferedAttack;
 
     public AttackState(Player player, PlayerStateMachine stateMachine) : base(player, stateMachine)
     {
@@ -17,6 +19,7 @@ public class AttackState : PlayerState
         player.animator.Play("Empty", 1, 0f);
         player.EnableCombatLayer();
         animationPlayed = false;
+        bufferedAttack = false;
 
         if (inputSystem.MoveInput.magnitude > 0.1f)
         {
@@ -44,13 +47,20 @@ public class AttackState : PlayerState
     {
         base.FrameUpdate();
 
+        if (inputSystem.AttackInput && attackTimer <= player.attackAnimation.length * 0.3f)
+        {
+            bufferedAttack = true;
+        }
+
         if (attackTimer > 0)
         {
             attackTimer -= Time.deltaTime;
         }
         else
         {
-            if (inputSystem.MoveInput == Vector2.zero)
+            if (bufferedAttack) 
+                stateMachine.ChangeState(player.attackState);
+            else if (inputSystem.MoveInput == Vector2.zero)
                 stateMachine.ChangeState(player.idleState);
             else
                 stateMachine.ChangeState(player.walkState);

@@ -38,11 +38,8 @@ public partial class NormalAttackAction : Action
             return Status.Running;
         }
 
-        // FASE 2: Espera acabar
         if (stateInfo.normalizedTime >= 0.95f || !isCurrentStateAttack)
         {
-            reaper.StartCooldown(GrimReaper.AttackTypes.Normal);
-
             return Status.Success;
         }
 

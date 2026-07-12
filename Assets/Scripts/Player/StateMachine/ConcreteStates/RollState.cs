@@ -5,6 +5,7 @@ public class RollState : PlayerState
 {
     private Vector2 rollDirection;
     private float rollTimer;
+    private bool bufferedRoll;
 
     public RollState(Player player, PlayerStateMachine stateMachine) : base(player, stateMachine)
     {
@@ -13,7 +14,8 @@ public class RollState : PlayerState
     public override void Enter()
     {
         animator.SetBool("isRolling", true);
-        if(inputSystem.MoveInput.magnitude > 0.1f)
+        bufferedRoll = false;
+        if (inputSystem.MoveInput.magnitude > 0.1f)
         {
             rollDirection = inputSystem.MoveInput.normalized;
         }
@@ -26,6 +28,7 @@ public class RollState : PlayerState
 
         rb.AddForce(rollDirection * player.rollForce, ForceMode2D.Impulse);
         player.isInvincible = true;
+        player.rollCooldown.Reset();
     }
 
     public override void Exit()
@@ -38,13 +41,21 @@ public class RollState : PlayerState
     public override void FrameUpdate()
     {
         base.FrameUpdate();
+        if (inputSystem.AttackInput) 
+        {
+            bufferedRoll = true;
+        }
         if (rollTimer > 0)
         {
             rollTimer -= Time.deltaTime;
         }
         else
         {
-            if (inputSystem.MoveInput == Vector2.zero)
+            if (bufferedRoll) 
+            {
+                stateMachine.ChangeState(player.attackState);
+            }
+            else if (inputSystem.MoveInput == Vector2.zero)
             {
                 stateMachine.ChangeState(player.idleState);
             }

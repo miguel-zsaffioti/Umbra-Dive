@@ -24,7 +24,7 @@ public class WalkState : PlayerState
             stateMachine.ChangeState(player.blockState);
             return;
         }
-        if (inputSystem.RollInput)
+        if (inputSystem.RollInput && player.rollCooldown.IsReady)
         {
             stateMachine.ChangeState(player.rollState);
             return;

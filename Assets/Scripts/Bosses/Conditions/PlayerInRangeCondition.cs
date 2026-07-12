@@ -13,10 +13,7 @@ public partial class PlayerInRangeCondition : Condition
         Boss boss = Boss.Instance;
         if (boss == null) return false;
 
-        int layerMask = LayerMask.GetMask("Player");
-
-        Collider2D collision = Physics2D.OverlapCircle(boss.transform.position, Range, layerMask);
-        return collision != null;
+        return boss.GetPlayerInRange(Range) != null;
     }
 
     public override void OnStart()

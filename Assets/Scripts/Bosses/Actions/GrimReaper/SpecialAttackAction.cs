@@ -10,25 +10,20 @@ public partial class SpecialAttackAction : Action
 {
     private bool hasStartedAnimation = false;
 
-    // Cache para armazenar a referência do Boss específico (GrimReaper)
     private GrimReaper reaper;
 
     protected override Status OnStart()
     {
-        hasStartedAnimation = false; // Reseta a flag sempre que a ação começa
+        hasStartedAnimation = false;
 
-        // Pega o componente GrimReaper do próprio objeto que está rodando a IA.
-        // Isso é mais seguro que Singleton para comportamentos locais.
         reaper = GameObject.GetComponent<GrimReaper>();
 
         if (reaper != null)
         {
-            // Dispara o gatilho da animação
             reaper.animator.SetTrigger("Special");
         }
         else
         {
-            // Segurança caso o script não seja encontrado
             Debug.LogError("Erro: O script GrimReaper não foi encontrado no objeto!");
             return Status.Failure;
         }
@@ -55,8 +50,6 @@ public partial class SpecialAttackAction : Action
 
         if (stateInfo.normalizedTime >= 0.95f || !isCurrentStateSpecial)
         {
-            reaper.StartCooldown(GrimReaper.AttackTypes.Special);
-
             return Status.Success;
         }
 

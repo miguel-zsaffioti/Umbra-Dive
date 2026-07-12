@@ -68,4 +68,14 @@ public class Boss : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public Player GetPlayerInRange(float range)
+    {
+        int layerMask = LayerMask.GetMask("Player");
+        Collider2D collision = Physics2D.OverlapCircle(transform.position, range, layerMask);
+
+        if (collision == null) return null;
+
+        return collision.gameObject.GetComponent<Player>();
+    }
+
 }
