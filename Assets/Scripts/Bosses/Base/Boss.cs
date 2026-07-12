@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Boss : MonoBehaviour
 {
-    // Singleton Seguro
     public static Boss Instance { get; private set; }
 
     [HideInInspector] public Player player;
@@ -12,26 +11,23 @@ public class Boss : MonoBehaviour
     [HideInInspector] public Animator animator;
 
     public float maxHealth;
-    [HideInInspector] public float currentHealth;
-    [HideInInspector] public bool isDead;
 
-    [HideInInspector] public BossHealthSystem healthSystem; 
-
+    [HideInInspector] public BossHealthSystem healthSystem;
     [HideInInspector] public BossTrigger trigger;
+
+    public float CurrentHealth => healthSystem.CurrentHealth;
+    public bool IsDead => healthSystem.IsDead;
 
     public BehaviorGraphAgent behaviorAgent { get; private set; }
 
     protected virtual void Awake()
     {
-        // Esta é a linha que estava sendo ignorada:
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         behaviorAgent = GetComponent<BehaviorGraphAgent>();
-        currentHealth = maxHealth;
-        isDead = false;
-        healthSystem = new BossHealthSystem(this);
 
-        // ... resto do seu código de singleton
+        healthSystem = new BossHealthSystem(this, maxHealth);
+
         if (Instance == null) Instance = this;
     }
 
@@ -78,4 +74,8 @@ public class Boss : MonoBehaviour
         return collision.gameObject.GetComponent<Player>();
     }
 
+    public void TakeDamage(int damage, Vector2 knockbackDirection, float knockbackForce)
+    {
+        healthSystem.TakeDamage(damage);
+    }
 }

@@ -1,77 +1,39 @@
 using System;
-using Unity.Behavior;
-using UnityEngine;
-using Action = Unity.Behavior.Action;
-using Unity.Properties;
 using System.Collections;
+using Unity.Behavior;
+using Unity.Properties;
+using UnityEngine;
 
 [Serializable, GeneratePropertyBag]
 [NodeDescription(name: "Teleport to attack", story: "Teleport avoiding overlap", category: "Action", id: "e865466f179775d727d534ba204f4094")]
-public partial class TeleportToAttackAction : Action
+public partial class TeleportToAttackAction : SpectreMoveActionBase
 {
-    private Spectre spectre;
-    private Vector2 targetLocation;
-    private bool isTeleporting = false;
-
     private float safeDistance = 1.5f;
 
-    protected override Status OnStart()
+    protected override Vector2 ComputeTarget(Spectre spectre)
     {
-        spectre = GameObject.GetComponent<Spectre>();
-
-
-        if (spectre == null || spectre.player == null || spectre.player.rb == null)
-        {
-            return Status.Failure;
-        }
+        if (spectre.player == null || spectre.player.rb == null) return spectre.rb.position;
 
         Vector2 currentPos = spectre.rb.position;
         Vector2 playerPos = spectre.player.rb.position;
-        targetLocation = currentPos;
+        Vector2 target = currentPos;
 
         float distX = Mathf.Abs(currentPos.x - playerPos.x);
         float distY = Mathf.Abs(currentPos.y - playerPos.y);
 
         bool wantToAlignX = UnityEngine.Random.value < 0.5f;
 
-    
+        if (wantToAlignX && distY < safeDistance) wantToAlignX = false;
+        else if (!wantToAlignX && distX < safeDistance) wantToAlignX = true;
 
-        if (wantToAlignX)
-        {
-            if (distY < safeDistance)
-            {
-                wantToAlignX = false;
-            }
-        }
-        else 
-        {
-            if (distX < safeDistance)
-            {
-                wantToAlignX = true;
-            }
-        }
-        if (wantToAlignX)
-        {
-            targetLocation.x = playerPos.x;
-        }
-        else
-        {
-            targetLocation.y = playerPos.y;
-        }
+        if (wantToAlignX) target.x = playerPos.x;
+        else target.y = playerPos.y;
 
-        isTeleporting = true;
-        spectre.StartCoroutine(RunTeleport());
-        return Status.Running;
+        return target;
     }
 
-    protected override Status OnUpdate()
+    protected override IEnumerator DoMovement(Spectre spectre, Vector2 target)
     {
-        return isTeleporting ? Status.Running : Status.Success;
-    }
-
-    private IEnumerator RunTeleport()
-    {
-        yield return spectre.TeleportTo(targetLocation, 1f);
-        isTeleporting = false;
+        yield return spectre.TeleportTo(target, 1f);
     }
 }

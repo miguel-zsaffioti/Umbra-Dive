@@ -1,7 +1,7 @@
 using System.Xml;
 using UnityEngine;
 
-public abstract class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour, IDamagable
 {
     [Header("Data")]
     public EnemyData data;
@@ -100,6 +100,11 @@ public abstract class Enemy : MonoBehaviour
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+    }
+
+    public void TakeDamage(int damage, Vector2 knockbackDirection, float knockbackForce)
+    {
+        healthSystem.TakeDamage(damage, knockbackDirection, knockbackForce);
     }
 
 }

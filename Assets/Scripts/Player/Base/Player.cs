@@ -142,34 +142,25 @@ public class Player : MonoBehaviour
 
         foreach (Collider2D hitCollider in hitColliders)
         {
-            Enemy enemy = hitCollider.GetComponent<Enemy>();
-            Boss boss = hitCollider.GetComponent<Boss>();
+            IDamagable damageable = hitCollider.GetComponent<IDamagable>();
 
-            if (enemy != null && !objectsAlreadyHit.Contains(enemy.gameObject))
+            if (damageable != null && !objectsAlreadyHit.Contains(hitCollider.gameObject))
             {
                 hasHitSomething = true;
 
-                Vector2 knockbackDirection = (enemy.transform.position - transform.position).normalized;
-                enemy.healthSystem.TakeDamage(attackDamage, knockbackDirection, 10f);
+                Vector2 knockbackDirection = (hitCollider.transform.position - transform.position).normalized;
+                damageable.TakeDamage(attackDamage, knockbackDirection, 10f);
 
-                objectsAlreadyHit.Add(enemy.gameObject);
+                objectsAlreadyHit.Add(hitCollider.gameObject);
             }
-            else if (boss != null && !objectsAlreadyHit.Contains(boss.gameObject))
-            {
-                hasHitSomething = true;
+        }
 
-                Vector2 knockbackDirection = (boss.transform.position - transform.position).normalized;
-
-                boss.healthSystem.TakeDamage(attackDamage);
-
-                objectsAlreadyHit.Add(boss.gameObject);
-            }
-          }
         if (hasHitSomething)
         {
             StartHitStop(0.08f);
         }
     }
+
     private void StartHitStop(float duration)
     {
         if (hitStopCoroutine != null)

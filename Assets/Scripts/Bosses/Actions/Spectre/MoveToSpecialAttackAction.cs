@@ -1,44 +1,29 @@
 using System;
+using System.Collections;
 using Unity.Behavior;
-using UnityEngine;
-using Action = Unity.Behavior.Action;
 using Unity.Properties;
+using UnityEngine;
 
 [Serializable, GeneratePropertyBag]
 [NodeDescription(name: "Move to special attack", story: "Move to special attack", category: "Action", id: "515bc6a3c143540436178f601cd369bc")]
-public partial class MoveToSpecialAttackAction : Action
+public partial class MoveToSpecialAttackAction : SpectreMoveActionBase
 {
-    private Spectre spectre;
     [SerializeReference] public BlackboardVariable<float> StoppingDistance;
 
-    protected override Status OnStart()
+    protected override Vector2 ComputeTarget(Spectre spectre)
     {
-        spectre = GameObject.GetComponent<Spectre>(); ;
-        if (spectre == null) return Status.Failure;
-        return Status.Running;
+        return spectre.player.transform.position; // alvo é a posição atual do player
     }
 
-    protected override Status OnUpdate()
+    protected override IEnumerator DoMovement(Spectre spectre, Vector2 target)
     {
-        if (spectre == null || spectre.player == null) return Status.Failure;
-
-        Vector2 currentPos = spectre.transform.position;
-        Vector2 targetPos = spectre.player.transform.position;
-        float distance = Vector2.Distance(currentPos, targetPos);
-
-        if (distance <= StoppingDistance.Value)
+        while (Vector2.Distance(spectre.transform.position, spectre.player.transform.position) > StoppingDistance.Value)
         {
-            return Status.Success; // Chegou no alvo!
+            Vector2 currentPos = spectre.rb.position;
+            Vector2 newPos = Vector2.MoveTowards(currentPos, spectre.player.transform.position, 5f * Time.deltaTime);
+            spectre.rb.MovePosition(newPos);
+            yield return null;
         }
-
-        Vector2 newPos = Vector2.MoveTowards(currentPos, targetPos, 5f * Time.deltaTime);
-        spectre.rb.MovePosition(newPos);
-
-        return Status.Running;
-    }
-
-    protected override void OnEnd()
-    {
     }
 }
 
