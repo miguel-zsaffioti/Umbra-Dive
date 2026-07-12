@@ -11,7 +11,7 @@ public partial class RandomizeAttackTypeCondition : Condition
 
     public override bool IsTrue()
     {
-        return UnityEngine.Random.value < Chance * 0.01f;
+        return UnityEngine.Random.value < Chance.Value * 0.01f;
     }
 
     public override void OnStart()
@@ -19,7 +19,4 @@ public partial class RandomizeAttackTypeCondition : Condition
         IsTrue();
     }
 
-    public override void OnEnd()
-    {
-    }
 }

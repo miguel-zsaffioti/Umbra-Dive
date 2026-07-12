@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Spectre : Boss
 {
-    GameObject OreShard;
+    [SerializeField]  GameObject OreShard;
 
     public IEnumerator MoveToCoroutine(Vector2 location, float moveSpeed)
     {

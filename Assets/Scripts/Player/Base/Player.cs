@@ -48,6 +48,10 @@ public class Player : MonoBehaviour
     [Header("Attack")]
     public AnimationClip attackAnimation;
     public float attackMoveSpeed = 2f;
+    public float windUpDuration = 0.15f;
+    public float squashAmount = 0.9f;
+    public float stretchAmount = 1.1f;
+    public float scaleSmoothness = 20f;
 
     [Header("Knockback")]
     public float knockbackDuration = 0.2f;
@@ -67,6 +71,7 @@ public class Player : MonoBehaviour
     public PlayerAudioData audioData;
 
     private Coroutine layerWeightCoroutine;
+    private Coroutine hitStopCoroutine;
 
     [HideInInspector] public List<GameObject> objectsAlreadyHit = new List<GameObject>();
 
@@ -163,20 +168,23 @@ public class Player : MonoBehaviour
           }
         if (hasHitSomething)
         {
-            StartCoroutine(HitStopEffect(0.08f));
+            StartHitStop(0.08f);
         }
     }
+    private void StartHitStop(float duration)
+    {
+        if (hitStopCoroutine != null)
+            StopCoroutine(hitStopCoroutine);
 
-    // Usamos IEnumerator para criar uma Coroutine
+        hitStopCoroutine = StartCoroutine(HitStopEffect(duration));
+    }
+
     private IEnumerator HitStopEffect(float duration)
     {
         Time.timeScale = 0.1f;
-
-  
         yield return new WaitForSecondsRealtime(duration);
-
-        // Retorna o tempo ao normal
         Time.timeScale = 1f;
+        hitStopCoroutine = null;
     }
 
     public void ApplyKnockback(Vector2 direction, float force)

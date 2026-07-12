@@ -126,6 +126,6 @@ public class GrimReaper : Boss
 
         Gizmos.color = Color.red;
 
-        Gizmos.DrawWireSphere(transform.position, 2f);
+        Gizmos.DrawWireSphere(transform.position, Range);
     }
 }
