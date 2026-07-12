@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Spectre : Boss
 {
+    GameObject OreShard;
+
     public IEnumerator MoveToCoroutine(Vector2 location, float moveSpeed)
     {
         while (Mathf.Abs(rb.position.x - location.x) > 0.01f)
@@ -29,6 +31,23 @@ public class Spectre : Boss
     public IEnumerator TeleportTo(Vector2 location, float waitTime) {
         yield return new WaitForSeconds(waitTime);
         rb.position = location;
+    }
+
+    public void SpawnProjectile(Vector2 direction, Quaternion rotation)
+    {
+        Vector2 spawnLocation = rb.position + direction;
+
+        Instantiate(OreShard, spawnLocation, rotation);
+    }
+
+    public void SpawnProjectileInCrossPattern()
+    {
+
+    }
+
+    public void SpawnProjectileInXPattern()
+    {
+
     }
 
 }
