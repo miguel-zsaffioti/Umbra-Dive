@@ -1,10 +1,12 @@
 using UnityEngine;
+using Unity.Cinemachine;
 
 public class BossTrigger : MonoBehaviour
 {
     public GameObject Door;
     public GameObject boss;
     public Transform SpawnLocation;
+    public CinemachineCamera bossArenaCamera; // NOVO - arraste a câmera fixa da arena aqui
     private Transform Parent;
 
     private bool activated;
@@ -20,7 +22,7 @@ public class BossTrigger : MonoBehaviour
         if (activated) return;
         if (Door.activeSelf) return;
         if (SpawnLocation == null) return;
-        if(Parent == null) return;  
+        if (Parent == null) return;
 
         if (collision.CompareTag("Player"))
         {
@@ -32,10 +34,23 @@ public class BossTrigger : MonoBehaviour
             {
                 bossScript.trigger = this;
             }
+
+            if (bossArenaCamera != null)
+            {
+                bossArenaCamera.Priority = 20;
+            }
+
             activated = true;
         }
     }
-    public void DesactivateDoor() {
+
+    public void DesactivateDoor()
+    {
         Door.SetActive(false);
+
+        if (bossArenaCamera != null)
+        {
+            bossArenaCamera.Priority = 0;
+        }
     }
 }
