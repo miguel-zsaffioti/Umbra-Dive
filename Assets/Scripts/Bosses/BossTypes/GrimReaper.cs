@@ -11,7 +11,7 @@ public class GrimReaper : Boss
     private Cooldown attackCooldown;
     private Cooldown specialCooldown;
 
-    private BlackboardVariable<float> Range;
+    public float attackRange = 1.5f;
 
     public Transform slashSpawnLocation;
     public GameObject slashPrefab;
@@ -26,7 +26,7 @@ public class GrimReaper : Boss
     protected override void Awake()
     {
         isFacingRight = true;
-        attackCooldown = new Cooldown(attackCooldownDuration); 
+        attackCooldown = new Cooldown(attackCooldownDuration);
         specialCooldown = new Cooldown(specialCooldownDuration);
         base.Awake();
     }
@@ -50,7 +50,7 @@ public class GrimReaper : Boss
 
     public void TriggerNormalAttack()
     {
-        Player player = GetPlayerInRange(Range.Value + 0.5f);
+        Player player = GetPlayerInRange(attackRange + 0.5f);
 
         if (player != null && player.healthSystem != null)
         {
@@ -77,6 +77,6 @@ public class GrimReaper : Boss
 
         Gizmos.color = Color.red;
 
-        Gizmos.DrawWireSphere(transform.position, Range);
+        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 }

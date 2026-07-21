@@ -12,18 +12,13 @@ public class EnemyContactDamage : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Player player = collision.gameObject.GetComponent<Player>();
+        IDamagable damageable = collision.gameObject.GetComponent<IDamagable>();
 
-        if (player != null && enemy != null)
+        if (damageable != null && enemy != null)
         {
-            PlayerHealthSystem playerHealth = player.healthSystem;
+            Vector2 knockbackDirection = (collision.transform.position - transform.position).normalized;
 
-            if (playerHealth != null)
-            {
-                Vector2 knockbackDirection = (player.transform.position - transform.position).normalized;
-                 
-                playerHealth.TakeDamage(enemy.data.damageAmount, knockbackDirection, enemy.data.knockbackForce);
-            }
+            damageable.TakeDamage(enemy.data.damageAmount, knockbackDirection, enemy.data.knockbackForce);
         }
     }
 

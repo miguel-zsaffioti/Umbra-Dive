@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 
 public class PlayerHealthSystem
@@ -23,7 +23,7 @@ public class PlayerHealthSystem
                 -snappedDirection.y == player.animator.GetFloat("LastY"))
             {
                 Debug.Log("Bloqueou");
-                player.ApplyKnockback(knockbackDirection, knockbackForce *2f);
+                player.ApplyKnockback(knockbackDirection, knockbackForce * 2f);
                 player.StartCoroutine(InvincibilityCoroutine(false));
                 return;
             }
@@ -34,6 +34,7 @@ public class PlayerHealthSystem
         // Aplica o dano normalmente
         player.currentHealth -= damageAmount;
         player.audioSystem.PlaySound(player.audioData.damage);
+        player.NotifyHealthChanged();
 
         if (player.currentHealth <= 0)
         {
@@ -48,7 +49,7 @@ public class PlayerHealthSystem
         }
     }
 
-    // Adicione o parâmetro 'bool flashSprite'
+    // Adicione o parï¿½metro 'bool flashSprite'
     private IEnumerator InvincibilityCoroutine(bool flashSprite)
     {
         player.isInvincible = true;
@@ -57,7 +58,6 @@ public class PlayerHealthSystem
 
         while (Time.time < endTime)
         {
-            // Só roda a lógica de piscar se flashSprite for verdadeiro
             if (flashSprite)
             {
                 player.spriteRenderer.enabled = !player.spriteRenderer.enabled;
@@ -74,7 +74,8 @@ public class PlayerHealthSystem
     private void Die()
     {
         player.gameObject.SetActive(false);
+        GameOverManager.Instance.ShowGameOver();
     }
 
-    
+
 }

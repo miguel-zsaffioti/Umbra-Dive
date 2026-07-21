@@ -1,8 +1,8 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamagable
 {
     #region Components
     [HideInInspector] public Rigidbody2D rb;
@@ -35,6 +35,13 @@ public class Player : MonoBehaviour
     [HideInInspector] public bool isInvincible = false;
     [HideInInspector] public bool isBlocking = false;
     public float blockBufferDuration = 0.2f;
+
+    public event System.Action<int, int> OnHealthChanged; // (current, max)
+
+    public void NotifyHealthChanged()
+    {
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+    }
     #endregion
 
     #region State Variables
@@ -63,7 +70,7 @@ public class Player : MonoBehaviour
 
     [HideInInspector] public Vector2 facingDirection;
 
-    [Header("Configurações de Ataque")]
+    [Header("Configuraï¿½ï¿½es de Ataque")]
     public Transform attackPoint;
     public float attackPointOffset = 1f;
     public float attackRange = 0.8f;
@@ -118,6 +125,7 @@ public class Player : MonoBehaviour
 
         stateMachine.Start(idleState);
         currentHealth = maxHealth;
+        NotifyHealthChanged();
     }
 
     void Update()
@@ -190,6 +198,11 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(blockBufferDuration);
         isBlocking = false;
+    }
+
+    public void TakeDamage(int damage, Vector2 knockbackDirection, float knockbackForce)
+    {
+        healthSystem.TakeDamage(damage, knockbackDirection, knockbackForce);
     }
 
     public void EnableCombatLayer()

@@ -7,18 +7,13 @@ public class BossContactDamage : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Player player = collision.gameObject.GetComponent<Player>();
+        IDamagable damageable = collision.gameObject.GetComponent<IDamagable>();
 
-        if (player != null)
+        if (damageable != null)
         {
-            PlayerHealthSystem playerHealth = player.healthSystem;
+            Vector2 knockbackDirection = (collision.transform.position - transform.position).normalized;
 
-            if (playerHealth != null)
-            {
-                Vector2 knockbackDirection = (player.transform.position - transform.position).normalized;
-
-                playerHealth.TakeDamage(damageAmount, knockbackDirection, knockbackForce);
-            }
+            damageable.TakeDamage(damageAmount, knockbackDirection, knockbackForce);
         }
     }
 }
