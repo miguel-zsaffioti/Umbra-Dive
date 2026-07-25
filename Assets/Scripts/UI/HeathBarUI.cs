@@ -5,12 +5,14 @@ using UnityEngine.UI;
 public class HealthBarUI : MonoBehaviour
 {
     [SerializeField] private Image fillImage;
-
+    [SerializeField] private GameObject barRoot;
     private Player subscribedPlayer;
 
     private void OnEnable()
     {
         StartCoroutine(SubscribeWhenReady());
+        PauseMenu.OnPauseStateChanged += HandlePauseChanged;
+        GameOverManager.OnGameOverTriggered += HandleGameOver;
     }
 
     private IEnumerator SubscribeWhenReady()
@@ -32,11 +34,23 @@ public class HealthBarUI : MonoBehaviour
             subscribedPlayer.OnHealthChanged -= UpdateHealthBar;
             subscribedPlayer = null;
         }
+
+        PauseMenu.OnPauseStateChanged -= HandlePauseChanged;
+        GameOverManager.OnGameOverTriggered -= HandleGameOver;
     }
 
     private void UpdateHealthBar(int current, int max)
     {
-        Debug.Log($"[HealthBarUI] Atualizando barra: {current}/{max}, fillImage={(fillImage != null ? fillImage.name : "NULL")}");
         fillImage.fillAmount = (float)current / max;
+    }
+
+    private void HandlePauseChanged(bool isPaused)
+    {
+        barRoot.SetActive(!isPaused);
+    }
+
+    private void HandleGameOver()
+    {
+        barRoot.SetActive(false);
     }
 }

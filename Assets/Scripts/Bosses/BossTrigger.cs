@@ -1,13 +1,16 @@
 using UnityEngine;
 using Unity.Cinemachine;
+using TMPro;
 
 public class BossTrigger : MonoBehaviour
 {
     public GameObject Door;
     public GameObject boss;
     public Transform SpawnLocation;
-    public CinemachineCamera bossArenaCamera; // NOVO - arraste a câmera fixa da arena aqui
+    public CinemachineCamera bossArenaCamera;
     private Transform Parent;
+    public GameObject healthPanel;
+    public TextMeshProUGUI bossName;
 
     private bool activated;
 
@@ -33,6 +36,7 @@ public class BossTrigger : MonoBehaviour
             if (bossScript != null)
             {
                 bossScript.trigger = this;
+                bossName.text = bossScript.bossName;
             }
 
             if (bossArenaCamera != null)
@@ -41,6 +45,7 @@ public class BossTrigger : MonoBehaviour
             }
 
             activated = true;
+            healthPanel.SetActive(true);
         }
     }
 

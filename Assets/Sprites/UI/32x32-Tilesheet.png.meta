@@ -323,7 +323,7 @@ TextureImporter:
         height: 19
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 15, y: 5, z: 15, w: 5}
       customData: 
       outline: []
       physicsShape: []
@@ -408,10 +408,10 @@ TextureImporter:
         x: 128
         y: 229
         width: 64
-        height: 27
+        height: 19
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 15, y: 5, z: 15, w: 5}
       customData: 
       outline: []
       physicsShape: []
@@ -903,6 +903,28 @@ TextureImporter:
       bones: []
       spriteID: a56fe9248384714449817df7d48a07b8
       internalID: 9117392450429811534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 32x32-Tilesheet_27
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 11
+        width: 60
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 15, y: 5, z: 15, w: 5}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bde4896bf9250840a2aa70c46d7e552
+      internalID: -4161589458744429608
       vertices: []
       indices: 
       edges: []

@@ -331,9 +331,9 @@ MonoBehaviour:
   rb: {fileID: 0}
   animator: {fileID: 0}
   maxHealth: 2
-  currentHealth: 0
-  isDead: 0
   trigger: {fileID: 0}
+  bossName: Spectre
+  OreShard: {fileID: 0}
 --- !u!114 &6140943119499916633
 MonoBehaviour:
   m_ObjectHideFlags: 0

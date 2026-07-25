@@ -1,12 +1,14 @@
+using System.Diagnostics;
+
 public class BossHealthSystem
 {
     private Boss boss;
     private FlashEffect flashEffect;
 
-    public float CurrentHealth { get; private set; }
-    public bool IsDead { get; private set; }        
+    public int CurrentHealth { get; private set; }
+    public bool IsDead { get; private set; }
 
-    public BossHealthSystem(Boss boss, float maxHealth)
+    public BossHealthSystem(Boss boss, int maxHealth)
     {
         this.boss = boss;
         this.flashEffect = boss.GetComponent<FlashEffect>();
@@ -19,6 +21,7 @@ public class BossHealthSystem
         if (IsDead) return;
 
         CurrentHealth -= damage;
+        boss.NotifyHealthChanged();
 
         if (CurrentHealth <= 0)
         {
@@ -33,7 +36,6 @@ public class BossHealthSystem
     private void StartDying()
     {
         IsDead = true;
-
         boss.rb.simulated = false;
         boss.StopAllCoroutines();
 

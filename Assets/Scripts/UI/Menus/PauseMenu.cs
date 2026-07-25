@@ -8,6 +8,8 @@ public class PauseMenu : MonoBehaviour
     private bool isPaused = false;
     public GameObject pausePanel;
 
+    public static event System.Action<bool> OnPauseStateChanged; // true = pausado
+
     void Update()
     {
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
@@ -22,6 +24,7 @@ public class PauseMenu : MonoBehaviour
         pausePanel.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
+        OnPauseStateChanged?.Invoke(true);
     }
 
     public void ResumeGame()
@@ -29,6 +32,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         pausePanel.SetActive(false);
         isPaused = false;
+        OnPauseStateChanged?.Invoke(false);
     }
 
     public void BackToMenu()
@@ -39,10 +43,10 @@ public class PauseMenu : MonoBehaviour
 
     public void QuitGame()
     {
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-    #else
+#else
         Application.Quit();
-    #endif
+#endif
     }
 }

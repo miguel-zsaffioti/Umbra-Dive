@@ -359,12 +359,12 @@ MonoBehaviour:
   rb: {fileID: 0}
   animator: {fileID: 0}
   maxHealth: 3
-  currentHealth: 0
-  isDead: 0
   trigger: {fileID: 0}
+  bossName: Grim Reaper
   isFacingRight: 0
-  attackCooldown: 5
-  specialCooldown: 10
+  attackCooldownDuration: 5
+  specialCooldownDuration: 10
+  attackRange: 1.5
   slashSpawnLocation: {fileID: 5392335664102427163}
   slashPrefab: {fileID: 5427868014869711695, guid: 93e73bb1af6c57d409a34155e9882d5e, type: 3}
 --- !u!114 &-8442098870479040165

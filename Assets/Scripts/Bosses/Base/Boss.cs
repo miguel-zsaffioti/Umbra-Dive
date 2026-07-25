@@ -2,7 +2,7 @@ using System.Collections;
 using Unity.Behavior;
 using UnityEngine;
 
-public class Boss : MonoBehaviour
+public class Boss : MonoBehaviour, IDamagable
 {
     public static Boss Instance { get; private set; }
 
@@ -10,22 +10,29 @@ public class Boss : MonoBehaviour
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public Animator animator;
 
-    public float maxHealth;
-
+    public int maxHealth = 100;
     [HideInInspector] public BossHealthSystem healthSystem;
     [HideInInspector] public BossTrigger trigger;
 
-    public float CurrentHealth => healthSystem.CurrentHealth;
+    public int CurrentHealth => healthSystem.CurrentHealth;
     public bool IsDead => healthSystem.IsDead;
 
     public BehaviorGraphAgent behaviorAgent { get; private set; }
+
+    public event System.Action<int, int> OnHealthChanged;
+
+    public string bossName; 
+
+    public void NotifyHealthChanged()
+    {
+        OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
+    }
 
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         behaviorAgent = GetComponent<BehaviorGraphAgent>();
-
         healthSystem = new BossHealthSystem(this, maxHealth);
 
         if (Instance == null) Instance = this;
@@ -41,6 +48,8 @@ public class Boss : MonoBehaviour
         {
             player = FindFirstObjectByType<Player>();
         }
+
+        NotifyHealthChanged();
     }
 
     private void OnDisable()
@@ -68,14 +77,13 @@ public class Boss : MonoBehaviour
     {
         int layerMask = LayerMask.GetMask("Player");
         Collider2D collision = Physics2D.OverlapCircle(transform.position, range, layerMask);
-
         if (collision == null) return null;
-
         return collision.gameObject.GetComponent<Player>();
     }
 
     public void TakeDamage(int damage, Vector2 knockbackDirection, float knockbackForce)
     {
         healthSystem.TakeDamage(damage);
+        Debug.Log("Tomou dano");
     }
 }

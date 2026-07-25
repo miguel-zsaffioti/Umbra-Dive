@@ -656,50 +656,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Grim Reaper-Sheet-LITE_18
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 96
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a064d898ec90be1f0800000000000000
-      internalID: -1014706508366264822
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Grim Reaper-Sheet-LITE_19
-      rect:
-        serializedVersion: 2
-        x: 432
-        y: 96
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e595063bb861c1520800000000000000
-      internalID: 2674037068016933214
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Grim Reaper-Sheet-LITE_20
       rect:
         serializedVersion: 2
@@ -871,50 +827,6 @@ TextureImporter:
       bones: []
       spriteID: 3e0e763d73e04cd90800000000000000
       internalID: -7078517081386786589
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Grim Reaper-Sheet-LITE_28
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 48
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 659140421d6fbb170800000000000000
-      internalID: 8195415325043595606
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Grim Reaper-Sheet-LITE_29
-      rect:
-        serializedVersion: 2
-        x: 432
-        y: 48
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: dd90d1e0664e56690800000000000000
-      internalID: -7609424868398003747
       vertices: []
       indices: 
       edges: []

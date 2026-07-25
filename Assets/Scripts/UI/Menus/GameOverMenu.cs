@@ -4,12 +4,13 @@ using UnityEngine.SceneManagement;
 
 public class GameOverManager : MonoBehaviour
 {
-    public static GameOverManager Instance;
-
+    public static GameOverManager Instance; // (mantém como já era: public static GameOverManager Instance;)
     public string menuSceneName = "MainMenu";
     public GameObject gameOverPanel;
     public CanvasGroup gameOverCanvasGroup;
     public float fadeDuration = 0.4f;
+
+    public static event System.Action OnGameOverTriggered;
 
     void Awake()
     {
@@ -20,8 +21,8 @@ public class GameOverManager : MonoBehaviour
     {
         gameOverPanel.SetActive(true);
         Time.timeScale = 0f;
-
         StartCoroutine(FadeIn());
+        OnGameOverTriggered?.Invoke();
     }
 
     private IEnumerator FadeIn()
@@ -29,7 +30,6 @@ public class GameOverManager : MonoBehaviour
         gameOverCanvasGroup.alpha = 0f;
         gameOverCanvasGroup.interactable = false;
         gameOverCanvasGroup.blocksRaycasts = true;
-
         float elapsed = 0f;
         while (elapsed < fadeDuration)
         {
@@ -37,7 +37,6 @@ public class GameOverManager : MonoBehaviour
             gameOverCanvasGroup.alpha = Mathf.Lerp(0f, 1f, elapsed / fadeDuration);
             yield return null;
         }
-
         gameOverCanvasGroup.alpha = 1f;
         gameOverCanvasGroup.interactable = true;
     }
