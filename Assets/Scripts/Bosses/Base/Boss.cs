@@ -84,6 +84,6 @@ public class Boss : MonoBehaviour, IDamagable
     public void TakeDamage(int damage, Vector2 knockbackDirection, float knockbackForce)
     {
         healthSystem.TakeDamage(damage);
-        Debug.Log("Tomou dano");
+        //Debug.Log("Tomou dano");
     }
 }

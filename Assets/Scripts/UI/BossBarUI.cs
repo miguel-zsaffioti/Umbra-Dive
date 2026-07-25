@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class BossBarUI : MonoBehaviour
 {
-    [SerializeField] private Image fillImage;
-    [SerializeField] private GameObject barRoot; 
+    [SerializeField] private RectTransform fillMask;
+    [SerializeField] private GameObject barRoot;
     private Boss subscribedBoss;
 
     private void OnEnable()
@@ -41,7 +41,12 @@ public class BossBarUI : MonoBehaviour
 
     private void UpdateHealthBar(int current, int max)
     {
-        fillImage.fillAmount = (float)current / max;
+        Debug.Log($"[BossBarUI] current={current} max={max}");
+        float pct = Mathf.Clamp01((float)current / max);
+
+        Vector2 anchorMax = fillMask.anchorMax;
+        anchorMax.x = pct;
+        fillMask.anchorMax = anchorMax;
     }
 
     private void HandlePauseChanged(bool isPaused)
