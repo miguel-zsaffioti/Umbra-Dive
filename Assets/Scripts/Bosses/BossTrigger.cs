@@ -12,6 +12,8 @@ public class BossTrigger : MonoBehaviour
     public GameObject healthPanel;
     public TextMeshProUGUI bossName;
 
+    private Player player;
+
     private bool activated;
 
     private void Start()
@@ -29,6 +31,7 @@ public class BossTrigger : MonoBehaviour
 
         if (collision.CompareTag("Player"))
         {
+            player = collision.GetComponent<Player>();
             Door.SetActive(true);
             GameObject spawnedBoss = Instantiate(boss, SpawnLocation.position, boss.transform.rotation, Parent);
 
@@ -49,13 +52,11 @@ public class BossTrigger : MonoBehaviour
         }
     }
 
-    public void DesactivateDoor()
+    public void EndBossFight()
     {
+        healthPanel.SetActive(false);
+        bossArenaCamera.Priority = 1;
         Door.SetActive(false);
-
-        if (bossArenaCamera != null)
-        {
-            bossArenaCamera.Priority = 0;
-        }
+        player.RestoreHealth();
     }
 }

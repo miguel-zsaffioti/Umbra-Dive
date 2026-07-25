@@ -22,7 +22,7 @@ public class PlayerHealthSystem
             if (-snappedDirection.x == player.animator.GetFloat("LastX") &&
                 -snappedDirection.y == player.animator.GetFloat("LastY"))
             {
-                Debug.Log("Bloqueou");
+                //Debug.Log("Bloqueou");
                 player.ApplyKnockback(knockbackDirection, knockbackForce * 2f);
                 player.StartCoroutine(InvincibilityCoroutine(false));
                 return;
@@ -31,7 +31,6 @@ public class PlayerHealthSystem
 
         bool isAttacking = player.stateMachine.currState == player.attackState;
 
-        // Aplica o dano normalmente
         player.currentHealth -= damageAmount;
         player.audioSystem.PlaySound(player.audioData.damage);
         player.NotifyHealthChanged();
@@ -49,7 +48,6 @@ public class PlayerHealthSystem
         }
     }
 
-    // Adicione o par�metro 'bool flashSprite'
     private IEnumerator InvincibilityCoroutine(bool flashSprite)
     {
         player.isInvincible = true;
@@ -77,5 +75,18 @@ public class PlayerHealthSystem
         GameOverManager.Instance.ShowGameOver();
     }
 
+    public IEnumerator RestoreHealth(int amount, float waitTime)
+    {
+        while (player.currentHealth < player.maxHealth)
+        {
+            if (player.currentHealth + amount > player.maxHealth)
+            {
+                player.currentHealth = player.maxHealth;
+            }
+            player.currentHealth += amount;
+            player.NotifyHealthChanged();
+            yield return new WaitForSeconds(waitTime);
+        }
+    }
 
 }

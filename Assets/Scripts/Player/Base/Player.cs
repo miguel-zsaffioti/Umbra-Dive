@@ -35,6 +35,8 @@ public class Player : MonoBehaviour, IDamagable
     [HideInInspector] public bool isInvincible = false;
     [HideInInspector] public bool isBlocking = false;
     public float blockBufferDuration = 0.2f;
+    public int cureAmount = 1;
+    public float cureTick = 0.5f;
 
     public event System.Action<int, int> OnHealthChanged; // (current, max)
 
@@ -208,7 +210,12 @@ public class Player : MonoBehaviour, IDamagable
     public void EnableCombatLayer()
     {
         if (layerWeightCoroutine != null) StopCoroutine(layerWeightCoroutine);
-        animator.SetLayerWeight(1, 1f); // Liga instantaneamente para o ataque sair na hora
+        animator.SetLayerWeight(1, 1f); 
+    }
+
+    public void RestoreHealth()
+    {
+        StartCoroutine(healthSystem.RestoreHealth(cureAmount,cureTick));
     }
 
 }

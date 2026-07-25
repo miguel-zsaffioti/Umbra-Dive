@@ -41,7 +41,7 @@ public class BossBarUI : MonoBehaviour
 
     private void UpdateHealthBar(int current, int max)
     {
-        Debug.Log($"[BossBarUI] current={current} max={max}");
+        //Debug.Log($"[BossBarUI] current={current} max={max}");
         float pct = Mathf.Clamp01((float)current / max);
 
         Vector2 anchorMax = fillMask.anchorMax;

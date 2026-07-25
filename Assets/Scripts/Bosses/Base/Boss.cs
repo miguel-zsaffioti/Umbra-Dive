@@ -64,6 +64,8 @@ public class Boss : MonoBehaviour, IDamagable
 
     public void Die()
     {
+        
+
         if (deathEffect != null)
         {
             deathEffect.StartCoroutine(WaitForDeathEffect());
@@ -74,7 +76,7 @@ public class Boss : MonoBehaviour, IDamagable
         }
 
         if (trigger == null) return;
-        trigger.Door.SetActive(false);
+        trigger.EndBossFight();
     }
 
     private IEnumerator WaitForDeathEffect()

@@ -2719,6 +2719,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8486392946124527458, guid: 43d420a369554a645b42ca833c2e1616, type: 3}
     - target: {fileID: 805260411619635311, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: bossName
+      value: 
+      objectReference: {fileID: 1227426915}
+    - target: {fileID: 805260411619635311, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: healthPanel
+      value: 
+      objectReference: {fileID: 1362049035}
+    - target: {fileID: 805260411619635311, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
       propertyPath: bossArenaCamera
       value: 
       objectReference: {fileID: 801616475}
@@ -5648,12 +5656,14 @@ MonoBehaviour:
   animator: {fileID: 0}
   audioSource: {fileID: 0}
   spriteRenderer: {fileID: 0}
-  maxHealth: 100
+  maxHealth: 10
   currentHealth: 0
   invincibilityDuration: 1
   isInvincible: 0
   isBlocking: 0
   blockBufferDuration: 0.2
+  cureAmount: 1
+  cureTick: 0.5
   moveSpeed: 5
   rollAnimation: {fileID: 7400000, guid: 27cd0e1588f455547bac819e5b69d828, type: 2}
   rollForce: 5
