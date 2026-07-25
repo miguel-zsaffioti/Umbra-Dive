@@ -44,7 +44,7 @@ public class BossHealthSystem
             boss.behaviorAgent.enabled = false;
         }
 
-        boss.animator.SetTrigger("Die");
+        boss.Die();
         boss.enabled = false;
     }
 }

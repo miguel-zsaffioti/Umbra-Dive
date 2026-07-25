@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 49678432867071011}
   - component: {fileID: 1476276447298329681}
   - component: {fileID: -8442098870479040165}
+  - component: {fileID: 6351703676915090578}
   m_Layer: 9
   m_Name: GrimReaper
   m_TagString: GrimReaper
@@ -358,6 +359,7 @@ MonoBehaviour:
   player: {fileID: 0}
   rb: {fileID: 0}
   animator: {fileID: 0}
+  deathEffect: {fileID: 0}
   maxHealth: 3
   trigger: {fileID: 0}
   bossName: Grim Reaper
@@ -381,6 +383,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FlashEffect
   whiteMaterial: {fileID: 2100000, guid: 4c0f761dfbd1ed64fae0b91bd46e6a4c, type: 2}
   duration: 0.1
+--- !u!114 &6351703676915090578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7521081770387274127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cb6bc4dcdfcaf748890024f80a3cc9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeathEffect
+  flickerCount: 6
+  flickerInterval: 0.08
+  deathParticlesPrefab: {fileID: 1546186448473138721, guid: 52f7908007befb647a07f9f04d386895, type: 3}
+  whiteMaterial: {fileID: 2100000, guid: 4c0f761dfbd1ed64fae0b91bd46e6a4c, type: 2}
 --- !u!1 &8638645692037994623
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ public class Boss : MonoBehaviour, IDamagable
     [HideInInspector] public Player player;
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public Animator animator;
+    [HideInInspector] public DeathEffect deathEffect;
 
     public int maxHealth = 100;
     [HideInInspector] public BossHealthSystem healthSystem;
@@ -33,6 +34,7 @@ public class Boss : MonoBehaviour, IDamagable
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         behaviorAgent = GetComponent<BehaviorGraphAgent>();
+        deathEffect = GetComponent<DeathEffect>();
         healthSystem = new BossHealthSystem(this, maxHealth);
 
         if (Instance == null) Instance = this;
@@ -62,14 +64,22 @@ public class Boss : MonoBehaviour, IDamagable
 
     public void Die()
     {
-        StartCoroutine(WaitToDie());
+        if (deathEffect != null)
+        {
+            deathEffect.StartCoroutine(WaitForDeathEffect());
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         if (trigger == null) return;
         trigger.Door.SetActive(false);
     }
 
-    private IEnumerator WaitToDie()
+    private IEnumerator WaitForDeathEffect()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return deathEffect.PlayDeathEffect();
         Destroy(gameObject);
     }
 
