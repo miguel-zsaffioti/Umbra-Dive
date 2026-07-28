@@ -11,7 +11,7 @@ public partial class MoveToSpecialAttackAction : SpectreMoveActionBase
 
     protected override Vector2 ComputeTarget(Spectre spectre)
     {
-        return spectre.player.transform.position;
+        return spectre.ClampToArena(spectre.player.transform.position);
     }
 
     protected override void UpdateTarget(Spectre spectre)
