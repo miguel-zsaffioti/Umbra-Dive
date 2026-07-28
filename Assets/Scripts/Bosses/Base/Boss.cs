@@ -27,6 +27,19 @@ public class Boss : MonoBehaviour, IDamagable
     [HideInInspector] public Vector2 moveDirection;
     [HideInInspector] public float moveSpeed;
 
+    [HideInInspector] public Collider2D arenaBounds;
+
+    public Vector2 ClampToArena(Vector2 point)
+    {
+        if (arenaBounds == null) return point;
+
+        Bounds bounds = arenaBounds.bounds;
+        return new Vector2(
+            Mathf.Clamp(point.x, bounds.min.x, bounds.max.x),
+            Mathf.Clamp(point.y, bounds.min.y, bounds.max.y)
+        );
+    }
+
     protected virtual void FixedUpdate()
     {
         if (moveDirection.sqrMagnitude > 0.0001f)

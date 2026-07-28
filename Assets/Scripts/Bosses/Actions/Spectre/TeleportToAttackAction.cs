@@ -56,6 +56,6 @@ public partial class TeleportToAttackAction : Action
         if (wantToAlignX) target.x = playerPos.x;
         else target.y = playerPos.y;
 
-        return target;
+        return spectre.ClampToArena(target);
     }
 }

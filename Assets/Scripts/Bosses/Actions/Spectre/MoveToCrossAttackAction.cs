@@ -21,6 +21,6 @@ public partial class MoveToCrossAttackAction : SpectreMoveActionBase
         else
             target.x = playerPos.x;
 
-        return target;
+        return spectre.ClampToArena(target);
     }
 }

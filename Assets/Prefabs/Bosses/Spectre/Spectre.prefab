@@ -330,10 +330,13 @@ MonoBehaviour:
   player: {fileID: 0}
   rb: {fileID: 0}
   animator: {fileID: 0}
+  deathEffect: {fileID: 0}
   maxHealth: 2
   trigger: {fileID: 0}
   bossName: Spectre
-  OreShard: {fileID: 0}
+  moveDirection: {x: 0, y: 0}
+  moveSpeed: 0
+  OreShard: {fileID: 742863164703497884, guid: b65734e9f6f803245b5cfa2c7f4779ee, type: 3}
 --- !u!114 &6140943119499916633
 MonoBehaviour:
   m_ObjectHideFlags: 0

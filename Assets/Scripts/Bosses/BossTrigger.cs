@@ -11,6 +11,7 @@ public class BossTrigger : MonoBehaviour
     private Transform Parent;
     public GameObject healthPanel;
     public TextMeshProUGUI bossName;
+    public Collider2D arenaBounds;
 
     private Player player;
 
@@ -28,6 +29,7 @@ public class BossTrigger : MonoBehaviour
         if (Door.activeSelf) return;
         if (SpawnLocation == null) return;
         if (Parent == null) return;
+        if (arenaBounds == null) return;
 
         if (collision.CompareTag("Player"))
         {
@@ -49,6 +51,7 @@ public class BossTrigger : MonoBehaviour
 
             activated = true;
             healthPanel.SetActive(true);
+            bossScript.arenaBounds = arenaBounds;
         }
     }
 

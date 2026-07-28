@@ -22,9 +22,11 @@ public partial class MoveToDiagonalSafeAction : SpectreMoveActionBase
 
         float targetDist = Mathf.Max(Mathf.Min(distX, distY), minRange.Value);
 
-        return new Vector2(
+        Vector2 target = new Vector2(
             playerPos.x + (targetDist * dirX),
             playerPos.y + (targetDist * dirY)
         );
+
+        return spectre.ClampToArena(target);
     }
 }
