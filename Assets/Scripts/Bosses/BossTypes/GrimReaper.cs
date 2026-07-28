@@ -16,12 +16,16 @@ public class GrimReaper : Boss
     public Transform slashSpawnLocation;
     public GameObject slashPrefab;
 
+    [Header("Flip")]
+    public float flipThreshold = 0.3f;
+    public float flipCooldown = 0.2f;
+    private float lastFlipTime = -999f;
+
     public enum AttackTypes
     {
         Normal,
         Special
     }
-
 
     protected override void Awake()
     {
@@ -37,6 +41,24 @@ public class GrimReaper : Boss
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+    }
+
+
+    public void TryFlipTowards(float diffX)
+    {
+        if (Time.time - lastFlipTime < flipCooldown) return;
+        if (Mathf.Abs(diffX) < flipThreshold) return;
+
+        if (diffX > 0 && !isFacingRight)
+        {
+            Flip();
+            lastFlipTime = Time.time;
+        }
+        else if (diffX < 0 && isFacingRight)
+        {
+            Flip();
+            lastFlipTime = Time.time;
+        }
     }
 
     private void Update()
@@ -74,9 +96,7 @@ public class GrimReaper : Boss
 
     private void OnDrawGizmosSelected()
     {
-
         Gizmos.color = Color.red;
-
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 }

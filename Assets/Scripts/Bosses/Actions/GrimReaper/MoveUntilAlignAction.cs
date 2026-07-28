@@ -8,7 +8,6 @@ using Unity.Properties;
 [NodeDescription(name: "MoveUntilAlign", story: "Move until is aligned to Player", category: "Action", id: "c2522e7783dbf24c2979fdcf1b7a5a70")]
 public partial class MoveUntilAlignAction : Action
 {
-
     [SerializeReference] public BlackboardVariable<float> Speed;
     [SerializeReference] public BlackboardVariable<float> AlignmentRange;
     private GrimReaper reaper;
@@ -26,34 +25,36 @@ public partial class MoveUntilAlignAction : Action
     {
         if (reaper == null || reaper.player == null) return Status.Failure;
 
-        if (isAligned())
+        if (IsAligned())
         {
+            reaper.StopMovement();
             reaper.animator.SetBool("isMoving", false);
             return Status.Success;
         }
 
-        float diffX = reaper.player.transform.position.x - reaper.transform.position.x;
-        if (Mathf.Abs(diffX) > 0.5f) 
-        {
-            if (diffX > 0 && !reaper.isFacingRight) reaper.Flip();
-            else if (diffX < 0 && reaper.isFacingRight) reaper.Flip();
-        }
+        float diffX = reaper.player.transform.position.x - reaper.rb.position.x;
+        reaper.TryFlipTowards(diffX);
 
-        float newY = Mathf.MoveTowards(
-            reaper.rb.position.y,
-            reaper.player.transform.position.y,
-            Speed.Value * Time.deltaTime
-        );
+        float diffY = reaper.player.transform.position.y - reaper.rb.position.y;
+        float distanceY = Mathf.Abs(diffY);
 
-        Vector2 targetPosition = new Vector2(reaper.rb.position.x, newY);
-        reaper.rb.MovePosition(targetPosition);
+        float speedFactor = Mathf.Clamp01(distanceY / (AlignmentRange.Value * 2f));
+        float effectiveSpeed = Speed.Value * Mathf.Max(speedFactor, 0.3f);
+
+        Vector2 direction = new Vector2(0f, Mathf.Sign(diffY));
+        reaper.SetMovement(direction, effectiveSpeed);
 
         return Status.Running;
     }
 
-    private bool isAligned() {
+    protected override void OnEnd()
+    {
+        if (reaper != null) reaper.StopMovement();
+    }
+
+    private bool IsAligned()
+    {
         float diffY = Mathf.Abs(reaper.transform.position.y - reaper.player.transform.position.y);
         return diffY <= AlignmentRange.Value;
     }
 }
-

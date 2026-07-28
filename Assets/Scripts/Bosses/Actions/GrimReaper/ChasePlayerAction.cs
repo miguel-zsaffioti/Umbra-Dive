@@ -2,7 +2,6 @@ using System;
 using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 using Action = Unity.Behavior.Action;
 
 [Serializable, GeneratePropertyBag]
@@ -16,7 +15,7 @@ public partial class ChasePlayerAction : Action
 
     protected override Status OnStart()
     {
-        reaper = GameObject.GetComponent<GrimReaper>(); ;
+        reaper = GameObject.GetComponent<GrimReaper>();
         if (reaper == null) return Status.Failure;
 
         reaper.animator.SetBool("isMoving", true);
@@ -27,32 +26,30 @@ public partial class ChasePlayerAction : Action
     {
         if (reaper == null || reaper.player == null) return Status.Failure;
 
-        Vector2 currentPos = reaper.transform.position;
+        Vector2 currentPos = reaper.rb.position;
         Vector2 targetPos = reaper.player.transform.position;
         float distance = Vector2.Distance(currentPos, targetPos);
 
         if (distance <= StoppingDistance.Value)
         {
+            reaper.StopMovement();
             reaper.animator.SetBool("isMoving", false);
-            return Status.Success; // Chegou no alvo!
+            return Status.Success;
         }
 
-        // 2. Lógica de Flip
-        float diffX = targetPos.x - currentPos.x;
-        if (Mathf.Abs(diffX) > 0.1f)
-        {
-            if (diffX > 0 && !reaper.isFacingRight) reaper.Flip();
-            else if (diffX < 0 && reaper.isFacingRight) reaper.Flip();
-        }
+        reaper.TryFlipTowards(targetPos.x - currentPos.x);
 
-        Vector2 newPos = Vector2.MoveTowards(currentPos, targetPos, Speed.Value * Time.deltaTime);
-        reaper.rb.MovePosition(newPos);
+        float speedFactor = Mathf.Clamp01(distance / (StoppingDistance.Value * 2f));
+        float effectiveSpeed = Speed.Value * Mathf.Max(speedFactor, 0.3f);
+
+        Vector2 direction = targetPos - currentPos;
+        reaper.SetMovement(direction, effectiveSpeed);
 
         return Status.Running;
     }
 
     protected override void OnEnd()
     {
+        if (reaper != null) reaper.StopMovement();
     }
 }
-

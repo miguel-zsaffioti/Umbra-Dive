@@ -22,7 +22,31 @@ public class Boss : MonoBehaviour, IDamagable
 
     public event System.Action<int, int> OnHealthChanged;
 
-    public string bossName; 
+    public string bossName;
+
+    [HideInInspector] public Vector2 moveDirection;
+    [HideInInspector] public float moveSpeed;
+
+    protected virtual void FixedUpdate()
+    {
+        if (moveDirection.sqrMagnitude > 0.0001f)
+        {
+            Vector2 newPos = rb.position + moveDirection.normalized * moveSpeed * Time.fixedDeltaTime;
+            rb.MovePosition(newPos);
+        }
+    }
+
+    public void SetMovement(Vector2 direction, float speed)
+    {
+        moveDirection = direction;
+        moveSpeed = speed;
+    }
+
+    public void StopMovement()
+    {
+        moveDirection = Vector2.zero;
+        moveSpeed = 0f;
+    }
 
     public void NotifyHealthChanged()
     {
@@ -64,7 +88,7 @@ public class Boss : MonoBehaviour, IDamagable
 
     public void Die()
     {
-        
+
 
         if (deathEffect != null)
         {

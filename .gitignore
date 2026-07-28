@@ -76,3 +76,5 @@ crashlytics-build.properties
 
 .zip
 *.zip
+Assets/Scripts.zip.meta
+Assets/Scripts.zip
