@@ -14,9 +14,4 @@ public partial class RandomizeAttackTypeCondition : Condition
         return UnityEngine.Random.value < Chance.Value * 0.01f;
     }
 
-    public override void OnStart()
-    {
-        IsTrue();
-    }
-
 }

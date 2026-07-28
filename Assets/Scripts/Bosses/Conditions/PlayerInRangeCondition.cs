@@ -16,9 +16,4 @@ public partial class PlayerInRangeCondition : Condition
         return boss.GetPlayerInRange(Range) != null;
     }
 
-    public override void OnStart()
-    {
-       IsTrue();
-    }
-
 }

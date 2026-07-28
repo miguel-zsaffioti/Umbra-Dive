@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using Unity.Behavior;
 using UnityEngine;
 using Action = Unity.Behavior.Action;
@@ -8,7 +7,8 @@ public abstract partial class SpectreMoveActionBase : Action
 {
     protected Spectre spectre;
     protected Vector2 targetLocation;
-    private bool isMoving = false;
+    protected float moveSpeed = 5f;
+    protected float stoppingDistance = 0.05f;
 
     protected override Status OnStart()
     {
@@ -16,27 +16,45 @@ public abstract partial class SpectreMoveActionBase : Action
         if (spectre == null) return Status.Failure;
 
         targetLocation = ComputeTarget(spectre);
-
-        isMoving = true;
-        spectre.StartCoroutine(RunMovement());
         return Status.Running;
     }
 
     protected override Status OnUpdate()
     {
-        return isMoving ? Status.Running : Status.Success;
+        UpdateTarget(spectre);
+
+        Vector2 currentPos = spectre.rb.position;
+        float step = moveSpeed * Time.fixedDeltaTime;
+
+        float distX = Mathf.Abs(targetLocation.x - currentPos.x);
+        float distY = Mathf.Abs(targetLocation.y - currentPos.y);
+
+
+        if (distX > stoppingDistance)
+        {
+            float newX = Mathf.MoveTowards(currentPos.x, targetLocation.x, step);
+            spectre.rb.MovePosition(new Vector2(newX, currentPos.y));
+            return Status.Running;
+        }
+
+        if (distY > stoppingDistance)
+        {
+            float newY = Mathf.MoveTowards(currentPos.y, targetLocation.y, step);
+            spectre.rb.MovePosition(new Vector2(targetLocation.x, newY));
+            return Status.Running;
+        }
+
+        spectre.StopMovement();
+        spectre.rb.MovePosition(targetLocation);
+        return Status.Success;
     }
 
-    private IEnumerator RunMovement()
+    protected override void OnEnd()
     {
-        yield return DoMovement(spectre, targetLocation);
-        isMoving = false;
+        if (spectre != null) spectre.StopMovement();
     }
 
     protected abstract Vector2 ComputeTarget(Spectre spectre);
 
-    protected virtual IEnumerator DoMovement(Spectre spectre, Vector2 target)
-    {
-        yield return spectre.MoveToCoroutine(target, 5f);
-    }
+    protected virtual void UpdateTarget(Spectre spectre) { }
 }

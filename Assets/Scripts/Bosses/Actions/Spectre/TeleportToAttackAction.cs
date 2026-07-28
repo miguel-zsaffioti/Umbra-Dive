@@ -1,16 +1,43 @@
 using System;
-using System.Collections;
 using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;
+using Action = Unity.Behavior.Action;
 
 [Serializable, GeneratePropertyBag]
 [NodeDescription(name: "Teleport to attack", story: "Teleport avoiding overlap", category: "Action", id: "e865466f179775d727d534ba204f4094")]
-public partial class TeleportToAttackAction : SpectreMoveActionBase
+public partial class TeleportToAttackAction : Action
 {
+    private Spectre spectre;
     private float safeDistance = 1.5f;
+    private float waitTime = 1f;
+    private float timer = 0f;
 
-    protected override Vector2 ComputeTarget(Spectre spectre)
+    protected override Status OnStart()
+    {
+        spectre = GameObject.GetComponent<Spectre>();
+        if (spectre == null) return Status.Failure;
+
+        spectre.StopMovement();
+        timer = 0f;
+
+        return Status.Running;
+    }
+
+    protected override Status OnUpdate()
+    {
+        timer += Time.deltaTime;
+
+        if (timer >= waitTime)
+        {
+            spectre.rb.position = ComputeTarget(spectre);
+            return Status.Success;
+        }
+
+        return Status.Running;
+    }
+
+    private Vector2 ComputeTarget(Spectre spectre)
     {
         if (spectre.player == null || spectre.player.rb == null) return spectre.rb.position;
 
@@ -30,10 +57,5 @@ public partial class TeleportToAttackAction : SpectreMoveActionBase
         else target.y = playerPos.y;
 
         return target;
-    }
-
-    protected override IEnumerator DoMovement(Spectre spectre, Vector2 target)
-    {
-        yield return spectre.TeleportTo(target, 1f);
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;
@@ -12,18 +11,29 @@ public partial class MoveToSpecialAttackAction : SpectreMoveActionBase
 
     protected override Vector2 ComputeTarget(Spectre spectre)
     {
-        return spectre.player.transform.position; // alvo é a posição atual do player
+        return spectre.player.transform.position;
     }
 
-    protected override IEnumerator DoMovement(Spectre spectre, Vector2 target)
+    protected override void UpdateTarget(Spectre spectre)
     {
-        while (Vector2.Distance(spectre.transform.position, spectre.player.transform.position) > StoppingDistance.Value)
+        targetLocation = spectre.player.transform.position;
+    }
+
+    protected override Status OnUpdate()
+    {
+        UpdateTarget(spectre);
+
+        float distanceToPlayer = Vector2.Distance(spectre.rb.position, targetLocation);
+
+        if (distanceToPlayer <= StoppingDistance.Value)
         {
-            Vector2 currentPos = spectre.rb.position;
-            Vector2 newPos = Vector2.MoveTowards(currentPos, spectre.player.transform.position, 5f * Time.deltaTime);
-            spectre.rb.MovePosition(newPos);
-            yield return null;
+            spectre.StopMovement();
+            return Status.Success;
         }
+
+        Vector2 direction = (targetLocation - spectre.rb.position).normalized;
+        spectre.SetMovement(direction, moveSpeed);
+
+        return Status.Running;
     }
 }
-

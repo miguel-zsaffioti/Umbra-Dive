@@ -19,9 +19,5 @@ public partial class PlayerAlignedCondition : Condition
         return diffY <= AlignmentRange.Value;
     }
 
-    public override void OnStart()
-    {
-        IsTrue();
-    }
 
 }
