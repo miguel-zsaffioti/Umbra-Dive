@@ -30,7 +30,13 @@ public partial class TeleportToAttackAction : Action
 
         if (timer >= waitTime)
         {
-            spectre.rb.position = ComputeTarget(spectre);
+            Vector2 target = ComputeTarget(spectre);
+
+            spectre.PlayTeleportEffect(spectre.rb.position);
+
+            spectre.rb.position = target;
+            spectre.PlayTeleportEffect(target);
+
             return Status.Success;
         }
 
