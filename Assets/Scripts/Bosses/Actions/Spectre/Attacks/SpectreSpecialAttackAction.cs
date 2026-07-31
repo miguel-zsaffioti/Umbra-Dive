@@ -17,7 +17,7 @@ public partial class SpectreSpecialAttackAction : Action
 
         spectre.SpawnProjectileInCrossPattern();
         spectre.SpawnProjectileInXPattern();
+        spectre.RegisterAttack("Special");
         return Status.Success;
     }
 }
-

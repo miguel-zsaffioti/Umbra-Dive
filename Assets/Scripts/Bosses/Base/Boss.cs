@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Behavior;
 using UnityEngine;
 
@@ -28,6 +29,33 @@ public class Boss : MonoBehaviour, IDamagable
     [HideInInspector] public float moveSpeed;
 
     [HideInInspector] public Collider2D arenaBounds;
+
+    private readonly List<string> attackHistory = new List<string>();
+    private const int MaxAttackHistorySize = 20;
+
+    public void RegisterAttack(string attackId)
+    {
+        if (string.IsNullOrEmpty(attackId)) return;
+
+        attackHistory.Add(attackId);
+        if (attackHistory.Count > MaxAttackHistorySize)
+        {
+            attackHistory.RemoveAt(0);
+        }
+    }
+
+    public bool CanUseAttack(string attackId, int cooldownAttacks)
+    {
+        if (string.IsNullOrEmpty(attackId)) return true;
+        if (cooldownAttacks <= 0) return true;
+
+        int checkCount = Mathf.Min(cooldownAttacks, attackHistory.Count);
+        for (int i = attackHistory.Count - checkCount; i < attackHistory.Count; i++)
+        {
+            if (attackHistory[i] == attackId) return false;
+        }
+        return true;
+    }
 
     public Vector2 ClampToArena(Vector2 point)
     {

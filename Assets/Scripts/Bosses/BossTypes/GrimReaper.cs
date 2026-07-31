@@ -80,6 +80,7 @@ public class GrimReaper : Boss
             player.healthSystem.TakeDamage(2, knockbackDirection, 5f);
         }
 
+        RegisterAttack("Normal");
         attackCooldown.Reset();
     }
 
@@ -91,6 +92,8 @@ public class GrimReaper : Boss
         Vector3 newScale = newSlash.transform.localScale;
         newScale.x = transform.localScale.x;
         newSlash.transform.localScale = newScale;
+
+        RegisterAttack("Special");
         specialCooldown.Reset();
     }
 

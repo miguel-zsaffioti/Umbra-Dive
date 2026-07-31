@@ -74,6 +74,8 @@ public class Spectre : Boss
         {
             SpawnProjectile(direction);
         }
+
+        RegisterAttack("Cross");
     }
 
     public void SpawnProjectileInXPattern()
@@ -83,6 +85,8 @@ public class Spectre : Boss
         {
             SpawnProjectile(direction);
         }
+
+        RegisterAttack("X");
     }
 
     public void SpawnProjectileTeleport()
@@ -90,5 +94,7 @@ public class Spectre : Boss
         animator.SetTrigger("Attack");
         Vector2 directionToPlayer = (player.rb.position - rb.position).normalized;
         SpawnProjectile(directionToPlayer);
+
+        RegisterAttack("Teleport");
     }
 }

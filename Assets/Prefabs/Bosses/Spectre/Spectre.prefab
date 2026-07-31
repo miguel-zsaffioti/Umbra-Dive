@@ -302,7 +302,6 @@ MonoBehaviour:
   m_Graph: {fileID: 46304684103073268, guid: b75436473f9a67d4faa86f9fe50db063, type: 2}
   m_BlackboardVariableOverridesList:
   - rid: 3972595402501259395
-  - rid: 4463692471153983776
   m_OriginalGraph: {fileID: 46304684103073268, guid: b75436473f9a67d4faa86f9fe50db063, type: 2}
   m_IsInitialised: 0
   m_IsStarted: 0
@@ -317,14 +316,6 @@ MonoBehaviour:
           m_Value1: 0
         Name: Self
         m_Value: {fileID: 8486392946124527458}
-    - rid: 4463692471153983776
-      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 15857124182573830546
-          m_Value1: 2071976934783545281
-        Name: TeleportChance
-        m_Value: 100
 --- !u!114 &8552454024757355947
 MonoBehaviour:
   m_ObjectHideFlags: 0
