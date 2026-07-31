@@ -4,7 +4,15 @@ using UnityEngine.AdaptivePerformance;
 public class Spectre : Boss
 {
     [SerializeField] GameObject OreShard;
-    
+    [SerializeField] GameObject teleportEffectPrefab;
+
+    public void ForceFaceForward(Vector2? direction = null)
+    {
+        Vector2 facing = direction ?? Vector2.down;
+        animator.SetBool("isMoving", false);
+        animator.SetFloat("LastX", facing.x);
+        animator.SetFloat("LastY", facing.y);
+    }
 
     private static readonly Vector2[] CrossDirections =
     {
@@ -18,6 +26,13 @@ public class Spectre : Boss
         new Vector2(1f, -1f).normalized,
         new Vector2(-1f, -1f).normalized
     };
+
+    public void PlayTeleportEffect(Vector2 position)
+    {
+        if (teleportEffectPrefab == null) return;
+        GameObject fx = Instantiate(teleportEffectPrefab, position, Quaternion.identity);
+        Destroy(fx, 2f);
+    }
 
     private void Update()
     {
