@@ -137,16 +137,16 @@ public class Boss : MonoBehaviour, IDamagable
         else
         {
             Destroy(gameObject);
+            if (trigger == null) return;
+            trigger.EndBossFight();
         }
-
-        if (trigger == null) return;
-        trigger.EndBossFight();
     }
 
     private IEnumerator WaitForDeathEffect()
     {
         yield return deathEffect.PlayDeathEffect();
         Destroy(gameObject);
+        trigger.EndBossFight();
     }
 
     public Player GetPlayerInRange(float range)
