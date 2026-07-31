@@ -29,9 +29,13 @@ public abstract partial class SpectreMoveActionBase : Action
         float distX = Mathf.Abs(targetLocation.x - currentPos.x);
         float distY = Mathf.Abs(targetLocation.y - currentPos.y);
 
+        //Debug.Log($"Frame={Time.frameCount} currentPos={currentPos} target={targetLocation} distX={distX}");
 
         if (distX > stoppingDistance)
         {
+            float dirX = Mathf.Sign(targetLocation.x - currentPos.x);
+            spectre.SetMovement(new Vector2(dirX, 0f), 0f);
+
             float newX = Mathf.MoveTowards(currentPos.x, targetLocation.x, step);
             spectre.rb.MovePosition(new Vector2(newX, currentPos.y));
             return Status.Running;
@@ -39,6 +43,9 @@ public abstract partial class SpectreMoveActionBase : Action
 
         if (distY > stoppingDistance)
         {
+            float dirY = Mathf.Sign(targetLocation.y - currentPos.y);
+            spectre.SetMovement(new Vector2(0f, dirY), 0f); 
+
             float newY = Mathf.MoveTowards(currentPos.y, targetLocation.y, step);
             spectre.rb.MovePosition(new Vector2(targetLocation.x, newY));
             return Status.Running;

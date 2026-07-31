@@ -30,7 +30,12 @@ public partial class TeleportToAttackAction : Action
 
         if (timer >= waitTime)
         {
-            spectre.rb.position = ComputeTarget(spectre);
+            Vector2 target = ComputeTarget(spectre);
+            //Vector2 teleportDir = (target - spectre.rb.position);
+            //if (teleportDir.sqrMagnitude > 0.0001f)
+            //    spectre.SetMovement(teleportDir.normalized, 0f);
+
+            spectre.rb.position = target;
             return Status.Success;
         }
 

@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.AdaptivePerformance;
 
 public class Spectre : Boss
 {
     [SerializeField] GameObject OreShard;
+    
 
     private static readonly Vector2[] CrossDirections =
     {
@@ -17,8 +19,24 @@ public class Spectre : Boss
         new Vector2(-1f, -1f).normalized
     };
 
-    public void SpawnProjectile(Vector2 direction)
+    private void Update()
     {
+        Vector2 moveDir = moveDirection.normalized;
+        bool isMoving = moveDirection.sqrMagnitude > 0.01f;
+        //Debug.Log(isMoving);
+
+        animator.SetBool("isMoving", isMoving);
+
+        if (isMoving)
+        {
+            animator.SetFloat("LastX", moveDir.x);
+            animator.SetFloat("LastY", moveDir.y);
+        }
+    }
+
+    private void SpawnProjectile(Vector2 direction)
+    {
+        animator.SetTrigger("Attack");
         Vector2 spawnLocation = rb.position + direction;
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -36,6 +54,7 @@ public class Spectre : Boss
 
     public void SpawnProjectileInCrossPattern()
     {
+        animator.SetTrigger("Attack");
         foreach (Vector2 direction in CrossDirections)
         {
             SpawnProjectile(direction);
@@ -44,9 +63,17 @@ public class Spectre : Boss
 
     public void SpawnProjectileInXPattern()
     {
+        animator.SetTrigger("Attack");
         foreach (Vector2 direction in XDirections)
         {
             SpawnProjectile(direction);
         }
+    }
+
+    public void SpawnProjectileTeleport()
+    {
+        animator.SetTrigger("Attack");
+        Vector2 directionToPlayer = (player.rb.position - rb.position).normalized;
+        SpawnProjectile(directionToPlayer);
     }
 }

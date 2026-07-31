@@ -42,7 +42,7 @@ public class Boss : MonoBehaviour, IDamagable
 
     protected virtual void FixedUpdate()
     {
-        if (moveDirection.sqrMagnitude > 0.0001f)
+        if (moveDirection.sqrMagnitude > 0.0001f && moveSpeed > 0f)
         {
             Vector2 newPos = rb.position + moveDirection.normalized * moveSpeed * Time.fixedDeltaTime;
             rb.MovePosition(newPos);
@@ -51,6 +51,7 @@ public class Boss : MonoBehaviour, IDamagable
 
     public void SetMovement(Vector2 direction, float speed)
     {
+        //Debug.Log($"SetMovement chamado: dir={direction}, speed={speed}");
         moveDirection = direction;
         moveSpeed = speed;
     }
@@ -101,8 +102,6 @@ public class Boss : MonoBehaviour, IDamagable
 
     public void Die()
     {
-
-
         if (deathEffect != null)
         {
             deathEffect.StartCoroutine(WaitForDeathEffect());

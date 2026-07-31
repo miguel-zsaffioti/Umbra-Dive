@@ -13,13 +13,9 @@ public partial class TeleportAttackAction : Action
     protected override Status OnStart()
     {
         spectre = GameObject.GetComponent<Spectre>();
-
    
-        if (spectre == null || spectre.player == null) return Status.Failure;
-
-        Vector2 directionToPlayer = (spectre.player.rb.position - spectre.rb.position).normalized;
-
-        spectre.SpawnProjectile(directionToPlayer);
+        if (spectre == null) return Status.Failure;
+        spectre.SpawnProjectileTeleport();
 
         return Status.Success;
     }

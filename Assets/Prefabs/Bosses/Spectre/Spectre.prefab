@@ -221,7 +221,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8486392946124527458}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -336,6 +336,7 @@ MonoBehaviour:
   bossName: Spectre
   moveDirection: {x: 0, y: 0}
   moveSpeed: 0
+  arenaBounds: {fileID: 0}
   OreShard: {fileID: 742863164703497884, guid: b65734e9f6f803245b5cfa2c7f4779ee, type: 3}
 --- !u!114 &6140943119499916633
 MonoBehaviour:
