@@ -12,9 +12,15 @@ public class EnemyData : ScriptableObject
     public float playerDetectionRadius = 5f;
     public float timeToLose = 2f;
 
+    [Header("Leash")]
+    public float leashRange = 8f;
+
     [Header("Contact Damage")]
     public int damageAmount = 2;
     public float knockbackForce = 20f;
+
+    [Header("Knockback")]
+    public float knockbackStunDuration = 0.2f;
 
     [Header("Attack Data")]
     public float attackDistance = 2f;

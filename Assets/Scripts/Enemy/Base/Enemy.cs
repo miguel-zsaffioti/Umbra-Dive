@@ -1,5 +1,6 @@
-using System.Xml;
+ï»¿using System.Xml;
 using UnityEngine;
+using UnityEngine.AI;
 
 public abstract class Enemy : MonoBehaviour, IDamagable
 {
@@ -10,6 +11,7 @@ public abstract class Enemy : MonoBehaviour, IDamagable
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public Animator animator;
     [HideInInspector] public Transform playerTransform;
+    [HideInInspector] public NavMeshAgent agent;
 
     [Header("Detection")]
     [HideInInspector] public DetectionSystem detectionSystem;
@@ -29,10 +31,10 @@ public abstract class Enemy : MonoBehaviour, IDamagable
 
     [HideInInspector] public bool isDead = false;
 
-    // A máquina de estados continua aqui, mas os estados específicos saem.
+    [HideInInspector] public Vector2 spawnPosition;
+
     [HideInInspector] public EnemyStateMachine stateMachine;
 
-    // Awake permanece igual, pois inicializa componentes comuns a todos.
     public virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -42,17 +44,46 @@ public abstract class Enemy : MonoBehaviour, IDamagable
         healthSystem = new EnemyHealthSystem(this);
         knockbackState = new EnemyKnockbackState(this, stateMachine);
 
-        
+        agent = GetComponent<NavMeshAgent>();
+        if (agent != null)
+        {
+            agent.updatePosition = false;
+            agent.updateRotation = false;
+            agent.updateUpAxis = false;
+        }
+
+
     }
 
     private void Start()
     {
         this.InitializeStates();
         currentHealth = maxHealth;
+        spawnPosition = transform.position;
         if (Player.Instance != null)
         {
             playerTransform = Player.Instance.transform;
         }
+
+        if (agent != null && data != null)
+        {
+
+            agent.speed = data.moveSpeed;
+            agent.acceleration = 999f;
+            agent.stoppingDistance = 0f;
+            agent.autoBraking = false;
+        }
+    }
+
+    public virtual bool TryAttack()
+    {
+        return false;
+    }
+
+    public void FaceDirection(Vector2 direction)
+    {
+        if (direction.x > 0 && !isFacingRight) Flip();
+        else if (direction.x < 0 && isFacingRight) Flip();
     }
 
     protected virtual void InitializeStates()

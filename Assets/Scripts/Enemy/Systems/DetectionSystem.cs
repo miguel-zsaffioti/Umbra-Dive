@@ -3,7 +3,7 @@ using UnityEngine;
 public class DetectionSystem
 {
     private Enemy enemy;
-    private float losePlayerTimer; // Cronômetro interno
+    private float losePlayerTimer;
     private bool isPlayerDetected;
 
     public DetectionSystem(Enemy enemy)
@@ -30,16 +30,17 @@ public class DetectionSystem
 
     private bool CanSeePlayer()
     {
-        LayerMask combinedMask = enemy.playerLayer | enemy.obstacleLayer;
-        RaycastHit2D hit = Physics2D.CircleCast(
-            enemy.transform.position,
-            enemy.data.playerDetectionRadius, 
-            Vector2.zero,
-            0,
-            combinedMask
-        );
+        if (enemy.playerTransform == null) return false;
 
-        return hit.collider != null && hit.collider.CompareTag("Player");
+        Vector2 origin = enemy.transform.position;
+        Vector2 toPlayer = (Vector2)enemy.playerTransform.position - origin;
+        float distance = toPlayer.magnitude;
+
+        if (distance > enemy.data.playerDetectionRadius) return false;
+        if (distance <= 0f) return true;
+
+        RaycastHit2D obstacleHit = Physics2D.Raycast(origin, toPlayer / distance, distance, enemy.obstacleLayer);
+        return obstacleHit.collider == null;
     }
 
     public bool IsPlayerDetected()

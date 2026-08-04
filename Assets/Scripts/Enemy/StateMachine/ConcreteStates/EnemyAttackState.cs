@@ -13,9 +13,7 @@ public class EnemyAttackState : EnemyState
         enemy.rb.linearVelocity = Vector2.zero;
         attackDirection = (enemy.playerTransform.position - enemy.transform.position).normalized;
 
-       
-        if (attackDirection.x > 0 && !enemy.isFacingRight) enemy.Flip();
-        else if (attackDirection.x < 0 && enemy.isFacingRight) enemy.Flip();
+        enemy.FaceDirection(attackDirection);
 
         enemy.animator.SetTrigger("Attack");
     }
@@ -32,7 +30,7 @@ public class EnemyAttackState : EnemyState
     {
         if (eventName == "StartDash")
         {
-            isDashing = true; 
+            isDashing = true;
         }
         else if (eventName == "FinishAttack")
         {

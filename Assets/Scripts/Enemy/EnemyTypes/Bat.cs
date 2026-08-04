@@ -10,7 +10,7 @@ public class Bat : Enemy
     {
         waitState = new WaitState(this, stateMachine);
         chaseState = new ChaseState(this, stateMachine);
-        attackState = new EnemyAttackState(this,stateMachine);
+        attackState = new EnemyAttackState(this, stateMachine);
         knockbackState = new EnemyKnockbackState(this, stateMachine);
 
         stateMachine.Start(waitState);
@@ -21,7 +21,17 @@ public class Bat : Enemy
         stateMachine.OnAnimationTrigger(eventName);
     }
 
-    public IEnumerator waitToAttack() { 
+    public override bool TryAttack()
+    {
+        if (!canAttack) return false;
+
+        rb.linearVelocity = Vector2.zero;
+        stateMachine.ChangeState(attackState);
+        return true;
+    }
+
+    public IEnumerator waitToAttack()
+    {
         canAttack = false;
         yield return new WaitForSeconds(data.attackCooldown);
         canAttack = true;

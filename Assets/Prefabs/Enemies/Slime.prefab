@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 3265583897981682587}
   - component: {fileID: 3348526172255081349}
   - component: {fileID: 6545779894222318395}
+  - component: {fileID: 1603841271334903151}
   m_Layer: 7
   m_Name: Slime
   m_TagString: Slime
@@ -299,6 +300,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   animator: {fileID: 0}
   playerTransform: {fileID: 0}
+  agent: {fileID: 0}
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -309,6 +311,7 @@ MonoBehaviour:
   currentHealth: 0
   isFacingRight: 1
   isDead: 0
+  spawnPosition: {x: 0, y: 0}
 --- !u!114 &6545779894222318395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,3 +326,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   whiteMaterial: {fileID: 2100000, guid: 4c0f761dfbd1ed64fae0b91bd46e6a4c, type: 2}
   duration: 0.1
+--- !u!195 &1603841271334903151
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7023954208938059009}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.3
+  m_Speed: 3.5
+  m_Acceleration: 999
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 0
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 2

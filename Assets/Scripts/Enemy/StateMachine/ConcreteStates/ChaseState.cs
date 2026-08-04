@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class ChaseState : EnemyState
 {
+    private float repathTimer;
+    private const float RepathInterval = 0.2f;
+
     public ChaseState(Enemy enemy, EnemyStateMachine stateMachine) : base(enemy, stateMachine)
     {
     }
@@ -9,6 +12,12 @@ public class ChaseState : EnemyState
     public override void Enter()
     {
         enemy.animator.SetBool("isChasing", true);
+        repathTimer = 0f;
+
+        if (enemy.agent != null)
+        {
+            enemy.agent.nextPosition = enemy.transform.position;
+        }
     }
 
     public override void Exit()
@@ -23,43 +32,68 @@ public class ChaseState : EnemyState
             stateMachine.ChangeState(enemy.waitState);
             return;
         }
+
+        if (enemy.data.leashRange > 0f)
+        {
+            float distanceFromSpawn = Vector2.Distance(enemy.transform.position, enemy.spawnPosition);
+            if (distanceFromSpawn > enemy.data.leashRange)
+            {
+                stateMachine.ChangeState(enemy.waitState);
+                return;
+            }
+        }
     }
 
     public override void PhysicsUpdate()
     {
         if (enemy.playerTransform == null) return;
 
-        Vector2 dir = (enemy.playerTransform.position - enemy.transform.position);
-        float distanceToPlayer = dir.magnitude;
+        Vector2 straightDir = (Vector2)enemy.playerTransform.position - enemy.rb.position;
+        float distanceToPlayer = straightDir.magnitude;
 
-        // --- CORREÇÃO DO SAMBA (Flip) ---
-        if (Mathf.Abs(dir.x) > 0.2f)
+        if (Mathf.Abs(straightDir.x) > 0.2f)
         {
-            if (dir.x > 0 && !enemy.isFacingRight) enemy.Flip();
-            else if (dir.x < 0 && enemy.isFacingRight) enemy.Flip();
+            enemy.FaceDirection(straightDir);
         }
 
-        // Lógica de Ataque
-        if (distanceToPlayer <= enemy.data.attackDistance && ((Bat)enemy).canAttack)
+        if (distanceToPlayer <= enemy.data.attackDistance && enemy.TryAttack())
         {
-            // Importante: Zere a velocidade/inércia ao atacar
-            enemy.rb.linearVelocity = Vector2.zero;
-            stateMachine.ChangeState(((Bat)enemy).attackState);
             return;
         }
-        // Lógica de Movimento
         else if (distanceToPlayer > enemy.data.stopDistance)
         {
-            // MovePosition é mais estável que AddForce para RPGs
-            // Calculamos a nova posição baseada na velocidade * tempo fixo
-            Vector2 targetPosition = enemy.rb.position + (dir.normalized * enemy.data.moveSpeed * Time.fixedDeltaTime);
+            Vector2 targetPosition;
+
+            if (enemy.agent != null)
+            {
+                repathTimer -= Time.fixedDeltaTime;
+                if (repathTimer <= 0f)
+                {
+                    enemy.agent.SetDestination(enemy.playerTransform.position);
+                    repathTimer = RepathInterval;
+                }
+                Vector2 pathDir = ((Vector2)enemy.agent.desiredVelocity).normalized;
+                if (pathDir.sqrMagnitude < 0.001f)
+                {
+                    pathDir = straightDir.normalized;
+                }
+
+                targetPosition = enemy.rb.position + pathDir * enemy.data.moveSpeed * Time.fixedDeltaTime;
+            }
+            else
+            {
+                targetPosition = enemy.rb.position + straightDir.normalized * enemy.data.moveSpeed * Time.fixedDeltaTime;
+            }
 
             enemy.rb.MovePosition(targetPosition);
+
+            if (enemy.agent != null)
+            {
+                enemy.agent.nextPosition = targetPosition;
+            }
         }
-        // Parado
         else
         {
-            // Se já chegou perto, garanta que ele não deslize
             enemy.rb.linearVelocity = Vector2.zero;
         }
     }

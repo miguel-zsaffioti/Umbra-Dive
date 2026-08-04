@@ -1,23 +1,19 @@
-using UnityEditor;
 using UnityEngine;
 
 public class EnemyHealthSystem
 {
     Enemy enemy;
-
-    // Otimização: Cache do componente para não usar GetComponent toda vez (opcional, mas recomendado)
     private FlashEffect flashEffect;
 
     public EnemyHealthSystem(Enemy enemy)
     {
         this.enemy = enemy;
-        // Tenta pegar o componente FlashEffect que está no Inimigo
         this.flashEffect = enemy.GetComponent<FlashEffect>();
     }
 
     public void TakeDamage(int damage, Vector2 knockbackDirection, float knockbackForce)
     {
-        if (enemy.isDead) return; // Se já morreu, ignora dano novo
+        if (enemy.isDead) return;
 
         enemy.currentHealth -= damage;
 
@@ -29,9 +25,8 @@ public class EnemyHealthSystem
         }
         else
         {
-            // Só aplica knockback e hurt se NÃO morreu
             enemy.ApplyKnockback(knockbackDirection, knockbackForce);
-            enemy.animator.SetTrigger("Hurt"); // Importante ter animação de hit
+            enemy.animator.SetTrigger("Hurt");
         }
     }
 

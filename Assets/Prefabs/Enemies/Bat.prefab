@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6021763483369111243}
   - component: {fileID: 4099819709549712045}
   - component: {fileID: 673877262841308170}
+  - component: {fileID: 7405336471377105770}
   m_Layer: 7
   m_Name: Bat
   m_TagString: Bat
@@ -208,6 +209,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   animator: {fileID: 0}
   playerTransform: {fileID: 0}
+  agent: {fileID: 0}
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -218,6 +220,7 @@ MonoBehaviour:
   currentHealth: 0
   isFacingRight: 1
   isDead: 0
+  spawnPosition: {x: 0, y: 0}
   canAttack: 1
 --- !u!114 &673877262841308170
 MonoBehaviour:
@@ -233,6 +236,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FlashEffect
   whiteMaterial: {fileID: 2100000, guid: 4c0f761dfbd1ed64fae0b91bd46e6a4c, type: 2}
   duration: 0.1
+--- !u!195 &7405336471377105770
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4637743472107979480}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.3
+  m_Speed: 3.5
+  m_Acceleration: 999
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 0
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 2
 --- !u!1 &5389239101332013542
 GameObject:
   m_ObjectHideFlags: 0

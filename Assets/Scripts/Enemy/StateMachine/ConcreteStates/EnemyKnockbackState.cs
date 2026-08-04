@@ -10,11 +10,8 @@ public class EnemyKnockbackState : EnemyState
 
     public override void Enter()
     {
-        // Define quanto tempo o inimigo fica "atordoado" voando para trás
-        // Você pode criar uma variável 'knockbackDuration' no Enemy.cs ou usar um valor fixo aqui
-        timer = 0.2f;
+        timer = enemy.data.knockbackStunDuration;
 
-        // Opcional: Tocar animação de dano
         enemy.animator.SetTrigger("Hurt");
     }
 
