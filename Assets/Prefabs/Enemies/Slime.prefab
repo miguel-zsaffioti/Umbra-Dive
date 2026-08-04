@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 3265583897981682587}
   - component: {fileID: 3348526172255081349}
   - component: {fileID: 6545779894222318395}
+  - component: {fileID: -1231163891496736320}
   - component: {fileID: 1603841271334903151}
   m_Layer: 7
   m_Name: Slime
@@ -272,7 +273,7 @@ Animator:
   m_GameObject: {fileID: 7023954208938059009}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b20cb5427fbfddc4ba61d31515b86c37, type: 2}
+  m_Controller: {fileID: 9100000, guid: e8f0ec4cfdce48b4f908ab97678e8917, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -326,6 +327,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   whiteMaterial: {fileID: 2100000, guid: 4c0f761dfbd1ed64fae0b91bd46e6a4c, type: 2}
   duration: 0.1
+--- !u!114 &-1231163891496736320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7023954208938059009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cb6bc4dcdfcaf748890024f80a3cc9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeathEffect
+  flickerCount: 6
+  startFlickerInterval: 0.35
+  endFlickerInterval: 0.04
+  deathParticlesPrefab: {fileID: 1546186448473138721, guid: 52f7908007befb647a07f9f04d386895, type: 3}
+  whiteMaterial: {fileID: 2100000, guid: 4c0f761dfbd1ed64fae0b91bd46e6a4c, type: 2}
 --- !u!195 &1603841271334903151
 NavMeshAgent:
   m_ObjectHideFlags: 0

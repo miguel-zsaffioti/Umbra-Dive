@@ -17,9 +17,13 @@ MonoBehaviour:
   stopDistance: 0.6
   playerDetectionRadius: 3
   timeToLose: 2
+  detectionRayThickness: 0.15
+  hearingRadius: 1.2
+  leashRange: 8
   damageAmount: 2
   knockbackForce: 1
-  attackDistance: 2
+  knockbackStunDuration: 0.2
+  attackDistance: 4
   attackDashSpeed: 10
   damage: 2
   attackCooldown: 1

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4099819709549712045}
   - component: {fileID: 673877262841308170}
   - component: {fileID: 7405336471377105770}
+  - component: {fileID: -2935700256853421350}
   m_Layer: 7
   m_Name: Bat
   m_TagString: Bat
@@ -258,6 +259,23 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 2
+--- !u!114 &-2935700256853421350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4637743472107979480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cb6bc4dcdfcaf748890024f80a3cc9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeathEffect
+  flickerCount: 6
+  startFlickerInterval: 0.35
+  endFlickerInterval: 0.04
+  deathParticlesPrefab: {fileID: 1546186448473138721, guid: 52f7908007befb647a07f9f04d386895, type: 3}
+  whiteMaterial: {fileID: 2100000, guid: 4c0f761dfbd1ed64fae0b91bd46e6a4c, type: 2}
 --- !u!1 &5389239101332013542
 GameObject:
   m_ObjectHideFlags: 0

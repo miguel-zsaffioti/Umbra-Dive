@@ -4,8 +4,8 @@ using UnityEngine;
 public class DeathEffect : MonoBehaviour
 {
     public int flickerCount = 6;
-    public float startFlickerInterval = 0.35f; 
-    public float endFlickerInterval = 0.04f;   
+    public float startFlickerInterval = 0.35f;
+    public float endFlickerInterval = 0.04f;
     public GameObject deathParticlesPrefab;
 
     private SpriteRenderer spriteRenderer;
@@ -32,6 +32,17 @@ public class DeathEffect : MonoBehaviour
             yield return new WaitForSeconds(interval);
         }
 
+        SpawnParticlesAndHide();
+    }
+
+    public IEnumerator PlayDeathEffectInstant()
+    {
+        SpawnParticlesAndHide();
+        yield break;
+    }
+
+    private void SpawnParticlesAndHide()
+    {
         if (deathParticlesPrefab != null)
         {
             Instantiate(deathParticlesPrefab, transform.position, Quaternion.identity);

@@ -11,6 +11,8 @@ public class EnemyData : ScriptableObject
     [Header("Detection")]
     public float playerDetectionRadius = 5f;
     public float timeToLose = 2f;
+    public float detectionRayThickness = 0.15f;
+    public float hearingRadius = 1.2f;
 
     [Header("Leash")]
     public float leashRange = 8f;

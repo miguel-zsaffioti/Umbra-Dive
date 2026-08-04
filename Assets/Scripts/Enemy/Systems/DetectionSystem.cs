@@ -37,9 +37,16 @@ public class DetectionSystem
         float distance = toPlayer.magnitude;
 
         if (distance > enemy.data.playerDetectionRadius) return false;
+        if (distance <= enemy.data.hearingRadius) return true;
         if (distance <= 0f) return true;
 
-        RaycastHit2D obstacleHit = Physics2D.Raycast(origin, toPlayer / distance, distance, enemy.obstacleLayer);
+        RaycastHit2D obstacleHit = Physics2D.CircleCast(
+            origin,
+            enemy.data.detectionRayThickness,
+            toPlayer / distance,
+            distance,
+            enemy.obstacleLayer
+        );
         return obstacleHit.collider == null;
     }
 
