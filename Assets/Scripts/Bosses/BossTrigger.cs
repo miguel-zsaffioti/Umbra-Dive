@@ -12,21 +12,39 @@ public class BossTrigger : MonoBehaviour
     public GameObject healthPanel;
     public TextMeshProUGUI bossName;
     public Collider2D arenaBounds;
-
+    public GameManager gameManager;
+    public int bossOrderer;
     private Player player;
-
     private bool activated;
 
     private void Start()
     {
         Parent = transform.parent;
         activated = false;
+
+        bool isCurrentBoss = gameManager.bossCount == bossOrderer;
+        bool alreadyDefeated = gameManager.bossCount > bossOrderer;
+
+        if (isCurrentBoss)
+        {
+            Door.SetActive(false);
+            GetComponent<Collider2D>().enabled = true;
+        }
+        else
+        {
+            Door.SetActive(true);
+            GetComponent<Collider2D>().enabled = false;
+
+            if (alreadyDefeated)
+                activated = true;
+        }
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (activated) return;
-        if (Door.activeSelf) return;
+        if (gameManager.bossCount != bossOrderer) return;
         if (SpawnLocation == null) return;
         if (Parent == null) return;
         if (arenaBounds == null) return;
@@ -36,19 +54,16 @@ public class BossTrigger : MonoBehaviour
             player = collision.GetComponent<Player>();
             Door.SetActive(true);
             GameObject spawnedBoss = Instantiate(boss, SpawnLocation.position, boss.transform.rotation, Parent);
-
             Boss bossScript = spawnedBoss.GetComponent<Boss>();
             if (bossScript != null)
             {
                 bossScript.trigger = this;
                 bossName.text = bossScript.bossName;
             }
-
             if (bossArenaCamera != null)
             {
                 bossArenaCamera.Priority = 20;
             }
-
             activated = true;
             healthPanel.SetActive(true);
             bossScript.arenaBounds = arenaBounds;
@@ -61,5 +76,6 @@ public class BossTrigger : MonoBehaviour
         bossArenaCamera.Priority = 1;
         Door.SetActive(false);
         player.RestorePotions();
+        gameManager.bossCount++;
     }
 }
