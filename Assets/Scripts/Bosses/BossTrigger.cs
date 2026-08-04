@@ -60,6 +60,6 @@ public class BossTrigger : MonoBehaviour
         healthPanel.SetActive(false);
         bossArenaCamera.Priority = 1;
         Door.SetActive(false);
-        player.RestoreHealth();
+        player.RestorePotions();
     }
 }

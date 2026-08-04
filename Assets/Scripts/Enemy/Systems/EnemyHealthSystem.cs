@@ -32,14 +32,14 @@ public class EnemyHealthSystem
             }
 
             enemy.ApplyKnockback(knockbackDirection, knockbackForce);
-            enemy.animator.SetTrigger("Hurt");
+            //enemy.animator.SetTrigger("Hurt");
         }
     }
 
     private void StartDying()
     {
         enemy.isDead = true;
-        enemy.animator.SetTrigger("Die");
+        //enemy.animator.SetTrigger("Die");
 
         enemy.rb.linearVelocity = Vector2.zero;
         enemy.GetComponent<Collider2D>().enabled = false;

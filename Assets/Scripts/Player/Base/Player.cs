@@ -46,6 +46,43 @@ public class Player : MonoBehaviour, IDamagable
     }
     #endregion
 
+    #region Potions
+    [Header("Potions")]
+    public int maxPotions = 3;
+    [HideInInspector] public int currentPotions;
+    public int potionHealAmount = 30;
+
+    public event System.Action<int, int> OnPotionsChanged; // (current, max)
+
+    public void NotifyPotionsChanged()
+    {
+        OnPotionsChanged?.Invoke(currentPotions, maxPotions);
+    }
+
+    public void TryUsePotion()
+    {
+        if (currentPotions <= 0) return;
+        if (currentHealth >= maxHealth) return;
+        if (stateMachine.currState == knockbackState) return;
+
+        currentPotions--;
+        NotifyPotionsChanged();
+
+        healthSystem.RestoreHealthAmount(potionHealAmount);
+
+        if (audioData.heal != null)
+        {
+            audioSystem.PlaySound(audioData.heal);
+        }
+    }
+
+    public void RestorePotions()
+    {
+        currentPotions = maxPotions;
+        NotifyPotionsChanged();
+    }
+    #endregion
+
     #region State Variables
     [Header("Move")]
     public float moveSpeed = 5f;
@@ -128,6 +165,9 @@ public class Player : MonoBehaviour, IDamagable
         stateMachine.Start(idleState);
         currentHealth = maxHealth;
         NotifyHealthChanged();
+
+        currentPotions = maxPotions;
+        NotifyPotionsChanged();
     }
 
     void Update()
@@ -135,6 +175,11 @@ public class Player : MonoBehaviour, IDamagable
         inputSystem.Tick();
         stateMachine.FrameUpdate();
         rollCooldown.Tick(Time.deltaTime);
+
+        if (inputSystem.HealInput)
+        {
+            TryUsePotion();
+        }
     }
 
     private void FixedUpdate()
@@ -210,12 +255,12 @@ public class Player : MonoBehaviour, IDamagable
     public void EnableCombatLayer()
     {
         if (layerWeightCoroutine != null) StopCoroutine(layerWeightCoroutine);
-        animator.SetLayerWeight(1, 1f); 
+        animator.SetLayerWeight(1, 1f);
     }
 
     public void RestoreHealth()
     {
-        StartCoroutine(healthSystem.RestoreHealth(cureAmount,cureTick));
+        StartCoroutine(healthSystem.RestoreHealth(cureAmount, cureTick));
     }
 
 }

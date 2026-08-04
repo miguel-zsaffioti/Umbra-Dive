@@ -12,6 +12,8 @@ public class PlayerInputSystem
 
     public bool BlockInput { get; private set; }
 
+    public bool HealInput { get; private set; }
+
     public PlayerInputSystem()
     {
         playerControls = new InputActions();
@@ -33,5 +35,6 @@ public class PlayerInputSystem
         RollInput = playerControls.Player.Roll.WasPerformedThisFrame();
         AttackInput = playerControls.Player.Attack.WasPerformedThisFrame();
         BlockInput = playerControls.Player.Block.IsPressed();
+        HealInput = playerControls.Player.Heal.WasPerformedThisFrame();
     }
 }

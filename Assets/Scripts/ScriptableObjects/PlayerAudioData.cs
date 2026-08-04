@@ -7,4 +7,5 @@ public class PlayerAudioData : ScriptableObject
     public AudioClip[] normalAttacks;
     public AudioClip[] hitAttacks;
     public AudioClip damage;
+    public AudioClip heal;
 }

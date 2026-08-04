@@ -89,4 +89,10 @@ public class PlayerHealthSystem
         }
     }
 
+    public void RestoreHealthAmount(int amount)
+    {
+        player.currentHealth = Mathf.Min(player.currentHealth + amount, player.maxHealth);
+        player.NotifyHealthChanged();
+    }
+
 }

@@ -127,6 +127,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Heal"",
+                    ""type"": ""Button"",
+                    ""id"": ""16dcc804-d86a-42be-8860-5c583afbb319"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -305,6 +314,28 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Block"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9cb3a87b-0675-4c96-8e9d-1588e0615c48"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Heal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ec173fd6-6209-41fd-8b40-029b785dc0cc"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Heal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -317,6 +348,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Player_Roll = m_Player.FindAction("Roll", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Block = m_Player.FindAction("Block", throwIfNotFound: true);
+        m_Player_Heal = m_Player.FindAction("Heal", throwIfNotFound: true);
     }
 
     ~@InputActions()
@@ -401,6 +433,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Roll;
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Block;
+    private readonly InputAction m_Player_Heal;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -428,6 +461,10 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Block".
         /// </summary>
         public InputAction @Block => m_Wrapper.m_Player_Block;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Heal".
+        /// </summary>
+        public InputAction @Heal => m_Wrapper.m_Player_Heal;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -466,6 +503,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Block.started += instance.OnBlock;
             @Block.performed += instance.OnBlock;
             @Block.canceled += instance.OnBlock;
+            @Heal.started += instance.OnHeal;
+            @Heal.performed += instance.OnHeal;
+            @Heal.canceled += instance.OnHeal;
         }
 
         /// <summary>
@@ -489,6 +529,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Block.started -= instance.OnBlock;
             @Block.performed -= instance.OnBlock;
             @Block.canceled -= instance.OnBlock;
+            @Heal.started -= instance.OnHeal;
+            @Heal.performed -= instance.OnHeal;
+            @Heal.canceled -= instance.OnHeal;
         }
 
         /// <summary>
@@ -557,5 +600,12 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnBlock(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Heal" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnHeal(InputAction.CallbackContext context);
     }
 }
