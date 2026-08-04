@@ -24,7 +24,7 @@ public class PlayerHealthSystem
             {
                 //Debug.Log("Bloqueou");
                 player.ApplyKnockback(knockbackDirection, knockbackForce * 2f);
-                player.StartCoroutine(InvincibilityCoroutine(false));
+                player.StartCoroutine(InvincibilityCoroutine(true));
                 return;
             }
         }
