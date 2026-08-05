@@ -3,9 +3,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class GameOverManager : MonoBehaviour
 {
-    public static GameOverManager Instance; // (mantém como já era: public static GameOverManager Instance;)
+    public static GameOverManager Instance;
+    public static bool IsGameOver { get; private set; }
+
     public string menuSceneName = "MainMenu";
-    public string gameSceneName = "Game";
+    public string gameSceneName = "MainScene";
     public GameObject gameOverPanel;
     public CanvasGroup gameOverCanvasGroup;
     public float fadeDuration = 0.4f;
@@ -16,6 +18,7 @@ public class GameOverManager : MonoBehaviour
     }
     public void ShowGameOver()
     {
+        IsGameOver = true;
         gameOverPanel.SetActive(true);
         Time.timeScale = 0f;
         StartCoroutine(FadeIn());
@@ -38,16 +41,19 @@ public class GameOverManager : MonoBehaviour
     }
     public void LoadCheckpoint()
     {
+        IsGameOver = false;
         Time.timeScale = 1f;
 
         if (!SaveManager.SaveExists())
         {
+            SceneManager.LoadScene(gameSceneName);
             return;
         }
 
         SceneManager.sceneLoaded += OnGameSceneLoaded;
         SceneManager.LoadScene(gameSceneName);
     }
+
     private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         SceneManager.sceneLoaded -= OnGameSceneLoaded;
@@ -60,9 +66,15 @@ public class GameOverManager : MonoBehaviour
 
         GameManager.Instance.LoadGame();
         Player.Instance.Respawn(Player.Instance.transform.position);
+
+        if (GameManager.Instance.activeBossTrigger != null)
+        {
+            GameManager.Instance.activeBossTrigger.ResetFight();
+        }
     }
     public void BackToMenu()
     {
+        IsGameOver = false;
         Time.timeScale = 1f;
         SceneManager.LoadScene(menuSceneName);
     }

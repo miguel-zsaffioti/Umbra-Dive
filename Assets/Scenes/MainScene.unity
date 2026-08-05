@@ -879,7 +879,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 484284389}
-  - component: {fileID: 484284390}
   m_Layer: 5
   m_Name: PotionHud
   m_TagString: Untagged
@@ -909,19 +908,6 @@ RectTransform:
   m_AnchoredPosition: {x: 861.7, y: 454.2}
   m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 1}
---- !u!114 &484284390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 484284388}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8ca1ca6a712ecd439fdd4cc35d10775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PotionUI
-  potionCountText: {fileID: 1271109577}
 --- !u!1 &510920495
 GameObject:
   m_ObjectHideFlags: 0
@@ -3383,9 +3369,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1036654933}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: ResumeGame
+      - m_Target: {fileID: 1077401852}
+        m_TargetAssemblyTypeName: GameOverManager, Assembly-CSharp
+        m_MethodName: LoadCheckpoint
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4117,8 +4103,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1036654933}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+      - m_Target: {fileID: 1077401852}
+        m_TargetAssemblyTypeName: GameOverManager, Assembly-CSharp
         m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:
@@ -4385,7 +4371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameOverManager
   menuSceneName: MainMenu
-  gameSceneName: Game
+  gameSceneName: MainScene
   gameOverPanel: {fileID: 1441013163}
   gameOverCanvasGroup: {fileID: 1441013167}
   fadeDuration: 0.4
@@ -4770,6 +4756,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1155583636}
+  - component: {fileID: 1155583637}
   m_Layer: 5
   m_Name: Potions
   m_TagString: Untagged
@@ -4797,6 +4784,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1155583637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1155583635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8ca1ca6a712ecd439fdd4cc35d10775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PotionUI
+  potionCountText: {fileID: 1271109577}
+  barRoot: {fileID: 484284388}
 --- !u!1 &1227426913
 GameObject:
   m_ObjectHideFlags: 0
@@ -5457,8 +5458,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1036654933}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+      - m_Target: {fileID: 1077401852}
+        m_TargetAssemblyTypeName: GameOverManager, Assembly-CSharp
         m_MethodName: BackToMenu
         m_Mode: 1
         m_Arguments:
@@ -34104,7 +34105,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aef0da4011efbd4aae7f418fafa54de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  bossCount: 0
   activeBossTrigger: {fileID: 0}
 --- !u!4 &1739487507
 Transform:

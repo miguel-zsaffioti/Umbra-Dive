@@ -6,12 +6,15 @@ using UnityEngine.UI;
 public class PotionUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI potionCountText;
+    [SerializeField] private GameObject barRoot;
 
     private Player subscribedPlayer;
 
     private void OnEnable()
     {
         StartCoroutine(SubscribeWhenReady());
+        PauseMenu.OnPauseStateChanged += HandlePauseChanged;
+        GameOverManager.OnGameOverTriggered += HandleGameOver;
     }
 
     private IEnumerator SubscribeWhenReady()
@@ -34,10 +37,23 @@ public class PotionUI : MonoBehaviour
             subscribedPlayer.OnPotionsChanged -= UpdatePotionUI;
             subscribedPlayer = null;
         }
+
+        PauseMenu.OnPauseStateChanged -= HandlePauseChanged;
+        GameOverManager.OnGameOverTriggered -= HandleGameOver;
     }
 
     private void UpdatePotionUI(int current, int max)
     {
         potionCountText.text = $"{current}/{max}";
+    }
+
+    private void HandlePauseChanged(bool isPaused)
+    {
+        barRoot.SetActive(!isPaused);
+    }
+
+    private void HandleGameOver()
+    {
+        barRoot.SetActive(false);
     }
 }

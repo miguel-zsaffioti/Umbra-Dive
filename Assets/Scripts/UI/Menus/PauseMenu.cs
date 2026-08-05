@@ -12,6 +12,8 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
+        if (GameOverManager.IsGameOver) return;
+
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             if (isPaused) ResumeGame();
@@ -21,6 +23,8 @@ public class PauseMenu : MonoBehaviour
 
     public void Pause()
     {
+        if (GameOverManager.IsGameOver) return;
+
         pausePanel.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;

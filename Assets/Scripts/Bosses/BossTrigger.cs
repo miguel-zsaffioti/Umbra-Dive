@@ -47,7 +47,13 @@ public class BossTrigger : MonoBehaviour
         bool isCurrentBoss = gameManager.bossCount == bossOrderer;
         bool alreadyDefeated = gameManager.bossCount > bossOrderer;
 
-        if (isCurrentBoss)
+        if (alreadyDefeated)
+        {
+            activated = true;
+            Door.SetActive(false);
+            GetComponent<Collider2D>().enabled = false;
+        }
+        else if (isCurrentBoss)
         {
             activated = false;
             Door.SetActive(false);
@@ -57,9 +63,6 @@ public class BossTrigger : MonoBehaviour
         {
             Door.SetActive(true);
             GetComponent<Collider2D>().enabled = false;
-
-            if (alreadyDefeated)
-                activated = true;
         }
     }
 

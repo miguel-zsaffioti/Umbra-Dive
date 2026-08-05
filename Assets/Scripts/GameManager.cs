@@ -40,9 +40,9 @@ public class GameManager : MonoBehaviour
             bossCount = bossCount,
             playerX = player.transform.position.x,
             playerY = player.transform.position.y,
-            currentHealth = player.maxHealth,
+            currentHealth = player.currentHealth,
             maxHealth = player.maxHealth,
-            currentPotions = player.maxPotions,
+            currentPotions = player.currentPotions,
             maxPotions = player.maxPotions
         };
 
@@ -69,18 +69,8 @@ public class GameManager : MonoBehaviour
         player.NotifyPotionsChanged();
     }
 
-    // Chamado pelo PlayerHealthSystem quando o player morre
     public void OnPlayerDeath()
     {
-        if (activeBossTrigger != null)
-        {
-            LoadGame();
-            Player.Instance.Respawn(Player.Instance.transform.position);
-            activeBossTrigger.ResetFight();
-        }
-        else
-        {
-            GameOverManager.Instance.ShowGameOver();
-        }
+        GameOverManager.Instance.ShowGameOver();
     }
 }

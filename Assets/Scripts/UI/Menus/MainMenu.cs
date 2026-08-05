@@ -2,41 +2,61 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 public class MainMenu : MonoBehaviour
 {
     public string gameSceneName = "Game";
-    public TextMeshProUGUI playButtonText;
-    public float playFontSize = 40f;
-    public float continueFontSize = 30f;
+
+    [Header("Botões")]
+    public GameObject continueButton;
+
     private void Start()
     {
-        if (playButtonText != null)
+        if (continueButton != null)
         {
-            bool hasSave = SaveManager.SaveExists();
-            playButtonText.text = hasSave ? "Continue" : "Play";
-            playButtonText.fontSize = hasSave ? continueFontSize : playFontSize;
+            continueButton.SetActive(SaveManager.SaveExists());
         }
     }
+
     public void PlayGame()
     {
         Time.timeScale = 1f;
+
         if (SaveManager.SaveExists())
         {
-            SceneManager.sceneLoaded += OnGameSceneLoaded;
+            SaveManager.Instance.DeleteSave();
         }
+
         SceneManager.LoadScene(gameSceneName);
     }
+
+    public void ContinueGame()
+    {
+        Time.timeScale = 1f;
+
+        if (!SaveManager.SaveExists())
+        {
+            PlayGame();
+            return;
+        }
+
+        SceneManager.sceneLoaded += OnGameSceneLoaded;
+        SceneManager.LoadScene(gameSceneName);
+    }
+
     private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         SceneManager.sceneLoaded -= OnGameSceneLoaded;
         GameManager.Instance.StartCoroutine(LoadAfterSceneReady());
     }
+
     private static IEnumerator LoadAfterSceneReady()
     {
-        yield return null; 
+        yield return null;
         GameManager.Instance.LoadGame();
         Player.Instance.Respawn(Player.Instance.transform.position);
     }
+
     public void QuitGame()
     {
 #if UNITY_EDITOR

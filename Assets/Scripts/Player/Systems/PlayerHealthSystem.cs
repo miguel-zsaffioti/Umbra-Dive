@@ -41,10 +41,11 @@ public class PlayerHealthSystem
             return;
         }
 
+        player.StartCoroutine(InvincibilityCoroutine(true));
+
         if (!isAttacking)
         {
             player.ApplyKnockback(knockbackDirection, knockbackForce);
-            player.StartCoroutine(InvincibilityCoroutine(true));
         }
     }
 
