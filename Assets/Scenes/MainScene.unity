@@ -2220,9 +2220,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
-    width: 1
-    height: 1
+    y: 0.055555556
+    width: 0.33333334
+    height: 0.3333333
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -2303,10 +2303,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.PixelPerfectCamera
   m_ComponentVersion: 1
-  m_AssetsPPU: 32
+  m_AssetsPPU: 75
   m_RefResolutionX: 1920
   m_RefResolutionY: 1080
-  m_CropFrame: 0
+  m_CropFrame: 4
   m_GridSnapping: 0
   m_FilterMode: 0
   m_UpscaleRT: 0
@@ -3002,6 +3002,14 @@ PrefabInstance:
     - target: {fileID: 6634364973404529926, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 7657351060148129738, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: m_Size.y
+      value: 1.6930525
+      objectReference: {fileID: 0}
+    - target: {fileID: 7657351060148129738, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.34652638
       objectReference: {fileID: 0}
     - target: {fileID: 8514298757989113252, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -34047,7 +34055,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 320
   m_UseGeometry: 1
   m_DefaultArea: 0
   m_IgnoreNavMeshAgent: 1
@@ -34055,7 +34063,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.033333335
+  m_VoxelSize: 0.1
   m_BuildHeightMesh: 0
   m_MinRegionArea: 0
   m_HideEditorLogs: 0
