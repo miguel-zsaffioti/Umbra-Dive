@@ -24,7 +24,7 @@ public class PlayerHealthSystem
             {
                 //Debug.Log("Bloqueou");
                 player.ApplyKnockback(knockbackDirection, knockbackForce * 2f);
-                player.StartCoroutine(InvincibilityCoroutine(true));
+                player.StartCoroutine(InvincibilityCoroutine(false));
                 return;
             }
         }
@@ -72,7 +72,7 @@ public class PlayerHealthSystem
     private void Die()
     {
         player.gameObject.SetActive(false);
-        GameOverManager.Instance.ShowGameOver();
+        GameManager.Instance.OnPlayerDeath();
     }
 
     public IEnumerator RestoreHealth(int amount, float waitTime)

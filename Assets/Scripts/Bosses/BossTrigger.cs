@@ -16,17 +16,40 @@ public class BossTrigger : MonoBehaviour
     public int bossOrderer;
     private Player player;
     private bool activated;
+    private GameObject spawnedBoss;
 
     private void Start()
     {
         Parent = transform.parent;
         activated = false;
 
+        Refresh();
+    }
+
+    private void OnEnable()
+    {
+        if (gameManager != null)
+        {
+            gameManager.OnBossCountChanged += Refresh;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (gameManager != null)
+        {
+            gameManager.OnBossCountChanged -= Refresh;
+        }
+    }
+
+    private void Refresh()
+    {
         bool isCurrentBoss = gameManager.bossCount == bossOrderer;
         bool alreadyDefeated = gameManager.bossCount > bossOrderer;
 
         if (isCurrentBoss)
         {
+            activated = false;
             Door.SetActive(false);
             GetComponent<Collider2D>().enabled = true;
         }
@@ -53,21 +76,42 @@ public class BossTrigger : MonoBehaviour
         {
             player = collision.GetComponent<Player>();
             Door.SetActive(true);
-            GameObject spawnedBoss = Instantiate(boss, SpawnLocation.position, boss.transform.rotation, Parent);
-            Boss bossScript = spawnedBoss.GetComponent<Boss>();
-            if (bossScript != null)
-            {
-                bossScript.trigger = this;
-                bossName.text = bossScript.bossName;
-            }
-            if (bossArenaCamera != null)
-            {
-                bossArenaCamera.Priority = 20;
-            }
+
+            gameManager.activeBossTrigger = this;
+            gameManager.SaveGame();
+
+            SpawnBoss();
+
             activated = true;
             healthPanel.SetActive(true);
+        }
+    }
+
+    private void SpawnBoss()
+    {
+        spawnedBoss = Instantiate(boss, SpawnLocation.position, boss.transform.rotation, Parent);
+        Boss bossScript = spawnedBoss.GetComponent<Boss>();
+        if (bossScript != null)
+        {
+            bossScript.trigger = this;
+            bossName.text = bossScript.bossName;
             bossScript.arenaBounds = arenaBounds;
         }
+        if (bossArenaCamera != null)
+        {
+            bossArenaCamera.Priority = 20;
+        }
+    }
+
+    public void ResetFight()
+    {
+        if (spawnedBoss != null)
+        {
+            Destroy(spawnedBoss);
+        }
+
+        healthPanel.SetActive(true);
+        SpawnBoss();
     }
 
     public void EndBossFight()
@@ -77,5 +121,7 @@ public class BossTrigger : MonoBehaviour
         Door.SetActive(false);
         player.RestorePotions();
         gameManager.bossCount++;
+        gameManager.activeBossTrigger = null;
+        gameManager.SaveGame();
     }
 }

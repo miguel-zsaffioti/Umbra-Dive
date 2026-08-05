@@ -263,4 +263,17 @@ public class Player : MonoBehaviour, IDamagable
         StartCoroutine(healthSystem.RestoreHealth(cureAmount, cureTick));
     }
 
+    public void Respawn(Vector2 position)
+    {
+        gameObject.SetActive(true);
+        transform.position = position;
+
+        isInvincible = false;
+        isBlocking = false;
+        spriteRenderer.enabled = true;
+
+        objectsAlreadyHit.Clear();
+        stateMachine.ChangeState(idleState);
+    }
+
 }
