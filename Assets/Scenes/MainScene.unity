@@ -2220,9 +2220,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.055555556
-    width: 0.33333334
-    height: 0.3333333
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -2252,7 +2252,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.82288, y: -41.34758, z: -10}
+  m_LocalPosition: {x: 19.22712, y: -60.95758, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3310,7 +3310,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -58.62}
+  m_AnchoredPosition: {x: 50, y: -58.620117}
   m_SizeDelta: {x: 200, y: 117.24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &741715203
@@ -3464,7 +3464,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -58.62}
+  m_AnchoredPosition: {x: 50, y: -58.620117}
   m_SizeDelta: {x: 200, y: 117.24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &746654686
@@ -3823,7 +3823,7 @@ Transform:
   m_GameObject: {fileID: 840936150}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.82288, y: -41.34758, z: -10}
+  m_LocalPosition: {x: 19.22712, y: -60.95758, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6183,7 +6183,7 @@ Transform:
   m_GameObject: {fileID: 1580769508}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.95, y: -40.79, z: 0}
+  m_LocalPosition: {x: 18.1, y: -60.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -129810,6 +129810,83 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2130951066}
   m_CullTransparentMesh: 1
+--- !u!1001 &711080139000903546
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 486826534385892056, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+      propertyPath: m_Name
+      value: Doctor Boss Room
+      objectReference: {fileID: 0}
+    - target: {fileID: 2519553832558207967, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2519553832558207967, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -130
+      objectReference: {fileID: 0}
+    - target: {fileID: 2519553832558207967, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2519553832558207967, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2519553832558207967, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2519553832558207967, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2519553832558207967, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2519553832558207967, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2519553832558207967, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2519553832558207967, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4025425422881404531, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+      propertyPath: boss
+      value: 
+      objectReference: {fileID: 8412280893660918338, guid: e5d3d893061615646aa57b8fb28bc24a, type: 3}
+    - target: {fileID: 4025425422881404531, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+      propertyPath: bossName
+      value: 
+      objectReference: {fileID: 1227426915}
+    - target: {fileID: 4025425422881404531, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1739487506}
+    - target: {fileID: 4025425422881404531, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+      propertyPath: healthPanel
+      value: 
+      objectReference: {fileID: 1362049035}
+    - target: {fileID: 7972092597669997707, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+      propertyPath: Lens.OrthographicSize
+      value: 11
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 72489e5ad17974142900e017af4caff8, type: 3}
 --- !u!1001 &2842823623415648300
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -129924,6 +130001,7 @@ SceneRoots:
   - {fileID: 1094890302}
   - {fileID: 2842823623415648300}
   - {fileID: 642997462}
+  - {fileID: 711080139000903546}
   - {fileID: 599738192}
   - {fileID: 1275931458}
   - {fileID: 1714700218}

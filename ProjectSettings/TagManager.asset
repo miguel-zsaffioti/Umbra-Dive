@@ -11,6 +11,7 @@ TagManager:
   - Bat
   - GrimReaper
   - Spectre
+  - Doctor
   layers:
   - Default
   - TransparentFX
