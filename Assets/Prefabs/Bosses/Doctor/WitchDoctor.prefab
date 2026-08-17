@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 2137587062955063566}
   - component: {fileID: 8720823383898332772}
   - component: {fileID: 7512229127194922536}
-  - component: {fileID: 1997130397860295129}
+  - component: {fileID: -8066408030781753606}
   - component: {fileID: 3163027527731627945}
   - component: {fileID: -3415739476037122100}
   - component: {fileID: 2829178212252116568}
@@ -265,7 +265,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.263628, y: 1.9962845}
   m_EdgeRadius: 0
---- !u!95 &1997130397860295129
+--- !u!95 &-8066408030781753606
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
@@ -275,7 +275,7 @@ Animator:
   m_GameObject: {fileID: 8412280893660918338}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4d091ec7578346f4e8a342f6d51ec1a1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -299,14 +299,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Behavior::Unity.Behavior.BehaviorGraphAgent
-  m_Graph: {fileID: 0}
-  m_BlackboardVariableOverridesList: []
+  m_Graph: {fileID: -2591286713751593269, guid: 959064a5a57d89d4b964fafd1fba99e5, type: 2}
+  m_BlackboardVariableOverridesList:
+  - rid: 4575394776634884241
   m_OriginalGraph: {fileID: 0}
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4575394776634884241
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 8412280893660918338}
 --- !u!114 &-3415739476037122100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,6 +338,9 @@ MonoBehaviour:
   moveDirection: {x: 0, y: 0}
   moveSpeed: 0
   arenaBounds: {fileID: 0}
+  areaSlashPrefab: {fileID: 7857988272872534380, guid: 4e468fd8c6b666140b46072007276215, type: 3}
+  frontAttackPrefab: {fileID: 1963715586550484853, guid: ae06a6f12eac0da42842745e5f1c4b77, type: 3}
+  frontAttackDirection: {x: 0, y: 0}
 --- !u!114 &2829178212252116568
 MonoBehaviour:
   m_ObjectHideFlags: 0
