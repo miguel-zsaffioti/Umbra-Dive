@@ -6,7 +6,11 @@ public class Doctor : Boss
     public GameObject frontAttackPrefab;
     public float frontAttackSpawnDistance = 1.2f;
 
+    private System.Action pendingAttack;
+
     [HideInInspector] public Vector2 frontAttackDirection;
+    [HideInInspector] public Vector2 frontAttackTargetPos;
+
     public enum AttackTypes
     {
         Dash,
@@ -15,11 +19,22 @@ public class Doctor : Boss
     }
 
 
-    private void SetAttackDirection(Vector2 direction)
+    public void SetAttackDirection(Vector2 direction)
     {
         animator.SetFloat("AttackX", direction.x);
         animator.SetFloat("AttackY", direction.y);
         animator.SetTrigger("Attack");
+    }
+
+    public void QueueAttack(System.Action attackAction)
+    {
+        pendingAttack = attackAction;
+    }
+
+    public void ExecuteQueuedAttack()
+    {
+        pendingAttack?.Invoke();
+        pendingAttack = null;
     }
 
     private void Update()
@@ -51,12 +66,13 @@ public class Doctor : Boss
 
     public void FrontAttack()
     {
-        SetAttackDirection(frontAttackDirection);
-
         float angle = Mathf.Atan2(frontAttackDirection.y, frontAttackDirection.x) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.Euler(0f, 0f, angle);
 
-        Vector3 spawnPos = transform.position + (Vector3)(frontAttackDirection * frontAttackSpawnDistance);
+        float distToTarget = Vector2.Distance(transform.position, frontAttackTargetPos);
+        float spawnDist = Mathf.Min(frontAttackSpawnDistance, distToTarget * 0.8f);
+
+        Vector3 spawnPos = transform.position + (Vector3)(frontAttackDirection * spawnDist);
 
         Instantiate(frontAttackPrefab, spawnPos, rotation, transform);
         RegisterAttack("Front");

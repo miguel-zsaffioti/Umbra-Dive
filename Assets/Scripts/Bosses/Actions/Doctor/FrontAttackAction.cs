@@ -21,7 +21,11 @@ public partial class FrontAttackAction : Action
             : new Vector2(0f, Mathf.Sign(diff.y));
 
         doctor.frontAttackDirection = attackDir;
-        doctor.FrontAttack();
+        doctor.frontAttackTargetPos = doctor.player.rb.position;
+
+        doctor.QueueAttack(doctor.FrontAttack);
+        doctor.SetAttackDirection(attackDir);
+
         return Status.Success;
     }
 }

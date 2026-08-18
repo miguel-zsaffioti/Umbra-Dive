@@ -15,7 +15,8 @@ public partial class AreaSingleAttackAction : Action
         doctor = GameObject.GetComponent<Doctor>();
         if (doctor == null) return Status.Failure;
 
-        doctor.AreaAttack();
+        doctor.QueueAttack(doctor.AreaAttack);
+        doctor.SetAttackDirection(Vector2.down);
         return Status.Success;
     }
 }
