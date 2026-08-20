@@ -106,7 +106,7 @@ public class Boss : MonoBehaviour, IDamagable
         if (Instance == null) Instance = this;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         if (Player.Instance != null)
         {

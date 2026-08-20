@@ -340,7 +340,9 @@ MonoBehaviour:
   arenaBounds: {fileID: 0}
   areaSlashPrefab: {fileID: 7857988272872534380, guid: 4e468fd8c6b666140b46072007276215, type: 3}
   frontAttackPrefab: {fileID: 1963715586550484853, guid: ae06a6f12eac0da42842745e5f1c4b77, type: 3}
+  areaAttackPrefab: {fileID: 7936061361550852113, guid: b7f56ba3d897a114eacf46c8da3ce3fe, type: 3}
   frontAttackSpawnDistance: 1.8
+  arenaCenter: {x: 0, y: 0}
   frontAttackDirection: {x: 0, y: 0}
   frontAttackTargetPos: {x: 0, y: 0}
 --- !u!114 &2829178212252116568

@@ -1,10 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Doctor : Boss
 {
     public GameObject areaSlashPrefab;
     public GameObject frontAttackPrefab;
+    public GameObject areaAttackPrefab;
     public float frontAttackSpawnDistance = 1.2f;
+
+    [HideInInspector] public Vector2 arenaCenter;
 
     private System.Action pendingAttack;
 
@@ -15,7 +19,14 @@ public class Doctor : Boss
     {
         Dash,
         AreaSlash,
-        Front
+        Front,
+        Area
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        arenaCenter = arenaBounds.bounds.center;
     }
 
 
@@ -76,6 +87,43 @@ public class Doctor : Boss
 
         Instantiate(frontAttackPrefab, spawnPos, rotation, transform);
         RegisterAttack("Front");
+    }
+
+    public List<Vector2> GetRandomArenaPoints(int count, float minDistance = 2f, float minDistanceFromBoss = 2f, int maxAttempts = 100)
+    {
+        List<Vector2> points = new List<Vector2>();
+        Bounds bounds = arenaBounds.bounds;
+        Vector2 bossPos = transform.position;
+        int attempts = 0;
+
+        while (points.Count < count && attempts < maxAttempts)
+        {
+            attempts++;
+
+            Vector2 point = new Vector2(
+                Random.Range(bounds.min.x, bounds.max.x),
+                Random.Range(bounds.min.y, bounds.max.y)
+            );
+
+            if (!arenaBounds.OverlapPoint(point)) continue;
+            if (Vector2.Distance(point, bossPos) < minDistanceFromBoss) continue;
+
+            bool tooClose = points.Exists(p => Vector2.Distance(p, point) < minDistance);
+            if (!tooClose) points.Add(point);
+        }
+
+        return points;
+    }
+
+    public void MultipleAreaAttack()
+    {
+        int qtd = Random.Range(2, 4);
+        List<Vector2> poisonSpots = GetRandomArenaPoints(qtd, minDistance: 2f);
+        foreach (Vector2 spot in poisonSpots)
+        {
+            Instantiate(areaAttackPrefab, spot, UnityEngine.Quaternion.identity, transform);
+        }
+        RegisterAttack("Area");
     }
 }
 
