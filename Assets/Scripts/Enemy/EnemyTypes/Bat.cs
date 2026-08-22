@@ -13,7 +13,7 @@ public class Bat : Enemy
         attackState = new EnemyAttackState(this, stateMachine);
         knockbackState = new EnemyKnockbackState(this, stateMachine);
 
-        stateMachine.Start(waitState);
+        stateMachine.Start(startAggroed ? chaseState : waitState);
     }
 
     public void AnimationTriggerEvent(string eventName)

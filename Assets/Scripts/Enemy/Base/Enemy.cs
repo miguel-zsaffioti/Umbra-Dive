@@ -35,6 +35,8 @@ public abstract class Enemy : MonoBehaviour, IDamagable
 
     [HideInInspector] public EnemyStateMachine stateMachine;
 
+    [HideInInspector] public bool startAggroed = false;
+
     public virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -86,12 +88,20 @@ public abstract class Enemy : MonoBehaviour, IDamagable
         else if (direction.x < 0 && isFacingRight) Flip();
     }
 
+    
+
     protected virtual void InitializeStates()
     {
         waitState = new WaitState(this, stateMachine);
         chaseState = new ChaseState(this, stateMachine);
 
-        stateMachine.Start(waitState);
+        stateMachine.Start(startAggroed ? chaseState : waitState);
+    }
+
+    public void ForceChase()
+    {
+        startAggroed = true;
+        detectionSystem?.ForceDetect();
     }
 
     public virtual void Update()

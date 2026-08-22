@@ -54,4 +54,10 @@ public class DetectionSystem
     {
         return isPlayerDetected;
     }
+
+    public void ForceDetect()
+    {
+        isPlayerDetected = true;
+        losePlayerTimer = enemy.data.timeToLose;
+    }
 }

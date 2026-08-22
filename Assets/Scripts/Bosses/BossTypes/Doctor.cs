@@ -6,6 +6,7 @@ public class Doctor : Boss
     public GameObject areaSlashPrefab;
     public GameObject frontAttackPrefab;
     public GameObject areaAttackPrefab;
+    public GameObject portalPrefab;
     public float frontAttackSpawnDistance = 1.2f;
 
     [HideInInspector] public Vector2 arenaCenter;
@@ -20,7 +21,8 @@ public class Doctor : Boss
         Dash,
         AreaSlash,
         Front,
-        Area
+        Area,
+        Summon
     }
 
     protected override void Start()
@@ -124,6 +126,17 @@ public class Doctor : Boss
             Instantiate(areaAttackPrefab, spot, UnityEngine.Quaternion.identity, transform);
         }
         RegisterAttack("Area");
+    }
+
+    public void Summon()
+    {
+        int qtd = Random.Range(1, 2);
+        List<Vector2> summonSpots = GetRandomArenaPoints(qtd, minDistance: 2f);
+        foreach (Vector2 spot in summonSpots)
+        {
+            Instantiate(portalPrefab, spot, UnityEngine.Quaternion.identity, transform);
+        }
+        RegisterAttack("Summon");
     }
 }
 
