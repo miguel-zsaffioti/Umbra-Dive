@@ -129901,6 +129901,22 @@ PrefabInstance:
       propertyPath: healthPanel
       value: 
       objectReference: {fileID: 1362049035}
+    - target: {fileID: 6162976886348857292, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+      propertyPath: m_Size.x
+      value: 31.421173
+      objectReference: {fileID: 0}
+    - target: {fileID: 6162976886348857292, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+      propertyPath: m_Size.y
+      value: 10.406921
+      objectReference: {fileID: 0}
+    - target: {fileID: 6162976886348857292, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+      propertyPath: m_Offset.x
+      value: 3.224594
+      objectReference: {fileID: 0}
+    - target: {fileID: 6162976886348857292, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.6095047
+      objectReference: {fileID: 0}
     - target: {fileID: 7972092597669997707, guid: 72489e5ad17974142900e017af4caff8, type: 3}
       propertyPath: Lens.OrthographicSize
       value: 11

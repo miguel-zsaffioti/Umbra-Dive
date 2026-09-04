@@ -103,7 +103,7 @@ public class AreaAttack : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("Teste");
+        //Debug.Log("Teste");
         if (!activated || hasDamagedThisActivation) return;
         if (collision.CompareTag("Player"))
         {

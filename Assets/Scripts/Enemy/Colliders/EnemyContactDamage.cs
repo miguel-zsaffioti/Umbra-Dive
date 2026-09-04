@@ -12,6 +12,8 @@ public class EnemyContactDamage : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if (!collision.CompareTag("Player")) return;
+
         IDamagable damageable = collision.gameObject.GetComponent<IDamagable>();
 
         if (damageable != null && enemy != null)

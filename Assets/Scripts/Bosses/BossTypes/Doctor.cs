@@ -7,7 +7,11 @@ public class Doctor : Boss
     public GameObject frontAttackPrefab;
     public GameObject areaAttackPrefab;
     public GameObject portalPrefab;
+    public GameObject projectilePrefab;
     public float frontAttackSpawnDistance = 1.2f;
+    public float cornerMargin = 0.6f;
+
+    public float projectileSpawnDistance = 1.2f;
 
     [HideInInspector] public Vector2 arenaCenter;
 
@@ -16,19 +20,36 @@ public class Doctor : Boss
     [HideInInspector] public Vector2 frontAttackDirection;
     [HideInInspector] public Vector2 frontAttackTargetPos;
 
+    [HideInInspector] public List<Vector2> arenaCorners;
+
     public enum AttackTypes
     {
         Dash,
         AreaSlash,
         Front,
         Area,
-        Summon
+        Summon,
+        Projectile
     }
 
     protected override void Start()
     {
         base.Start();
         arenaCenter = arenaBounds.bounds.center;
+        arenaCorners = GetArenaCorners();
+    }
+
+    private List<Vector2> GetArenaCorners()
+    {
+        Bounds bounds = arenaBounds.bounds;
+
+        return new List<Vector2>
+    {
+        new Vector2(bounds.min.x + cornerMargin, bounds.min.y + cornerMargin),
+        new Vector2(bounds.max.x - cornerMargin, bounds.min.y + cornerMargin),
+        new Vector2(bounds.max.x - cornerMargin, bounds.max.y - cornerMargin),
+        new Vector2(bounds.min.x + cornerMargin, bounds.max.y - cornerMargin)
+    };
     }
 
 
@@ -138,5 +159,57 @@ public class Doctor : Boss
         }
         RegisterAttack("Summon");
     }
-}
 
+    public void Projectile()
+    {
+        Vector2 nearestCorner = GetNearestCorner(out int cornerIndex);
+        Vector2 animationDir = Vector2.zero;
+        Vector2 spawnDir = Vector2.zero;
+
+        switch (cornerIndex)
+        {
+            case 0:
+                animationDir = Vector2.right;
+                spawnDir = Vector2.up + animationDir;
+                break;
+            case 1:
+                animationDir = Vector2.left;
+                spawnDir = Vector2.up + animationDir;
+                break;
+            case 2:
+                animationDir = Vector2.left;
+                spawnDir = Vector2.down + animationDir;
+                break;
+            case 3:
+                animationDir = Vector2.right;
+                spawnDir = Vector2.down + animationDir;
+                break;
+        }
+        Instantiate(projectilePrefab, transform.position + (Vector3)(spawnDir.normalized * projectileSpawnDistance), Quaternion.identity, transform);
+        RegisterAttack("Projectile");
+    }
+
+    public Vector2 GetNearestCorner(out int cornerIndex)
+    {
+        cornerIndex = -1;
+        Vector2 nearest = transform.position;
+
+        if (arenaCorners == null || arenaCorners.Count == 0) return nearest;
+
+        Vector2 bossPos = transform.position;
+        float bestDist = float.MaxValue;
+
+        for (int i = 0; i < arenaCorners.Count; i++)
+        {
+            float dist = Vector2.Distance(bossPos, arenaCorners[i]);
+            if (dist < bestDist)
+            {
+                bestDist = dist;
+                nearest = arenaCorners[i];
+                cornerIndex = i;
+            }
+        }
+
+        return nearest;
+    }
+}
