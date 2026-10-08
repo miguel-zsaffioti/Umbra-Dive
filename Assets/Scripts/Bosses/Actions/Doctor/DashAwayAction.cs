@@ -10,8 +10,8 @@ public partial class DashAwayAction : Action
 {
 
     private Doctor doctor;
-    private float dashSpeed = 12f;
-    private float dashDuration = 0.25f;
+    private float dashSpeed = 10f;
+    private float dashDuration = 0.15f;
 
     private enum Phase { DashX, DashY, Done }
     private Phase phase;

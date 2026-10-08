@@ -2951,6 +2951,14 @@ PrefabInstance:
       propertyPath: bossArenaCamera
       value: 
       objectReference: {fileID: 801616475}
+    - target: {fileID: 805260411619635311, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: bossRefResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 805260411619635311, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: bossRefResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
     - target: {fileID: 4433011964297537525, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -3656,6 +3664,7 @@ GameObject:
   m_Component:
   - component: {fileID: 801616474}
   - component: {fileID: 801616475}
+  - component: {fileID: 801616476}
   m_Layer: 0
   m_Name: Camera_Spectre
   m_TagString: Untagged
@@ -3691,7 +3700,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
   Priority:
-    Enabled: 0
+    Enabled: 1
     m_Value: 0
   OutputChannel: 1
   StandbyUpdate: 2
@@ -3721,6 +3730,18 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
+--- !u!114 &801616476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801616473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a8a05de0ac134f4f9d01bef6b9da077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachinePixelPerfect
 --- !u!1 &830077258
 GameObject:
   m_ObjectHideFlags: 0
@@ -3891,6 +3912,94 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
+--- !u!1 &844877498
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 844877499}
+  - component: {fileID: 844877500}
+  - component: {fileID: 844877501}
+  m_Layer: 0
+  m_Name: Camera_Doctor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &844877499
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844877498}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -23.53, y: 54.270004, z: -57.717934}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1292647153}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &844877500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844877498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
+  Priority:
+    Enabled: 1
+    m_Value: 0
+  OutputChannel: 1
+  StandbyUpdate: 2
+  m_StreamingVersion: 20241001
+  m_LegacyPriority: 0
+  Target:
+    TrackingTarget: {fileID: 0}
+    LookAtTarget: {fileID: 0}
+    CustomLookAtTarget: 0
+  Lens:
+    FieldOfView: 34
+    OrthographicSize: 13
+    NearClipPlane: 0.3
+    FarClipPlane: 1000
+    Dutch: 0
+    ModeOverride: 0
+    PhysicalProperties:
+      GateFit: 2
+      SensorSize: {x: 21.946, y: 16.002}
+      LensShift: {x: 0, y: 0}
+      FocusDistance: 10
+      Iso: 200
+      ShutterSpeed: 0.005
+      Aperture: 16
+      BladeCount: 5
+      Curvature: {x: 2, y: 11}
+      BarrelClipping: 0.25
+      Anamorphism: 0
+  BlendHint: 0
+--- !u!114 &844877501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844877498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a8a05de0ac134f4f9d01bef6b9da077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachinePixelPerfect
 --- !u!1 &863575844
 GameObject:
   m_ObjectHideFlags: 0
@@ -5320,6 +5429,11 @@ MonoBehaviour:
   - {fileID: 4637743472107979480, guid: daaffb5fbc50fae47a058323ab0e05dd, type: 3}
   - {fileID: 7023954208938059009, guid: 4616d9185efd2b446b884211137d1cf7, type: 3}
   spawnChance: 1
+--- !u!4 &1292647153 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2519553832558207967, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+  m_PrefabInstance: {fileID: 711080139000903546}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1292828383 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4883659986073440389, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
@@ -5664,6 +5778,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1358104512}
   - component: {fileID: 1358104513}
+  - component: {fileID: 1358104514}
   m_Layer: 0
   m_Name: Camera_GrimReaper
   m_TagString: Untagged
@@ -5711,7 +5826,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 34
-    OrthographicSize: 5.92
+    OrthographicSize: 9.03
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -5729,6 +5844,18 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
+--- !u!114 &1358104514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358104511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a8a05de0ac134f4f9d01bef6b9da077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachinePixelPerfect
 --- !u!1 &1362049035
 GameObject:
   m_ObjectHideFlags: 0
@@ -129901,29 +130028,37 @@ PrefabInstance:
       propertyPath: healthPanel
       value: 
       objectReference: {fileID: 1362049035}
+    - target: {fileID: 4025425422881404531, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+      propertyPath: bossArenaCamera
+      value: 
+      objectReference: {fileID: 844877500}
     - target: {fileID: 6162976886348857292, guid: 72489e5ad17974142900e017af4caff8, type: 3}
       propertyPath: m_Size.x
-      value: 31.421173
+      value: 28.184294
       objectReference: {fileID: 0}
     - target: {fileID: 6162976886348857292, guid: 72489e5ad17974142900e017af4caff8, type: 3}
       propertyPath: m_Size.y
-      value: 10.406921
+      value: 8.841454
       objectReference: {fileID: 0}
     - target: {fileID: 6162976886348857292, guid: 72489e5ad17974142900e017af4caff8, type: 3}
       propertyPath: m_Offset.x
-      value: 3.224594
+      value: 3.0690928
       objectReference: {fileID: 0}
     - target: {fileID: 6162976886348857292, guid: 72489e5ad17974142900e017af4caff8, type: 3}
       propertyPath: m_Offset.y
-      value: 0.6095047
+      value: 0.76618576
       objectReference: {fileID: 0}
     - target: {fileID: 7972092597669997707, guid: 72489e5ad17974142900e017af4caff8, type: 3}
       propertyPath: Lens.OrthographicSize
-      value: 11
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 333605630483973691, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2519553832558207967, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 844877499}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72489e5ad17974142900e017af4caff8, type: 3}
 --- !u!1001 &2842823623415648300
@@ -129962,6 +130097,14 @@ PrefabInstance:
       propertyPath: bossArenaCamera
       value: 
       objectReference: {fileID: 1358104513}
+    - target: {fileID: 805260411619635311, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: bossRefResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 805260411619635311, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: bossRefResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
     - target: {fileID: 4433011964297537525, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
       propertyPath: m_IsActive
       value: 0

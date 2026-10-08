@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using Unity.Cinemachine;
 using TMPro;
 
@@ -8,6 +9,14 @@ public class BossTrigger : MonoBehaviour
     public GameObject boss;
     public Transform SpawnLocation;
     public CinemachineCamera bossArenaCamera;
+    public int bossCameraActivePriority = 20;
+    private PrioritySettings bossCameraIdlePriority;
+
+    [Header("Pixel Perfect (zoom da luta)")]
+    public PixelPerfectCamera pixelPerfectCamera;
+    public Vector2Int bossRefResolution = new Vector2Int(2560, 1440);
+    private Vector2Int originalRefResolution;
+
     private Transform Parent;
     public GameObject healthPanel;
     public TextMeshProUGUI bossName;
@@ -22,6 +31,24 @@ public class BossTrigger : MonoBehaviour
     {
         Parent = transform.parent;
         activated = false;
+
+        if (bossArenaCamera != null)
+        {
+            bossCameraIdlePriority = bossArenaCamera.Priority;
+        }
+
+        if (pixelPerfectCamera == null && Camera.main != null)
+        {
+            pixelPerfectCamera = Camera.main.GetComponent<PixelPerfectCamera>();
+        }
+
+        if (pixelPerfectCamera != null)
+        {
+            originalRefResolution = new Vector2Int(
+                pixelPerfectCamera.refResolutionX,
+                pixelPerfectCamera.refResolutionY
+            );
+        }
 
         Refresh();
     }
@@ -102,7 +129,12 @@ public class BossTrigger : MonoBehaviour
         }
         if (bossArenaCamera != null)
         {
-            bossArenaCamera.Priority = 20;
+            bossArenaCamera.Priority = bossCameraActivePriority;
+        }
+        if (pixelPerfectCamera != null)
+        {
+            pixelPerfectCamera.refResolutionX = bossRefResolution.x;
+            pixelPerfectCamera.refResolutionY = bossRefResolution.y;
         }
     }
 
@@ -120,7 +152,15 @@ public class BossTrigger : MonoBehaviour
     public void EndBossFight()
     {
         healthPanel.SetActive(false);
-        bossArenaCamera.Priority = 1;
+        if (bossArenaCamera != null)
+        {
+            bossArenaCamera.Priority = bossCameraIdlePriority;
+        }
+        if (pixelPerfectCamera != null)
+        {
+            pixelPerfectCamera.refResolutionX = originalRefResolution.x;
+            pixelPerfectCamera.refResolutionY = originalRefResolution.y;
+        }
         Door.SetActive(false);
         player.RestorePotions();
         gameManager.bossCount++;

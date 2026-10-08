@@ -24,7 +24,7 @@ public class OreShard : MonoBehaviour
             if (damageable != null)
             {
                 Vector2 knockbackDirection = (collision.transform.position - transform.position).normalized;
-                damageable.TakeDamage(damage, knockbackDirection, 10f);
+                damageable.TakeDamage(damage, knockbackDirection, 3f);
             }
             Destroy(gameObject);
         }

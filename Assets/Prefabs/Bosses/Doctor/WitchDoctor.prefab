@@ -215,7 +215,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
@@ -302,12 +302,21 @@ MonoBehaviour:
   m_Graph: {fileID: -2591286713751593269, guid: 959064a5a57d89d4b964fafd1fba99e5, type: 2}
   m_BlackboardVariableOverridesList:
   - rid: 4575394776634884241
+  - rid: 1704243224814289769
   m_OriginalGraph: {fileID: 0}
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
     version: 2
     RefIds:
+    - rid: 1704243224814289769
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 5436564636214649211
+          m_Value1: 6307395055970796250
+        Name: Range
+        m_Value: 2.5
     - rid: 4575394776634884241
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:

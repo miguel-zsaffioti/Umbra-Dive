@@ -13,7 +13,7 @@ public partial class MoveToCenterAction : Action
     private Vector2 targetPosition;
 
     [SerializeReference] public float moveSpeed = 5f;
-    [SerializeReference] public float stoppingDistance = 0.05f;
+    [SerializeReference] public float stoppingDistance = 0.2f;
 
     protected override Status OnStart()
     {
