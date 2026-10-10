@@ -33,6 +33,8 @@ public class Boss : MonoBehaviour, IDamagable
     private readonly List<string> attackHistory = new List<string>();
     private const int MaxAttackHistorySize = 20;
 
+    private readonly List<GameObject> minions = new List<GameObject>();
+
     public void RegisterAttack(string attackId)
     {
         if (string.IsNullOrEmpty(attackId)) return;
@@ -55,6 +57,26 @@ public class Boss : MonoBehaviour, IDamagable
             if (attackHistory[i] == attackId) return false;
         }
         return true;
+    }
+
+    public void RegisterMinion(GameObject minion)
+    {
+        minions.RemoveAll(m => m == null); // limpa os que já morreram
+        minions.Add(minion);
+    }
+
+    public void ClearBossEntities()
+    {
+        if (PoolManager.Instance != null)
+        {
+            PoolManager.Instance.DespawnAll();
+        }
+
+        foreach (var minion in minions)
+        {
+            if (minion != null) Destroy(minion);
+        }
+        minions.Clear();
     }
 
     public Vector2 ClampToArena(Vector2 point)
@@ -130,6 +152,8 @@ public class Boss : MonoBehaviour, IDamagable
 
     public void Die()
     {
+        ClearBossEntities();
+
         if (deathEffect != null)
         {
             deathEffect.StartCoroutine(WaitForDeathEffect());

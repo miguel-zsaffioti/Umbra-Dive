@@ -13,6 +13,10 @@ public class PoolManager : MonoBehaviour
     private readonly Dictionary<GameObject, GameObject> instanceToPrefab = new();
     private readonly Dictionary<GameObject, Transform> containers = new();
 
+    // Instâncias que estão em uso agora (fora da pool)
+    private readonly HashSet<GameObject> active = new();
+    private readonly List<GameObject> despawnBuffer = new();
+
     private static readonly List<IPoolable> poolableBuffer = new();
 
     private void Awake()
@@ -30,8 +34,6 @@ public class PoolManager : MonoBehaviour
         if (Instance == this) Instance = null;
     }
 
-    // ---------- API pública ----------
-
     public void Prewarm(GameObject prefab, int count)
     {
         var pool = GetOrCreatePool(prefab);
@@ -44,14 +46,14 @@ public class PoolManager : MonoBehaviour
     public GameObject Spawn(GameObject prefab, Vector3 position, Quaternion rotation, Transform parent = null)
     {
         var pool = GetOrCreatePool(prefab);
-        var instance = pool.Get(); // ainda inativo
+        var instance = pool.Get();
 
         if (parent != null)
             instance.transform.SetParent(parent, false);
 
-        // Posição/rotação em espaço de mundo, aplicadas ANTES de ativar
         instance.transform.SetPositionAndRotation(position, rotation);
         instance.SetActive(true);
+        active.Add(instance);
 
         instance.GetComponents(poolableBuffer);
         foreach (var p in poolableBuffer) p.OnSpawn();
@@ -79,7 +81,18 @@ public class PoolManager : MonoBehaviour
         pools[prefab].Release(instance);
     }
 
-    // ---------- Internos ----------
+    public void DespawnAll()
+    {
+        despawnBuffer.Clear();
+        despawnBuffer.AddRange(active);
+
+        foreach (var instance in despawnBuffer)
+        {
+            if (instance != null) Despawn(instance);
+        }
+
+        despawnBuffer.Clear();
+    }
 
     private IObjectPool<GameObject> GetOrCreatePool(GameObject prefab)
     {
@@ -113,6 +126,8 @@ public class PoolManager : MonoBehaviour
 
     private void OnRelease(GameObject instance)
     {
+        active.Remove(instance);
+
         instance.GetComponents(poolableBuffer);
         foreach (var p in poolableBuffer) p.OnDespawn();
 
@@ -122,6 +137,7 @@ public class PoolManager : MonoBehaviour
 
     private void OnDestroyInstance(GameObject instance)
     {
+        active.Remove(instance);
         instanceToPrefab.Remove(instance);
         Destroy(instance);
     }

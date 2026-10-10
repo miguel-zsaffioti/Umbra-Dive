@@ -42,6 +42,11 @@ public class Portal : MonoBehaviour, IPoolable
         int rand = Random.Range(0, 100);
         GameObject enemyObj = Instantiate(rand > 50 ? slimePrefab : batPrefab, transform.position, Quaternion.identity);
 
+        if (Boss.Instance != null)
+        {
+            Boss.Instance.RegisterMinion(enemyObj);
+        }
+
         Enemy enemy = enemyObj.GetComponent<Enemy>();
         if (enemy != null)
         {
