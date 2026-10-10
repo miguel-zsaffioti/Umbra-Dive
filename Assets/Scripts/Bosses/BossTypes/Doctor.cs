@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class Doctor : Boss
 {
-    public GameObject areaSlashPrefab;
-    public GameObject frontAttackPrefab;
-    public GameObject areaAttackPrefab;
-    public GameObject portalPrefab;
-    public GameObject projectilePrefab;
+    public AreaSlash areaSlashPrefab;
+    public FrontAttack frontAttackPrefab;
+    public AreaAttack areaAttackPrefab;
+    public Portal portalPrefab;
+    public Projectile projectilePrefab;
     public float frontAttackSpawnDistance = 1.2f;
     public float cornerMargin = 0.6f;
 
@@ -44,14 +44,13 @@ public class Doctor : Boss
         Bounds bounds = arenaBounds.bounds;
 
         return new List<Vector2>
-    {
-        new Vector2(bounds.min.x + cornerMargin, bounds.min.y + cornerMargin),
-        new Vector2(bounds.max.x - cornerMargin, bounds.min.y + cornerMargin),
-        new Vector2(bounds.max.x - cornerMargin, bounds.max.y - cornerMargin),
-        new Vector2(bounds.min.x + cornerMargin, bounds.max.y - cornerMargin)
-    };
+        {
+            new Vector2(bounds.min.x + cornerMargin, bounds.min.y + cornerMargin),
+            new Vector2(bounds.max.x - cornerMargin, bounds.min.y + cornerMargin),
+            new Vector2(bounds.max.x - cornerMargin, bounds.max.y - cornerMargin),
+            new Vector2(bounds.min.x + cornerMargin, bounds.max.y - cornerMargin)
+        };
     }
-
 
     public void SetAttackDirection(Vector2 direction)
     {
@@ -89,7 +88,7 @@ public class Doctor : Boss
     {
         if (areaSlashPrefab == null) return;
         SetAttackDirection(Vector2.down);
-        Instantiate(areaSlashPrefab, transform.position, transform.rotation, transform);
+        PoolManager.Instance.Spawn(areaSlashPrefab, transform.position, transform.rotation, transform);
         RegisterAttack("AreaSlash");
     }
 
@@ -108,7 +107,7 @@ public class Doctor : Boss
 
         Vector3 spawnPos = transform.position + (Vector3)(frontAttackDirection * spawnDist);
 
-        Instantiate(frontAttackPrefab, spawnPos, rotation, transform);
+        PoolManager.Instance.Spawn(frontAttackPrefab, spawnPos, rotation, transform);
         RegisterAttack("Front");
     }
 
@@ -144,7 +143,7 @@ public class Doctor : Boss
         List<Vector2> poisonSpots = GetRandomArenaPoints(qtd, minDistance: 2f);
         foreach (Vector2 spot in poisonSpots)
         {
-            Instantiate(areaAttackPrefab, spot, UnityEngine.Quaternion.identity, transform);
+            PoolManager.Instance.Spawn(areaAttackPrefab, spot, Quaternion.identity, transform);
         }
         RegisterAttack("Area");
     }
@@ -155,7 +154,7 @@ public class Doctor : Boss
         List<Vector2> summonSpots = GetRandomArenaPoints(qtd, minDistance: 2f);
         foreach (Vector2 spot in summonSpots)
         {
-            Instantiate(portalPrefab, spot, UnityEngine.Quaternion.identity, transform);
+            PoolManager.Instance.Spawn(portalPrefab, spot, Quaternion.identity, transform);
         }
         RegisterAttack("Summon");
     }
@@ -185,7 +184,9 @@ public class Doctor : Boss
                 spawnDir = Vector2.down + animationDir;
                 break;
         }
-        Instantiate(projectilePrefab, transform.position + (Vector3)(spawnDir.normalized * projectileSpawnDistance), Quaternion.identity, transform);
+
+        Vector3 spawnPos = transform.position + (Vector3)(spawnDir.normalized * projectileSpawnDistance);
+        PoolManager.Instance.Spawn(projectilePrefab, spawnPos, Quaternion.identity, transform);
         RegisterAttack("Projectile");
     }
 

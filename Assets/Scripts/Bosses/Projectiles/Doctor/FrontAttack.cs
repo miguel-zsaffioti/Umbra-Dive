@@ -1,21 +1,32 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class FrontAttack : MonoBehaviour
+public class FrontAttack : MonoBehaviour, IPoolable
 {
     private bool activated = false;
     public int damage = 3;
 
     private bool hasDamagedThisActivation = false;
 
+    public void OnSpawn()
+    {
+        activated = false;
+        hasDamagedThisActivation = false;
+    }
+
+    public void OnDespawn()
+    {
+        activated = false;
+    }
+
     public void Activate()
     {
         activated = true;
     }
-    
-    public void Deactivate() { 
+
+    public void Deactivate()
+    {
         activated = false;
-        Destroy(gameObject);
+        PoolManager.Instance.Despawn(gameObject);
     }
 
     private void OnTriggerStay2D(Collider2D collision)

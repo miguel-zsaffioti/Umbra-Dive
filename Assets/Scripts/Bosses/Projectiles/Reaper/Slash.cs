@@ -1,25 +1,33 @@
 using UnityEngine;
 
-public class Slash : MonoBehaviour
+public class Slash : MonoBehaviour, IPoolable
 {
     private Rigidbody2D rb;
     public float speed = 1f;
     public int damage = 3;
+
+    private bool hasHit; 
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    private void Start()
+    public void Launch(float direction)
     {
+        direction = Mathf.Sign(direction);
 
-        float direction = Mathf.Sign(transform.localScale.x);
+        Vector3 scale = transform.localScale;
+        scale.x = Mathf.Abs(scale.x) * direction;
+        transform.localScale = scale;
+
         rb.linearVelocityX = speed * direction;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (hasHit) return;
+
         if (collision.CompareTag("Player"))
         {
             IDamagable damageable = collision.gameObject.GetComponent<IDamagable>();
@@ -30,11 +38,27 @@ public class Slash : MonoBehaviour
                 damageable.TakeDamage(damage, knockbackDirection, 10f);
             }
 
-            Destroy(gameObject);
+            Despawn();
         }
         else if (collision.CompareTag("Wall"))
         {
-            Destroy(gameObject);
+            Despawn();
         }
+    }
+
+    private void Despawn()
+    {
+        hasHit = true;
+        PoolManager.Instance.Despawn(gameObject);
+    }
+
+    public void OnSpawn()
+    {
+        hasHit = false;
+    }
+
+    public void OnDespawn()
+    {
+        rb.linearVelocity = Vector2.zero;
     }
 }

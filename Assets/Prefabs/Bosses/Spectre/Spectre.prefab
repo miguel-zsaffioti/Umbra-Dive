@@ -338,7 +338,7 @@ MonoBehaviour:
   moveDirection: {x: 0, y: 0}
   moveSpeed: 0
   arenaBounds: {fileID: 0}
-  OreShard: {fileID: 742863164703497884, guid: b65734e9f6f803245b5cfa2c7f4779ee, type: 3}
+  OreShard: {fileID: 8260793060956825254, guid: b65734e9f6f803245b5cfa2c7f4779ee, type: 3}
   teleportEffectPrefab: {fileID: 1759686916718489205, guid: 39d3235cb6eaaba459ac5092b994e3a0, type: 3}
 --- !u!114 &6140943119499916633
 MonoBehaviour:

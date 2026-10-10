@@ -365,12 +365,13 @@ MonoBehaviour:
   bossName: Grim Reaper
   moveDirection: {x: 0, y: 0}
   moveSpeed: 0
+  arenaBounds: {fileID: 0}
   isFacingRight: 0
   attackCooldownDuration: 5
   specialCooldownDuration: 10
   attackRange: 1.5
   slashSpawnLocation: {fileID: 5392335664102427163}
-  slashPrefab: {fileID: 5427868014869711695, guid: 93e73bb1af6c57d409a34155e9882d5e, type: 3}
+  slashPrefab: {fileID: 5992211850890988400, guid: 93e73bb1af6c57d409a34155e9882d5e, type: 3}
   flipThreshold: 0.3
   flipCooldown: 0.2
 --- !u!114 &-8442098870479040165

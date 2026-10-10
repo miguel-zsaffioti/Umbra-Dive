@@ -1,12 +1,27 @@
 using UnityEngine;
-using UnityEngine.WSA;
 
-public class AreaSlash : MonoBehaviour
+public class AreaSlash : MonoBehaviour, IPoolable
 {
     [HideInInspector] public bool activated = false;
     public int damage = 3;
 
     private bool hasDamagedThisActivation = false;
+
+    public void OnSpawn()
+    {
+        activated = false;
+        hasDamagedThisActivation = false;
+    }
+
+    public void OnDespawn()
+    {
+        activated = false;
+    }
+
+    public void Despawn()
+    {
+        PoolManager.Instance.Despawn(gameObject);
+    }
 
     private void OnTriggerStay2D(Collider2D collision)
     {

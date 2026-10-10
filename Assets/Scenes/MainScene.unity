@@ -2220,9 +2220,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
-    width: 1
-    height: 1
+    y: 0.041666668
+    width: 0.25
+    height: 0.25
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -2937,7 +2937,7 @@ PrefabInstance:
       objectReference: {fileID: 665547812}
     - target: {fileID: 805260411619635311, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
       propertyPath: bossOrderer
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 805260411619635311, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
       propertyPath: gameManager
@@ -34244,6 +34244,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1739487507}
   - component: {fileID: 1739487506}
+  - component: {fileID: 1739487508}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -34279,6 +34280,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1739487508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1739487505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed7bdd20dec5eac4a8da15323ef2bb52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PoolManager
+  defaultCapacity: 10
+  maxSize: 200
 --- !u!1 &1740540391
 GameObject:
   m_ObjectHideFlags: 0

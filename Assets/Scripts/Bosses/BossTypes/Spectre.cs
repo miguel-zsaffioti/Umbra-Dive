@@ -3,7 +3,7 @@ using UnityEngine.AdaptivePerformance;
 
 public class Spectre : Boss
 {
-    [SerializeField] GameObject OreShard;
+    [SerializeField] OreShard OreShard;
     [SerializeField] GameObject teleportEffectPrefab;
 
     public void ForceFaceForward(Vector2? direction = null)
@@ -57,7 +57,7 @@ public class Spectre : Boss
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.Euler(0f, 0f, angle);
 
-        GameObject shard = Instantiate(OreShard, spawnLocation, rotation);
+        OreShard shard = PoolManager.Instance.Spawn(OreShard, spawnLocation, rotation);
 
         if (direction.x < 0f)
         {

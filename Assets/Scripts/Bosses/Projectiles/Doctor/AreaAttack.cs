@@ -1,11 +1,11 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
-public class AreaAttack : MonoBehaviour
+public class AreaAttack : MonoBehaviour, IPoolable
 {
     private SpriteRenderer spriteRenderer;
     private Animator animator;
+    private Color baseColor;
 
     private bool inCooldown = true;
 
@@ -14,27 +14,38 @@ public class AreaAttack : MonoBehaviour
     private int currentTick = 0;
 
     public float cooldown = 1.5f;
-    
+
     public float fadeInDuration = 1f;
     public float fadeOutDuration = 1f;
 
     private bool hasDamagedThisActivation = false;
     private bool activated = false;
 
-
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        baseColor = spriteRenderer.color; // cor inicial do prefab (alpha incluso)
     }
 
-    void Start()
+    public void OnSpawn()
     {
-        StartCoroutine(FadeIn(fadeInDuration));
+        inCooldown = true;
         currentTick = 0;
+        activated = false;
+        hasDamagedThisActivation = false;
+        spriteRenderer.color = baseColor;
+
+        StartCoroutine(FadeIn(fadeInDuration));
     }
 
-    void Update()
+    public void OnDespawn()
+    {
+        StopAllCoroutines();
+        activated = false;
+    }
+
+    private void Update()
     {
         if (inCooldown) return;
         if (currentTick >= maxDamageTicks)
@@ -43,7 +54,6 @@ public class AreaAttack : MonoBehaviour
             return;
         }
         animator.SetTrigger("Damage");
-
 
         currentTick++;
         StartCoroutine(DamageCooldown());
@@ -70,7 +80,7 @@ public class AreaAttack : MonoBehaviour
 
         color.a = 1f;
         spriteRenderer.color = color;
-        inCooldown= false;
+        inCooldown = false;
     }
 
     private IEnumerator FadeOut(float duration)
@@ -88,7 +98,7 @@ public class AreaAttack : MonoBehaviour
 
         color.a = 0f;
         spriteRenderer.color = color;
-        Destroy(gameObject);
+        PoolManager.Instance.Despawn(gameObject);
     }
 
     public void Activate()
@@ -103,7 +113,6 @@ public class AreaAttack : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        //Debug.Log("Teste");
         if (!activated || hasDamagedThisActivation) return;
         if (collision.CompareTag("Player"))
         {
@@ -116,5 +125,4 @@ public class AreaAttack : MonoBehaviour
             }
         }
     }
-
 }

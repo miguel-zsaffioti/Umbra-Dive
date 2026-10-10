@@ -6,8 +6,14 @@ public class PoolManager : MonoBehaviour
 {
     public static PoolManager Instance { get; private set; }
 
+    [SerializeField] private int defaultCapacity = 10;
+    [SerializeField] private int maxSize = 200;
+
     private readonly Dictionary<GameObject, IObjectPool<GameObject>> pools = new();
     private readonly Dictionary<GameObject, GameObject> instanceToPrefab = new();
+    private readonly Dictionary<GameObject, Transform> containers = new();
+
+    private static readonly List<IPoolable> poolableBuffer = new();
 
     private void Awake()
     {
@@ -17,5 +23,106 @@ public class PoolManager : MonoBehaviour
             return;
         }
         Instance = this;
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
+    }
+
+    // ---------- API pública ----------
+
+    public void Prewarm(GameObject prefab, int count)
+    {
+        var pool = GetOrCreatePool(prefab);
+        var temp = new List<GameObject>(count);
+
+        for (int i = 0; i < count; i++) temp.Add(pool.Get());
+        foreach (var go in temp) pool.Release(go);
+    }
+
+    public GameObject Spawn(GameObject prefab, Vector3 position, Quaternion rotation, Transform parent = null)
+    {
+        var pool = GetOrCreatePool(prefab);
+        var instance = pool.Get(); // ainda inativo
+
+        if (parent != null)
+            instance.transform.SetParent(parent, false);
+
+        // Posição/rotação em espaço de mundo, aplicadas ANTES de ativar
+        instance.transform.SetPositionAndRotation(position, rotation);
+        instance.SetActive(true);
+
+        instance.GetComponents(poolableBuffer);
+        foreach (var p in poolableBuffer) p.OnSpawn();
+
+        return instance;
+    }
+
+    public T Spawn<T>(T prefab, Vector3 position, Quaternion rotation, Transform parent = null) where T : Component
+    {
+        var go = Spawn(prefab.gameObject, position, rotation, parent);
+        return go.GetComponent<T>();
+    }
+
+    public void Despawn(GameObject instance)
+    {
+        if (instance == null) return;
+
+        if (!instanceToPrefab.TryGetValue(instance, out var prefab))
+        {
+            Debug.LogWarning($"[PoolManager] '{instance.name}' não pertence a nenhum pool. Destruindo.", instance);
+            Destroy(instance);
+            return;
+        }
+
+        pools[prefab].Release(instance);
+    }
+
+    // ---------- Internos ----------
+
+    private IObjectPool<GameObject> GetOrCreatePool(GameObject prefab)
+    {
+        if (pools.TryGetValue(prefab, out var existing)) return existing;
+
+        var container = new GameObject($"Pool_{prefab.name}").transform;
+        container.SetParent(transform);
+        containers[prefab] = container;
+
+        var pool = new ObjectPool<GameObject>(
+            createFunc: () => CreateInstance(prefab),
+            actionOnGet: null,
+            actionOnRelease: OnRelease,
+            actionOnDestroy: OnDestroyInstance,
+            collectionCheck: true,
+            defaultCapacity: defaultCapacity,
+            maxSize: maxSize
+        );
+
+        pools[prefab] = pool;
+        return pool;
+    }
+
+    private GameObject CreateInstance(GameObject prefab)
+    {
+        var instance = Instantiate(prefab, containers[prefab]);
+        instance.SetActive(false);
+        instanceToPrefab[instance] = prefab;
+        return instance;
+    }
+
+    private void OnRelease(GameObject instance)
+    {
+        instance.GetComponents(poolableBuffer);
+        foreach (var p in poolableBuffer) p.OnDespawn();
+
+        instance.SetActive(false);
+        instance.transform.SetParent(containers[instanceToPrefab[instance]], false);
+    }
+
+    private void OnDestroyInstance(GameObject instance)
+    {
+        instanceToPrefab.Remove(instance);
+        Destroy(instance);
     }
 }

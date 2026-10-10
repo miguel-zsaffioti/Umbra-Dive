@@ -347,11 +347,11 @@ MonoBehaviour:
   moveDirection: {x: 0, y: 0}
   moveSpeed: 0
   arenaBounds: {fileID: 0}
-  areaSlashPrefab: {fileID: 7857988272872534380, guid: 4e468fd8c6b666140b46072007276215, type: 3}
-  frontAttackPrefab: {fileID: 1963715586550484853, guid: ae06a6f12eac0da42842745e5f1c4b77, type: 3}
-  areaAttackPrefab: {fileID: 7936061361550852113, guid: b7f56ba3d897a114eacf46c8da3ce3fe, type: 3}
-  portalPrefab: {fileID: 6657314859316866153, guid: 1396e6f0fc3e3934ea053c7181d338e1, type: 3}
-  projectilePrefab: {fileID: 3621736219875952811, guid: 545b56f85417e8c4e900f51b17ac4553, type: 3}
+  areaSlashPrefab: {fileID: 2391121349050726058, guid: 4e468fd8c6b666140b46072007276215, type: 3}
+  frontAttackPrefab: {fileID: 6587655495908730326, guid: ae06a6f12eac0da42842745e5f1c4b77, type: 3}
+  areaAttackPrefab: {fileID: 7527448721704280026, guid: b7f56ba3d897a114eacf46c8da3ce3fe, type: 3}
+  portalPrefab: {fileID: 66238399425433014, guid: 1396e6f0fc3e3934ea053c7181d338e1, type: 3}
+  projectilePrefab: {fileID: 6444491939887066345, guid: 545b56f85417e8c4e900f51b17ac4553, type: 3}
   frontAttackSpawnDistance: 1.8
   cornerMargin: 0.6
   projectileSpawnDistance: 1.2

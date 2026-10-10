@@ -1,22 +1,32 @@
 using System.Collections;
 using UnityEngine;
 
-public class Portal : MonoBehaviour
+public class Portal : MonoBehaviour, IPoolable
 {
     public float spawnCooldown = 3f;
     public GameObject slimePrefab;
     public GameObject batPrefab;
+
     private Animator animator;
+    private Vector3 baseScale;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        baseScale = transform.localScale; // escala original do prefab
     }
 
-    void Start()
+    public void OnSpawn()
     {
+        transform.localScale = baseScale;
+
         StartCoroutine(Appear());
         StartCoroutine(SpawnWait());
+    }
+
+    public void OnDespawn()
+    {
+        StopAllCoroutines();
     }
 
     private IEnumerator SpawnWait()
@@ -38,7 +48,7 @@ public class Portal : MonoBehaviour
             enemy.ForceChase();
         }
 
-        Destroy(gameObject);
+        PoolManager.Instance.Despawn(gameObject);
     }
 
     private IEnumerator Collapse()
@@ -56,14 +66,14 @@ public class Portal : MonoBehaviour
             yield return null;
         }
 
-        Destroy(gameObject);
+        PoolManager.Instance.Despawn(gameObject);
     }
 
     private IEnumerator Appear()
     {
         float duration = 0.4f;
         float t = 0f;
-        Vector3 targetScale = transform.localScale;
+        Vector3 targetScale = baseScale;
         Quaternion targetRotation = transform.rotation;
         transform.localScale = Vector3.zero;
 

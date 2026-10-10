@@ -1,41 +1,48 @@
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Projectile : MonoBehaviour, IPoolable
 {
-    private Transform target;         
+    private Transform target;
     public float speed = 8f;
-    public float turnSpeed = 120f;    
+    public float turnSpeed = 120f;
     public float homingDuration = 2f;
+    public float lifetime = 10f; // novo: garante que volte à pool se não bater em parede
 
     public int damage = 5;
 
     private Vector2 currentDirection;
     private float timer;
 
-    void Start()
+    public void OnSpawn()
     {
+        timer = 0f;
+
         if (target == null)
         {
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-            if (playerObj != null)
-            {
-                target = playerObj.transform;
-            }
+            if (playerObj != null) target = playerObj.transform;
         }
 
         if (target != null)
-        {
             currentDirection = (target.position - transform.position).normalized;
-        }
         else
-        {
             currentDirection = transform.right;
-        }
     }
 
-    void Update()
+    public void OnDespawn()
+    {
+        // Se tiver TrailRenderer, faça trail.Clear() aqui
+    }
+
+    private void Update()
     {
         timer += Time.deltaTime;
+
+        if (timer >= lifetime)
+        {
+            PoolManager.Instance.Despawn(gameObject);
+            return;
+        }
 
         if (target != null && timer < homingDuration)
         {
@@ -65,7 +72,7 @@ public class Projectile : MonoBehaviour
 
         if (collision.CompareTag("Wall"))
         {
-            Destroy(gameObject);
+            PoolManager.Instance.Despawn(gameObject);
         }
     }
 }

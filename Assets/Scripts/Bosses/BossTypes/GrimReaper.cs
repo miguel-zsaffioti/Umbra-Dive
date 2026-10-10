@@ -14,7 +14,7 @@ public class GrimReaper : Boss
     public float attackRange = 1.5f;
 
     public Transform slashSpawnLocation;
-    public GameObject slashPrefab;
+    public Slash slashPrefab;
 
     [Header("Flip")]
     public float flipThreshold = 0.3f;
@@ -87,11 +87,9 @@ public class GrimReaper : Boss
     public void TriggerSpecialAttack()
     {
         if (slashSpawnLocation == null) return;
-        GameObject newSlash = Instantiate(slashPrefab, slashSpawnLocation.position, Quaternion.identity);
+        Slash newSlash = PoolManager.Instance.Spawn(slashPrefab, slashSpawnLocation.position, Quaternion.identity);
 
-        Vector3 newScale = newSlash.transform.localScale;
-        newScale.x = transform.localScale.x;
-        newSlash.transform.localScale = newScale;
+        newSlash.Launch(isFacingRight ? 1f : -1f);
 
         RegisterAttack("Special");
         specialCooldown.Reset();
