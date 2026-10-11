@@ -12,6 +12,7 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
+        AudioManager.Instance.Play(AudioManager.Instance.menu);
         if (continueButton != null)
         {
             continueButton.SetActive(SaveManager.SaveExists());
@@ -26,7 +27,7 @@ public class MainMenu : MonoBehaviour
         {
             SaveManager.Instance.DeleteSave();
         }
-
+        AudioManager.Instance.Play(AudioManager.Instance.ambient);
         SceneManager.LoadScene(gameSceneName);
     }
 
@@ -39,7 +40,7 @@ public class MainMenu : MonoBehaviour
             PlayGame();
             return;
         }
-
+        AudioManager.Instance.Play(AudioManager.Instance.ambient);
         SceneManager.sceneLoaded += OnGameSceneLoaded;
         SceneManager.LoadScene(gameSceneName);
     }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using Unity.Cinemachine;
@@ -17,15 +18,34 @@ public class BossTrigger : MonoBehaviour
     public Vector2Int bossRefResolution = new Vector2Int(2560, 1440);
     private Vector2Int originalRefResolution;
 
+    [Header("Fim da luta")]
+    public float cameraReturnDelay = 3f;
+
     private Transform Parent;
     public GameObject healthPanel;
     public TextMeshProUGUI bossName;
     public Collider2D arenaBounds;
-    public GameManager gameManager;
+    private GameManager gameManager;
     public int bossOrderer;
     private Player player;
     private bool activated;
     private GameObject spawnedBoss;
+    public AudioClip bossMusic;
+
+    private void Awake()
+    {
+        gameManager = GameManager.Instance;
+
+        if (gameManager == null)
+        {
+            gameManager = FindFirstObjectByType<GameManager>();
+        }
+
+        if (gameManager == null)
+        {
+            Debug.LogError("[BossTrigger] GameManager não encontrado. Inicie o jogo pelo menu.", this);
+        }
+    }
 
     private void Start()
     {
@@ -71,6 +91,8 @@ public class BossTrigger : MonoBehaviour
 
     private void Refresh()
     {
+        if (gameManager == null) return;
+
         bool isCurrentBoss = gameManager.bossCount == bossOrderer;
         bool alreadyDefeated = gameManager.bossCount > bossOrderer;
 
@@ -97,6 +119,7 @@ public class BossTrigger : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (activated) return;
+        if (gameManager == null) return;
         if (gameManager.bossCount != bossOrderer) return;
         if (SpawnLocation == null) return;
         if (Parent == null) return;
@@ -136,6 +159,11 @@ public class BossTrigger : MonoBehaviour
             pixelPerfectCamera.refResolutionX = bossRefResolution.x;
             pixelPerfectCamera.refResolutionY = bossRefResolution.y;
         }
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.Play(bossMusic);
+        }
     }
 
     public void ResetFight()
@@ -152,6 +180,19 @@ public class BossTrigger : MonoBehaviour
     public void EndBossFight()
     {
         healthPanel.SetActive(false);
+        Door.SetActive(false);
+        player.RestorePotions();
+        gameManager.bossCount++;
+        gameManager.activeBossTrigger = null;
+        gameManager.SaveGame();
+
+        StartCoroutine(RestoreAfterDelay());
+    }
+
+    private IEnumerator RestoreAfterDelay()
+    {
+        yield return new WaitForSeconds(cameraReturnDelay);
+
         if (bossArenaCamera != null)
         {
             bossArenaCamera.Priority = bossCameraIdlePriority;
@@ -161,10 +202,10 @@ public class BossTrigger : MonoBehaviour
             pixelPerfectCamera.refResolutionX = originalRefResolution.x;
             pixelPerfectCamera.refResolutionY = originalRefResolution.y;
         }
-        Door.SetActive(false);
-        player.RestorePotions();
-        gameManager.bossCount++;
-        gameManager.activeBossTrigger = null;
-        gameManager.SaveGame();
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayAfterCurrent(AudioManager.Instance.ambient);
+        }
     }
 }
