@@ -29,6 +29,7 @@ public class RollState : PlayerState
         rb.AddForce(rollDirection * player.rollForce, ForceMode2D.Impulse);
         player.isInvincible = true;
         player.rollCooldown.Reset();
+        player.PlaySound(player.audioData.dodge);
     }
 
     public override void Exit()

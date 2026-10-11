@@ -23,6 +23,7 @@ public class PlayerHealthSystem
                 -snappedDirection.y == player.animator.GetFloat("LastY"))
             {
                 //Debug.Log("Bloqueou");
+                player.PlaySound(player.audioData.shield);
                 player.ApplyKnockback(knockbackDirection, knockbackForce * 2f);
                 player.StartCoroutine(InvincibilityCoroutine(false));
                 return;
@@ -32,7 +33,7 @@ public class PlayerHealthSystem
         bool isAttacking = player.stateMachine.currState == player.attackState;
 
         player.currentHealth -= damageAmount;
-        player.audioSystem.PlaySound(player.audioData.damage);
+        player.PlaySound(player.audioData.hit);
         player.NotifyHealthChanged();
 
         if (player.currentHealth <= 0)

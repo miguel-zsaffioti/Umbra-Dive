@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class Player : MonoBehaviour, IDamagable
 {
@@ -8,13 +9,13 @@ public class Player : MonoBehaviour, IDamagable
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public Animator animator;
     [HideInInspector] public AudioSource audioSource;
+    private AudioSource footstepSource;
     #endregion
 
     #region Systems
     [HideInInspector] public PlayerInputSystem inputSystem;
     [HideInInspector] public PlayerHealthSystem healthSystem;
     [HideInInspector] public SpriteRenderer spriteRenderer;
-    [HideInInspector] public PlayerAudioSystem audioSystem;
     [HideInInspector] public PlayerStateMachine stateMachine;
     #endregion
 
@@ -70,10 +71,7 @@ public class Player : MonoBehaviour, IDamagable
 
         healthSystem.RestoreHealthAmount(potionHealAmount);
 
-        if (audioData.heal != null)
-        {
-            audioSystem.PlaySound(audioData.heal);
-        }
+        PlaySound(audioData.potionUse);
     }
 
     public void RestorePotions()
@@ -109,7 +107,7 @@ public class Player : MonoBehaviour, IDamagable
 
     [HideInInspector] public Vector2 facingDirection;
 
-    [Header("Configura��es de Ataque")]
+    [Header("Configurações de Ataque")]
     public Transform attackPoint;
     public float attackPointOffset = 1f;
     public float attackRange = 0.8f;
@@ -134,12 +132,41 @@ public class Player : MonoBehaviour, IDamagable
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
 
+        footstepSource = gameObject.AddComponent<AudioSource>();
+        footstepSource.playOnAwake = false;
+        if (audioSource != null)
+        {
+            footstepSource.outputAudioMixerGroup = audioSource.outputAudioMixerGroup;
+            footstepSource.spatialBlend = audioSource.spatialBlend;
+            footstepSource.volume = audioSource.volume;
+        }
+
         inputSystem = new PlayerInputSystem();
         stateMachine = new PlayerStateMachine();
         healthSystem = new PlayerHealthSystem(this);
-        audioSystem = new PlayerAudioSystem(this);
         rollCooldown = new Cooldown(rollCooldownDuration);
     }
+
+    #region Audio
+    public void PlaySound(AudioResource resource)
+    {
+        if (resource == null) return;
+
+        audioSource.resource = resource;
+        audioSource.Play();
+    }
+
+    public void PlayFootstep()
+    {
+
+        if (stateMachine.currState != walkState) return;
+
+        if (audioData == null || audioData.footsteps == null) return;
+
+        footstepSource.resource = audioData.footsteps;
+        footstepSource.Play();
+    }
+    #endregion
 
     #region Enable/Disable
     private void OnEnable()
@@ -212,7 +239,12 @@ public class Player : MonoBehaviour, IDamagable
 
         if (hasHitSomething)
         {
+            PlaySound(audioData.swordImpact);
             StartHitStop(0.08f);
+        }
+        else
+        {
+            PlaySound(audioData.swordSlash);
         }
     }
 

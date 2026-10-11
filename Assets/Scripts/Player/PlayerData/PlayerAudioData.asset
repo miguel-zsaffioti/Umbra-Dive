@@ -12,13 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b2465af639ea9744a74d03da9ecfcaa, type: 3}
   m_Name: PlayerAudioData
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAudioData
-  normalAttacks:
-  - {fileID: 8300000, guid: 937da79e547aa314ba8ceca9d772c301, type: 3}
-  - {fileID: 8300000, guid: d8a766c0cbf7fc14cb97ca8ec80d100c, type: 3}
-  - {fileID: 8300000, guid: b8d26bf5958ff174e83fbfc7a623d8bd, type: 3}
-  hitAttacks:
-  - {fileID: 8300000, guid: e7c8aa2f57b12ec4da162b4568cb2bfc, type: 3}
-  - {fileID: 8300000, guid: b630c376870035544b3d17f1fef229f0, type: 3}
-  - {fileID: 8300000, guid: a6074607e0d07744db8318ec13ba0169, type: 3}
-  - {fileID: 8300000, guid: ef4ba9ac737c44f4f9a94d875b97ca4e, type: 3}
-  damage: {fileID: 8300000, guid: 1e9163d439bf8964c9fd0f146e5068c0, type: 3}
+  footsteps: {fileID: 6418180475301049370, guid: c2dc8f10b623e3047bb6756d3980aa96, type: 2}
+  shield: {fileID: 6418180475301049370, guid: 4532ed2ff76554c4dada9eb5dc0ec9d2, type: 2}
+  swordSlash: {fileID: 6418180475301049370, guid: 91a0f45b9b9e37848bd9e1511447d3a0, type: 2}
+  swordImpact: {fileID: 6418180475301049370, guid: 7db71bb07a799394bb34d79b386ce87a, type: 2}
+  hit: {fileID: 8300000, guid: 550d570508653214a8b6c12d660fdff5, type: 3}
+  potionUse: {fileID: 8300000, guid: be22d70265f95f3478233b6f445f23a6, type: 3}
+  dodge: {fileID: 8300000, guid: e26e92627254c114e8cfc391dc687739, type: 3}
