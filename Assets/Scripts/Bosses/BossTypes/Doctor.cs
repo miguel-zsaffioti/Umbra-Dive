@@ -22,6 +22,15 @@ public class Doctor : Boss
 
     [HideInInspector] public List<Vector2> arenaCorners;
 
+    [HideInInspector] public AudioSource audioSource;
+    public AudioClip areaSlash;
+    public AudioClip dash;
+    public AudioClip frontAttack;
+    public AudioClip projectile;
+    public AudioClip area;
+    [Range(0f, 1f)] public float areaVolume = 0.6f;
+    public AudioClip portal;
+
     public enum AttackTypes
     {
         Dash,
@@ -37,6 +46,7 @@ public class Doctor : Boss
         base.Start();
         arenaCenter = arenaBounds.bounds.center;
         arenaCorners = GetArenaCorners();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private List<Vector2> GetArenaCorners()
@@ -84,16 +94,25 @@ public class Doctor : Boss
         }
     }
 
+    public void PlayPortalSound()
+    {
+        if (audioSource == null || portal == null) return;
+
+        audioSource.PlayOneShot(portal);
+    }
+
     public void AreaAttack()
     {
         if (areaSlashPrefab == null) return;
         SetAttackDirection(Vector2.down);
         PoolManager.Instance.Spawn(areaSlashPrefab, transform.position, transform.rotation, transform);
+        audioSource.PlayOneShot(areaSlash);
         RegisterAttack("AreaSlash");
     }
 
     public void Dash()
     {
+        audioSource.PlayOneShot(dash);
         RegisterAttack("Dash");
     }
 
@@ -108,6 +127,7 @@ public class Doctor : Boss
         Vector3 spawnPos = transform.position + (Vector3)(frontAttackDirection * spawnDist);
 
         PoolManager.Instance.Spawn(frontAttackPrefab, spawnPos, rotation, transform);
+        audioSource.PlayOneShot(frontAttack);
         RegisterAttack("Front");
     }
 
@@ -141,10 +161,18 @@ public class Doctor : Boss
     {
         int qtd = Random.Range(2, 4);
         List<Vector2> poisonSpots = GetRandomArenaPoints(qtd, minDistance: 2f);
-        foreach (Vector2 spot in poisonSpots)
+
+        for (int i = 0; i < poisonSpots.Count; i++)
         {
-            PoolManager.Instance.Spawn(areaAttackPrefab, spot, Quaternion.identity, transform);
+            AreaAttack areaAttack = PoolManager.Instance.Spawn(areaAttackPrefab, poisonSpots[i], Quaternion.identity, transform);
+
+            if (i == 0)
+            {
+                var mixerGroup = audioSource != null ? audioSource.outputAudioMixerGroup : null;
+                areaAttack.PlayLoop(area, areaVolume, mixerGroup);
+            }
         }
+
         RegisterAttack("Area");
     }
 
@@ -187,6 +215,7 @@ public class Doctor : Boss
 
         Vector3 spawnPos = transform.position + (Vector3)(spawnDir.normalized * projectileSpawnDistance);
         PoolManager.Instance.Spawn(projectilePrefab, spawnPos, Quaternion.identity, transform);
+        audioSource.PlayOneShot(projectile);
         RegisterAttack("Projectile");
     }
 

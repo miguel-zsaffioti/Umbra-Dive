@@ -45,30 +45,17 @@ public class Portal : MonoBehaviour, IPoolable
         if (Boss.Instance != null)
         {
             Boss.Instance.RegisterMinion(enemyObj);
+
+            if (Boss.Instance is Doctor doctor)
+            {
+                doctor.PlayPortalSound();
+            }
         }
 
         Enemy enemy = enemyObj.GetComponent<Enemy>();
         if (enemy != null)
         {
             enemy.ForceChase();
-        }
-
-        PoolManager.Instance.Despawn(gameObject);
-    }
-
-    private IEnumerator Collapse()
-    {
-        float duration = 0.4f;
-        float t = 0f;
-        Vector3 startScale = transform.localScale;
-
-        while (t < duration)
-        {
-            t += Time.deltaTime;
-            float p = t / duration;
-            transform.localScale = Vector3.Lerp(startScale, Vector3.zero, p);
-            transform.Rotate(0, 0, 720f * Time.deltaTime);
-            yield return null;
         }
 
         PoolManager.Instance.Despawn(gameObject);
