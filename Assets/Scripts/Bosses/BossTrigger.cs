@@ -11,6 +11,9 @@ public class BossTrigger : MonoBehaviour
     public GameObject boss;
     public Transform SpawnLocation;
     public CinemachineCamera bossArenaCamera;
+
+    [Header("Configurações da Câmera")]
+    [Tooltip("Prioridade da câmera do boss durante a luta (deve ser maior que a do Player).")]
     public int bossCameraActivePriority = 20;
     private PrioritySettings bossCameraIdlePriority;
 
@@ -19,10 +22,14 @@ public class BossTrigger : MonoBehaviour
     public Vector2Int bossRefResolution = new Vector2Int(2560, 1440);
     private Vector2Int originalRefResolution;
 
-    [Header("Fim da luta")]
+    [Header("Início da Luta")]
+    [Tooltip("Tempo de espera (em segundos) antes do boss começar a se mexer.")]
+    public float bossStartDelay = 2f;
+
+    [Header("Fim da Luta")]
     public float cameraReturnDelay = 3f;
 
-    [Header("Boss final")]
+    [Header("Boss Final")]
     public bool isFinalBoss = false;
     public string endSceneName = "ThanksForPlaying";
     public float endSceneDelay = 2f;
@@ -121,7 +128,6 @@ public class BossTrigger : MonoBehaviour
         }
     }
 
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (activated) return;
@@ -150,17 +156,20 @@ public class BossTrigger : MonoBehaviour
     {
         spawnedBoss = Instantiate(boss, SpawnLocation.position, boss.transform.rotation, Parent);
         Boss bossScript = spawnedBoss.GetComponent<Boss>();
+
         if (bossScript != null)
         {
             bossScript.trigger = this;
             bossName.text = bossScript.bossName;
             bossScript.arenaBounds = arenaBounds;
         }
+
         if (bossArenaCamera != null)
         {
             bool instant = gameManager != null && gameManager.justLoaded;
             StartCoroutine(ActivateBossCamera(instant));
         }
+
         if (pixelPerfectCamera != null)
         {
             pixelPerfectCamera.refResolutionX = bossRefResolution.x;
@@ -185,11 +194,11 @@ public class BossTrigger : MonoBehaviour
             brain.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.Cut, 0f);
         }
 
-        bossArenaCamera.Priority = bossCameraActivePriority;
+        bossArenaCamera.Priority.Value = bossCameraActivePriority;
 
         if (cut)
         {
-            yield return null; 
+            yield return null;
             brain.DefaultBlend = oldBlend;
         }
     }
@@ -209,7 +218,7 @@ public class BossTrigger : MonoBehaviour
     {
         healthPanel.SetActive(false);
         Door.SetActive(false);
-        player.RestorePotions();
+        if (player != null) player.RestorePotions();
         gameManager.bossCount++;
         gameManager.activeBossTrigger = null;
         gameManager.SaveGame();
@@ -225,6 +234,7 @@ public class BossTrigger : MonoBehaviour
         {
             bossArenaCamera.Priority = bossCameraIdlePriority;
         }
+
         if (pixelPerfectCamera != null)
         {
             pixelPerfectCamera.refResolutionX = originalRefResolution.x;

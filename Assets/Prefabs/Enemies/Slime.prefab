@@ -308,11 +308,12 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 256
-  maxHealth: 5
+  maxHealth: 3
   currentHealth: 0
   isFacingRight: 1
   isDead: 0
   spawnPosition: {x: 0, y: 0}
+  startAggroed: 0
 --- !u!114 &6545779894222318395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,6 +344,11 @@ MonoBehaviour:
   startFlickerInterval: 0.35
   endFlickerInterval: 0.04
   deathParticlesPrefab: {fileID: 1546186448473138721, guid: 52f7908007befb647a07f9f04d386895, type: 3}
+  buildUpSound: {fileID: 0}
+  buildUpVolume: 0.6
+  explosionSound: {fileID: 0}
+  explosionVolume: 0.6
+  shakeForce: 1
   whiteMaterial: {fileID: 2100000, guid: 4c0f761dfbd1ed64fae0b91bd46e6a4c, type: 2}
 --- !u!195 &1603841271334903151
 NavMeshAgent:

@@ -334,7 +334,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   animator: {fileID: 0}
   deathEffect: {fileID: 0}
-  maxHealth: 2
+  maxHealth: 20
   trigger: {fileID: 0}
   bossName: Spectre
   moveDirection: {x: 0, y: 0}

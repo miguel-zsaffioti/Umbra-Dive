@@ -2220,9 +2220,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
-    width: 1
-    height: 1
+    y: 0.041666668
+    width: 0.25
+    height: 0.25
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -2957,11 +2957,11 @@ PrefabInstance:
       objectReference: {fileID: 801616475}
     - target: {fileID: 805260411619635311, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
       propertyPath: bossRefResolution.x
-      value: 1920
+      value: 2560
       objectReference: {fileID: 0}
     - target: {fileID: 805260411619635311, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
       propertyPath: bossRefResolution.y
-      value: 1080
+      value: 1440
       objectReference: {fileID: 0}
     - target: {fileID: 4433011964297537525, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
       propertyPath: m_IsActive
@@ -3037,7 +3037,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8915932843174035518, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -15.61
+      value: -16.93
       objectReference: {fileID: 0}
     - target: {fileID: 9189963504783144774, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
       propertyPath: m_Name
@@ -3195,7 +3195,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.6114464, y: -0.34449196}
+  m_Offset: {x: 0.3203373, y: -0.16179848}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3205,7 +3205,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 23.033112, y: 8.812077}
+  m_Size: {x: 21.537441, y: 7.7159233}
   m_EdgeRadius: 0
 --- !u!1 &684045477
 GameObject:
@@ -3273,7 +3273,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.49702263, y: -0.33955193}
+  m_Offset: {x: 0.47631884, y: -0.40364742}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3283,7 +3283,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 17.365719, y: 10.751453}
+  m_Size: {x: 16.112728, y: 9.277056}
   m_EdgeRadius: 0
 --- !u!1 &718987125
 GameObject:
@@ -3763,7 +3763,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 34
-    OrthographicSize: 8
+    OrthographicSize: 10
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -6566,7 +6566,7 @@ MonoBehaviour:
   blockBufferDuration: 0.2
   cureAmount: 1
   cureTick: 0.5
-  maxPotions: 3
+  maxPotions: 4
   currentPotions: 0
   potionHealAmount: 30
   moveSpeed: 5
@@ -266201,6 +266201,14 @@ PrefabInstance:
       propertyPath: Lens.OrthographicSize
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 8257481901730088836, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -12.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8257481901730088836, guid: 72489e5ad17974142900e017af4caff8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 52.6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 333605630483973691, guid: 72489e5ad17974142900e017af4caff8, type: 3}
@@ -266252,11 +266260,11 @@ PrefabInstance:
       objectReference: {fileID: 1358104513}
     - target: {fileID: 805260411619635311, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
       propertyPath: bossRefResolution.x
-      value: 1920
+      value: 2560
       objectReference: {fileID: 0}
     - target: {fileID: 805260411619635311, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
       propertyPath: bossRefResolution.y
-      value: 1080
+      value: 1440
       objectReference: {fileID: 0}
     - target: {fileID: 4433011964297537525, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
       propertyPath: m_IsActive
@@ -266309,6 +266317,14 @@ PrefabInstance:
     - target: {fileID: 8514298757989113252, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 8915932843174035518, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -10.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 8915932843174035518, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 8.82
       objectReference: {fileID: 0}
     - target: {fileID: 9189963504783144774, guid: 2161a1e5870c0fc4a9842d4d60d312f9, type: 3}
       propertyPath: m_Name

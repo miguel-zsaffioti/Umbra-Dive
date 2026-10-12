@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Slime
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   health: 10
-  moveSpeed: 4
+  moveSpeed: 3
   stopDistance: 0.6
   playerDetectionRadius: 8
   timeToLose: 2
