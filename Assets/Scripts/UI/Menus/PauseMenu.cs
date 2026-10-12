@@ -1,6 +1,7 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -8,17 +9,24 @@ public class PauseMenu : MonoBehaviour
     private bool isPaused = false;
     public GameObject pausePanel;
 
-    public static event System.Action<bool> OnPauseStateChanged; // true = pausado
+    public static event System.Action<bool> OnPauseStateChanged;
 
     void Update()
     {
         if (GameOverManager.IsGameOver) return;
 
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        if (PausePressed())
         {
             if (isPaused) ResumeGame();
             else Pause();
         }
+    }
+
+    private bool PausePressed()
+    {
+        bool keyboard = Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame;
+        bool gamepad = Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame;
+        return keyboard || gamepad;
     }
 
     public void Pause()
@@ -36,6 +44,12 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         pausePanel.SetActive(false);
         isPaused = false;
+
+        if (EventSystem.current != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+        }
+
         OnPauseStateChanged?.Invoke(false);
     }
 

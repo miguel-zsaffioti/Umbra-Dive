@@ -1309,7 +1309,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 1, g: 0.9137255, b: 0.6901961, a: 1}
     m_PressedColor: {r: 0.5411765, g: 0.45882353, b: 0.3137255, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 1, g: 0.9137255, b: 0.6901961, a: 1}
     m_DisabledColor: {r: 0.4, g: 0.4, b: 0.4, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.15
@@ -1483,7 +1483,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 1, g: 0.9137255, b: 0.6901961, a: 1}
     m_PressedColor: {r: 0.5411765, g: 0.45882353, b: 0.3137255, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 1, g: 0.9137255, b: 0.6901961, a: 1}
     m_DisabledColor: {r: 0.4, g: 0.4, b: 0.4, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.15
@@ -1700,6 +1700,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1807387492}
   - component: {fileID: 1807387493}
+  - component: {fileID: 1807387494}
   m_Layer: 5
   m_Name: Options
   m_TagString: Untagged
@@ -1755,6 +1756,21 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1807387494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807387491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5924235939e7d94280d9eb80ffd8587, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuFirstSelected
+  candidates:
+  - {fileID: 1267065665}
+  - {fileID: 1224516637}
 --- !u!1 &1962914999
 GameObject:
   m_ObjectHideFlags: 0
@@ -1791,6 +1807,7 @@ MonoBehaviour:
   menu: {fileID: 8300000, guid: ab0fb7fa284cac6448850f905ef5b6e0, type: 3}
   ambient: {fileID: 8300000, guid: 0e847bf40734ee3408a97b74855efeab, type: 3}
   gameOver: {fileID: 8300000, guid: 9406f1388ec4226488898ffe58cd091d, type: 3}
+  logCalls: 0
 --- !u!114 &1962915001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2005,7 +2022,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 1, g: 0.9137255, b: 0.6901961, a: 1}
     m_PressedColor: {r: 0.5411765, g: 0.45882353, b: 0.3137255, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 1, g: 0.9137255, b: 0.6901961, a: 1}
     m_DisabledColor: {r: 0.4, g: 0.4, b: 0.4, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.15

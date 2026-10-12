@@ -156,9 +156,11 @@ public class Player : MonoBehaviour, IDamagable
         audioSource.Play();
     }
 
+    // Chamado por Animation Event na animação de andar
     public void PlayFootstep()
     {
-
+        // A animação de andar continua rodando na layer base durante block/attack/roll,
+        // então só toca o passo se o player estiver de fato andando
         if (stateMachine.currState != walkState) return;
 
         if (audioData == null || audioData.footsteps == null) return;
@@ -199,6 +201,10 @@ public class Player : MonoBehaviour, IDamagable
 
     void Update()
     {
+        // Jogo pausado (pause/game over): o Update continua rodando com timeScale 0,
+        // então sem isso o player processaria input e trocaria de estado durante o pause
+        if (Time.timeScale == 0f) return;
+
         inputSystem.Tick();
         stateMachine.FrameUpdate();
         rollCooldown.Tick(Time.deltaTime);
@@ -260,7 +266,12 @@ public class Player : MonoBehaviour, IDamagable
     {
         Time.timeScale = 0.1f;
         yield return new WaitForSecondsRealtime(duration);
-        Time.timeScale = 1f;
+
+        if (Time.timeScale > 0f)
+        {
+            Time.timeScale = 1f;
+        }
+
         hitStopCoroutine = null;
     }
 
