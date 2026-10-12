@@ -214,7 +214,7 @@ public class Doctor : Boss
         }
 
         Vector3 spawnPos = transform.position + (Vector3)(spawnDir.normalized * projectileSpawnDistance);
-        PoolManager.Instance.Spawn(projectilePrefab, spawnPos, Quaternion.identity, transform);
+        PoolManager.Instance.Spawn(projectilePrefab, spawnPos, Quaternion.identity);
         audioSource.PlayOneShot(projectile);
         RegisterAttack("Projectile");
     }

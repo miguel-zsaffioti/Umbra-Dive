@@ -170,7 +170,7 @@ public class Boss : MonoBehaviour, IDamagable
     {
         yield return deathEffect.PlayDeathEffect();
         Destroy(gameObject);
-        trigger.EndBossFight();
+        if (trigger != null) trigger.EndBossFight();
     }
 
     public Player GetPlayerInRange(float range)

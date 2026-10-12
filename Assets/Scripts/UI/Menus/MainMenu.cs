@@ -14,6 +14,11 @@ public class MainMenu : MonoBehaviour
         {
             continueButton.SetActive(SaveManager.SaveExists());
         }
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.Play(AudioManager.Instance.menu);
+        }
     }
 
     public void PlayGame()

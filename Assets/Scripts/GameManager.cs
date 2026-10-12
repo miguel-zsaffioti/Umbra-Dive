@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -19,6 +20,9 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public BossTrigger activeBossTrigger;
 
+    // True por um instante logo após um load: o BossTrigger usa isso para cortar a câmera direto pro boss
+    [HideInInspector] public bool justLoaded;
+
     private void Awake()
     {
         if (Instance != null)
@@ -34,6 +38,7 @@ public class GameManager : MonoBehaviour
     {
         Player player = Player.Instance;
         if (player == null) return;
+        if (SaveManager.Instance == null) return;
 
         SaveData data = new SaveData
         {
@@ -51,6 +56,8 @@ public class GameManager : MonoBehaviour
 
     public void LoadGame()
     {
+        if (SaveManager.Instance == null) return;
+
         SaveData data = SaveManager.Instance.Load();
         if (data == null) return;
 
@@ -59,7 +66,10 @@ public class GameManager : MonoBehaviour
 
         bossCount = data.bossCount;
 
-        player.transform.position = new Vector2(data.playerX, data.playerY);
+        justLoaded = true;
+        StartCoroutine(ClearJustLoaded());
+
+        player.Teleport(new Vector2(data.playerX, data.playerY));
         player.maxHealth = data.maxHealth;
         player.currentHealth = data.currentHealth;
         player.NotifyHealthChanged();
@@ -67,6 +77,12 @@ public class GameManager : MonoBehaviour
         player.maxPotions = data.maxPotions;
         player.currentPotions = data.currentPotions;
         player.NotifyPotionsChanged();
+    }
+
+    private IEnumerator ClearJustLoaded()
+    {
+        yield return new WaitForSecondsRealtime(0.5f);
+        justLoaded = false;
     }
 
     public void OnPlayerDeath()

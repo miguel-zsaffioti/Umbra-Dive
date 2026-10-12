@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class MenuFirstSelected : MonoBehaviour
 {
@@ -16,7 +17,11 @@ public class MenuFirstSelected : MonoBehaviour
     private IEnumerator SelectNextFrame()
     {
         yield return null;
-        SelectFirst();
+
+        if (IsGamepadConnected())
+        {
+            SelectFirst();
+        }
     }
 
     private void Update()
@@ -25,10 +30,25 @@ public class MenuFirstSelected : MonoBehaviour
         if (es == null) return;
 
         GameObject current = es.currentSelectedGameObject;
-        if (current == null || !current.activeInHierarchy)
+        if ((current == null || !current.activeInHierarchy) && IsGamepadConnected())
         {
             SelectFirst();
         }
+    }
+
+    private bool IsGamepadConnected()
+    {
+        if (Gamepad.current != null) return true;
+
+        foreach (var device in InputSystem.devices)
+        {
+            if (device is Gamepad)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void SelectFirst()

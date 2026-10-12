@@ -73,6 +73,10 @@ public class ControlsScreen : MonoBehaviour
         }
 
         ContinueRequested = false;
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.Play(AudioManager.Instance.ambient);
+        }
         SceneManager.LoadScene(gameSceneName);
     }
 

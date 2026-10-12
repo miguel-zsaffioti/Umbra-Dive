@@ -15,7 +15,7 @@ MonoBehaviour:
   health: 10
   moveSpeed: 3
   stopDistance: 0.6
-  playerDetectionRadius: 3
+  playerDetectionRadius: 8
   timeToLose: 2
   detectionRayThickness: 0.15
   hearingRadius: 1.2

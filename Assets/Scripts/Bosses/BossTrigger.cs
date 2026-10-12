@@ -158,7 +158,8 @@ public class BossTrigger : MonoBehaviour
         }
         if (bossArenaCamera != null)
         {
-            bossArenaCamera.Priority = bossCameraActivePriority;
+            bool instant = gameManager != null && gameManager.justLoaded;
+            StartCoroutine(ActivateBossCamera(instant));
         }
         if (pixelPerfectCamera != null)
         {
@@ -169,6 +170,27 @@ public class BossTrigger : MonoBehaviour
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.Play(bossMusic);
+        }
+    }
+
+    private IEnumerator ActivateBossCamera(bool instant)
+    {
+        CinemachineBrain brain = Camera.main != null ? Camera.main.GetComponent<CinemachineBrain>() : null;
+        bool cut = instant && brain != null;
+        CinemachineBlendDefinition oldBlend = default;
+
+        if (cut)
+        {
+            oldBlend = brain.DefaultBlend;
+            brain.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.Cut, 0f);
+        }
+
+        bossArenaCamera.Priority = bossCameraActivePriority;
+
+        if (cut)
+        {
+            yield return null; 
+            brain.DefaultBlend = oldBlend;
         }
     }
 

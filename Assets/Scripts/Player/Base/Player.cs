@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using Unity.Cinemachine;
 
 public class Player : MonoBehaviour, IDamagable
 {
@@ -156,11 +157,8 @@ public class Player : MonoBehaviour, IDamagable
         audioSource.Play();
     }
 
-    // Chamado por Animation Event na animação de andar
     public void PlayFootstep()
     {
-        // A animação de andar continua rodando na layer base durante block/attack/roll,
-        // então só toca o passo se o player estiver de fato andando
         if (stateMachine.currState != walkState) return;
 
         if (audioData == null || audioData.footsteps == null) return;
@@ -201,8 +199,6 @@ public class Player : MonoBehaviour, IDamagable
 
     void Update()
     {
-        // Jogo pausado (pause/game over): o Update continua rodando com timeScale 0,
-        // então sem isso o player processaria input e trocaria de estado durante o pause
         if (Time.timeScale == 0f) return;
 
         inputSystem.Tick();
@@ -306,10 +302,27 @@ public class Player : MonoBehaviour, IDamagable
         StartCoroutine(healthSystem.RestoreHealth(cureAmount, cureTick));
     }
 
+    public void Teleport(Vector2 position)
+    {
+        Vector3 delta = (Vector3)position - transform.position;
+
+        transform.position = position;
+        if (rb != null)
+        {
+            rb.position = position;
+            rb.linearVelocity = Vector2.zero;
+        }
+
+        foreach (CinemachineCamera cam in FindObjectsByType<CinemachineCamera>(FindObjectsSortMode.None))
+        {
+            cam.OnTargetObjectWarped(transform, delta);
+        }
+    }
+
     public void Respawn(Vector2 position)
     {
         gameObject.SetActive(true);
-        transform.position = position;
+        Teleport(position);
 
         isInvincible = false;
         isBlocking = false;
