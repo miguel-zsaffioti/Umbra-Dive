@@ -6,6 +6,17 @@ public class Spectre : Boss
     [SerializeField] OreShard OreShard;
     [SerializeField] GameObject teleportEffectPrefab;
 
+    private AudioSource audioSource;
+
+    public AudioClip attack;
+    public AudioClip teleport;
+
+    protected override void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+        base.Awake();
+    }
+
     public void ForceFaceForward(Vector2? direction = null)
     {
         Vector2 facing = direction ?? Vector2.down;
@@ -75,6 +86,9 @@ public class Spectre : Boss
             SpawnProjectile(direction);
         }
 
+        if (audioSource != null) {
+            audioSource.PlayOneShot(attack);
+        }
         RegisterAttack("Cross");
     }
 
@@ -86,6 +100,10 @@ public class Spectre : Boss
             SpawnProjectile(direction);
         }
 
+        if (audioSource != null)
+        {
+            audioSource.PlayOneShot(attack);
+        }
         RegisterAttack("X");
     }
 
@@ -95,6 +113,10 @@ public class Spectre : Boss
         Vector2 directionToPlayer = (player.rb.position - rb.position).normalized;
         SpawnProjectile(directionToPlayer);
 
+        if (audioSource != null)
+        {
+            audioSource.PlayOneShot(teleport);
+        }
         RegisterAttack("Teleport");
     }
 }

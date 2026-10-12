@@ -21,6 +21,10 @@ public class GrimReaper : Boss
     public float flipCooldown = 0.2f;
     private float lastFlipTime = -999f;
 
+    public AudioClip normalAttack;
+    public AudioClip specialAttack;
+    private AudioSource audioSource;
+
     public enum AttackTypes
     {
         Normal,
@@ -32,6 +36,7 @@ public class GrimReaper : Boss
         isFacingRight = true;
         attackCooldown = new Cooldown(attackCooldownDuration);
         specialCooldown = new Cooldown(specialCooldownDuration);
+        audioSource = GetComponent<AudioSource>();
         base.Awake();
     }
 
@@ -80,6 +85,10 @@ public class GrimReaper : Boss
             player.healthSystem.TakeDamage(2, knockbackDirection, 5f);
         }
 
+        if (audioSource != null)
+        {
+            audioSource.PlayOneShot(normalAttack);
+        }
         RegisterAttack("Normal");
         attackCooldown.Reset();
     }
@@ -91,6 +100,10 @@ public class GrimReaper : Boss
 
         newSlash.Launch(isFacingRight ? 1f : -1f);
 
+        if (audioSource != null)
+        {
+            audioSource.PlayOneShot(specialAttack);
+        }
         RegisterAttack("Special");
         specialCooldown.Reset();
     }
