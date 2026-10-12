@@ -2908,7 +2908,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.45
+  m_Intensity: 0.6
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: 00000000cd1114188122941b3bda76a7f908949031100dc2
@@ -6680,11 +6680,11 @@ MonoBehaviour:
   rollForce: 5
   rollCooldownDuration: 1
   attackAnimation: {fileID: 7400000, guid: 85e2a99ea2d05064ca9fb0460b2d0dcb, type: 2}
-  attackMoveSpeed: 2
-  windUpDuration: 0.15
+  attackMoveSpeed: 3
+  windUpDuration: 0.05
   squashAmount: 0.9
   stretchAmount: 1.1
-  scaleSmoothness: 20
+  scaleSmoothness: 30
   knockbackDuration: 0.2
   facingDirection: {x: 0, y: 0}
   attackPoint: {fileID: 54129473}
