@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 using Unity.Cinemachine;
 using TMPro;
 
@@ -20,6 +21,11 @@ public class BossTrigger : MonoBehaviour
 
     [Header("Fim da luta")]
     public float cameraReturnDelay = 3f;
+
+    [Header("Boss final")]
+    public bool isFinalBoss = false;
+    public string endSceneName = "ThanksForPlaying";
+    public float endSceneDelay = 2f;
 
     private Transform Parent;
     public GameObject healthPanel;
@@ -201,6 +207,19 @@ public class BossTrigger : MonoBehaviour
         {
             pixelPerfectCamera.refResolutionX = originalRefResolution.x;
             pixelPerfectCamera.refResolutionY = originalRefResolution.y;
+        }
+
+        if (isFinalBoss)
+        {
+            yield return new WaitForSeconds(endSceneDelay);
+
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.Stop();
+            }
+
+            SceneManager.LoadScene(endSceneName);
+            yield break;
         }
 
         if (AudioManager.Instance != null)
