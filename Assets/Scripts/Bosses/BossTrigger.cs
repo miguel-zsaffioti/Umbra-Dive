@@ -210,6 +210,8 @@ public class BossTrigger : MonoBehaviour
             Destroy(spawnedBoss);
         }
 
+        PoolManager.Instance.DespawnAll();
+
         healthPanel.SetActive(true);
         SpawnBoss();
     }

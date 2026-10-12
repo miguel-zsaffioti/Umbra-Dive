@@ -302,7 +302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AreaSlash
   activated: 0
-  damage: 3
+  damage: 2
 --- !u!58 &6119267015365400103
 CircleCollider2D:
   m_ObjectHideFlags: 0

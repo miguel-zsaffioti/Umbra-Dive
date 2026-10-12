@@ -193,6 +193,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   speed: 8
-  turnSpeed: 120
-  homingDuration: 2
-  damage: 5
+  lifetime: 10
+  damage: 4
